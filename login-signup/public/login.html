@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+     
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+     <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+    <script src="./script.js"></script> 
+</head>
+
+<body>
+    
+
+    <div>
+        <center>
+            <h2>SIGN-UP</h2>
+            <form action='/signup' method='POST' id="form" onsubmit="return checkForm(this);"> 
+                <div class="col-xs-12">
+                  User's Email Id:  <input type="email" name="email" id="email" placeholder="email id here...." required />
+                </div>
+                <div class="col-xs-12">
+                    Username :<input type="text" name="username" id="username" placeholder="enter username here..." required />
+                </div>
+                <!-- <div class="col-xs-12">
+                    <select class="dropdown" id="gender" onChange="changeColor(this)">
+                        <option value="" disabled selected>Gender</option>
+                        <option value="female">Female</option>
+                        <option value="male">Male</option>
+                    </select>
+                </div> -->
+                <div class="col-xs-12">
+                    Password : <input type="password" name="password" id="password" placeholder="enter password here..." required />
+                </div>
+                
+                <div class="col-xs-12">
+                    Confirm Password : <input type="password" name="Cpassword" id="Cpassword" placeholder="enter password again..." required />
+                </div>
+                <input id="submit" class="button" type="submit" value="submit"/>
+            </form>
+        </center>
+    </div>
+
+    <br><br><br>
+    <div>
+        <center>
+            <h3>LOGIN</h3>
+            <form action='/login' method='POST' id="form2" > 
+                <div class="col-xs-12">
+                    Username :<input type="text" name="username" id="username" placeholder="enter username here..." required />
+                </div>
+                <div class="col-xs-12">
+                    Password : <input type="password" name="password" id="password" placeholder="enter password here..." required />
+                </div>
+                <input id="submit" class="button" type="submit" value="submit"/>
+            </form>
+        </center>
+    </div>
+</body>
+</html>
