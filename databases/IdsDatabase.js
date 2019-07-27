@@ -10,7 +10,7 @@ const get_db=()=>client.connect()
     })
 
 
-//accessing collection loginAcc
+//accessing collection for checking a loginAcc
 const get_allLogins=()=>{
     get_db()
     .then(db=>db.collection('loginIds'))
@@ -22,23 +22,27 @@ const get_allLogins=()=>{
 
 }
 
+
 //get one login Id requested by client through username
-const  get_loginAcc =(username,password)=>
+const  check_loginAcc =(username,password)=>
     get_db()
     .then(db=>db.collection('loginIds'))
     .catch(err=>{
-        console.log('error in finding username 1')
+        console.log('error in collection')
         res.send('error1')    
     })
     .then(collection=>{
         //console.log(collection)
-        return collection.findOne({username:username})})
-     .catch(err=>{
-        console.log('error in finding username 2')
-        return null    
-    })   
-    .then(document=>{console.log('username matched')
-      //console.log('document : ',document)  
+        return collection.findOne({username:username})
+    })  
+    .then(document=>{
+      if(document==null){
+        console.log('error in finding username ')
+        return null
+      }  
+      else{      
+      console.log('username matched')
+      console.log('document : ',document)  
       if(document.password===password)
         {console.log('pASSWORD MATHCED')
             return document}
@@ -46,10 +50,34 @@ const  get_loginAcc =(username,password)=>
             console.log('error in password')
             return null
         }
+      }
     })
 
 
-//inserting in collection loginIds
+//get one login Id requested by client through username
+const  get_loginAcc =(username)=>
+    get_db()
+    .then(db=>db.collection('loginIds'))
+    .catch(err=>{
+        console.log('error in collection')
+        res.send('error1')    
+    })
+    .then(collection=>{
+        //console.log(collection)
+        return collection.findOne({username:username})
+    })  
+    .then(document=>{
+      if(document==null){
+        console.log('error in finding username ')
+        return null
+      }  
+      else{      
+      console.log('username matched')
+            return document
+      }
+    })
+
+    //inserting in collection loginIds
 const insert_loginAcc=(Id_info)=>
     get_db()
     .then(db=>db.collection('loginIds'))
@@ -78,6 +106,7 @@ get_db()
 console.log("accessing the database for ids")
 module.exports={
     get_allLogins,
+    check_loginAcc,
     get_loginAcc,
     insert_loginAcc,
     delete_loginAcc
