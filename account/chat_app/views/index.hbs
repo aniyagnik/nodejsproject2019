@@ -28,13 +28,8 @@
   </style>
   </head>
   <body>
-    <div id='login'>
-        <h2>login</h2><br>
-        username:<input type="text" placeholder="enter name here..." id="login_nm">
-        <button id="login_btn">login</button>      
-    </div>
      <h3 id="user_name"></h3>
-    <div id='msg' style="display:none">
+    <div id='msg' >
         <h2>messaging</h2><br>
           massage:<input type="text" placeholder="enter message here..." id="send_msg">
           <button id="msg_btn">send message</button>      
@@ -52,7 +47,7 @@
         messages you sent:
         <ul id="sent_msg"></ul>
     </div>
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="script.js"></script>
     </script>

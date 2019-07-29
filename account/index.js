@@ -6,13 +6,13 @@ app.use(express.urlencoded({extended: true}))
 
 
 //app.use(express.static(path.join(__dirname,'/publc')))
-//app.use('/user',require('../account'))
+app.use('/chat',require('./chat_app'))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '/views'));
-//app.use('/user/chat',require('./chat_app'))
+
 
 app.get('/dashboard',(req,res)=>{
-    console.log(req.user)   
+    console.log('in dashboard',req.user)   
     if(req.user)
     {
         const {username}=req.user

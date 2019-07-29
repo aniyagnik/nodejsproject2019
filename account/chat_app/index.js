@@ -3,12 +3,27 @@ var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 let path=require('path')
-app.use(express.static((__dirname)+'/public'))
 
-app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname,'index.html'));
-});
+const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc}=require('../../databases/IdsDatabase')
+//app.use(express.static((__dirname)+'/public'))
+app.set('view engine', 'hbs')
+app.set('views', path.join(__dirname, '/views'));
+
 let users=[]
+
+function takeUsers(){
+  get_allLogins().then(result=>{
+    console.log(result);
+    users=result.map(ele=>{ele.username});
+  })
+}
+takeUsers();
+
+app.get('/chat', function(req, res){
+  const {username}=req.user
+  res.render('index',{username});
+});
+
 
 io.on('connection', function(socket){
     console.log('a user connected ',socket.id);
@@ -37,30 +52,12 @@ io.on('connection', function(socket){
 
     //logging a client in
     socket.on('login',(data)=>{
-      const username=data.user
-      function check_id_existence(username){
-        for(let i=0;i<users.length;i++)
-        {
-          if(users[i].name===username)
-          {return 0}
-        }
-        return 1
-      }
-      const id_exist=check_id_existence(username)
-      console.log('id exist',id_exist)
-      if(id_exist==1)
-      {
         users.push({
-          name:username,
+          name:data.user,
           id:socket.id
         })
-       socket.emit('login_result',{user:username,error:null})
        console.log('io.emit')
-      io.emit('get_user',{users:users})
-      }
-      else{
-        socket.emit('login_result',{user:username,error:'username already exists'})
-      }
+     // io.emit('get_user',{users:users})
     })
  
     //reading a message and then sending
@@ -94,4 +91,4 @@ io.on('connection', function(socket){
     })
   });
 
-  module.exports=http
+  module.exports=app

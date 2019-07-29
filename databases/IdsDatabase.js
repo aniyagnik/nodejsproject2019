@@ -5,19 +5,22 @@ const client=new MongoClient('mongodb://localhost:27017')
 const get_db=()=>client.connect()
     .then(()=>{
         const db=client.db('testdb')
-       console.log(`database made`)
+       console.log(`database accessed`)
         return db
     })
 
 
 //accessing collection for checking a loginAcc
 const get_allLogins=()=>{
-    get_db()
+    return get_db()
     .then(db=>db.collection('loginIds'))
     .catch(err=>console.log('error in fetching 1'))
     .then(collection=>collection.find())
     .catch(err=>console.log('error in fetching 2'))
-    .then(cursor=>cursor.toArray())
+    .then(cursor=>{
+       // console.log(cursor.toArray())
+        return cursor              
+    })
     .catch(err=>console.log('error in fetching '))
 
 }

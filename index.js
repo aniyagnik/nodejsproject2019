@@ -19,5 +19,5 @@ app.use(passport.session())     //tells express to user sessions with passport
 
 
 app.use('/',require('./login-signup'))
-
+app.use('/user',require('./account'))
 app.listen(8080,()=>{console.log('listening at 8080')})

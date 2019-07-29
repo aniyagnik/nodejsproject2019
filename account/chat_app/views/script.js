@@ -1,15 +1,12 @@
- const socket = io();
- socket.on('connected', () => {
-    console.log("Connected " + socket.id)
-})
-     
+const socket = io();
 let selected_user=[]
-let done_login=false
-let my_username
+const my_username=req.user.username
+socket.on('connected', () => {
+    console.log("Connected " + socket.id)
+    socket.emit('login', {user:my_username}); 
+})
+  
 
-    const login=$('#login')
-    const login_nm=$('#login_nm')
-    const login_btn=$('#login_btn')
     const msg=$('#msg')
     const send_msg=$('#send_msg')
     const recieved_msg=$('#recieved_msg')
@@ -18,38 +15,10 @@ let my_username
     const div_recieve=$('#div_recieve')
     const div_sent=$('#div_sent')
     const user_list=$('#user_list')
-  
    
-  
-    //logging in
-    login_btn.click(function(e){
-        e.preventDefault(); // prevents page reloading
-        const user=login_nm.val()  
-        socket.emit('login', {user:user}); 
-   })    
-
-    //checking valid user
-    socket.on('login_result',(details)=>{
-        if(details.error===null)
-        {
-            
-            my_username=details.user
-            login.hide()
-            done_login=true
-            $('#user_name').html('hi,'+my_username)
-            msg.show()
-            div_recieve.show()
-            div_sent.show()
-            window.alert('login succesful')
-        }
-        else{
-            window.alert(details.error)
-        }
-    })
 
     //getting active users
-    socket.on('get_user',data=>{
-        if(done_login==1){          
+    socket.on('get_user',data=>{          
             let user_nm=data.users
             let html='<h4>active users :</h4><br>'
             let filter_arr=user_nm.filter(ele=>ele.name!==my_username)
@@ -57,7 +26,6 @@ let my_username
             html+=`<button class='user_btn' id=`+ ele.id + `> ` + ele.name + `</button><br><br>`
             })
             user_list.html(html)
-        }
     })
 
    //selcting user 
@@ -120,9 +88,7 @@ let my_username
   
    //printing the message on page 
     socket.on('res_msg',res_msg=>{
-        console.log('done_login',done_login)
-       if(done_login)
-       {
+       
            console.log('my_username',my_username)
             console.log('printing message you recieved')
             console.log(res_msg.personal)
@@ -146,6 +112,5 @@ let my_username
                     recieved_msg.append($(`<li><b>${res_msg.user}</b>:${res_msg.message}</li>`))
                 } 
              }
-       }
     })
  
