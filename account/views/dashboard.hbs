@@ -7,7 +7,11 @@
     <title>dashboard</title>
 </head>
 <body>
-    hello,{{username}}
+    hello,{{user.username}}
     <a href="/user/chat">go to chatting</a>
+    <br><br>
+    <img src='{{user.image}}' alt="{{user.username}}" height='30%' width='30%'>
+    <br><br>
+    <big><a href="/edit">edit profile</a></big> 
 </body>
 </html>

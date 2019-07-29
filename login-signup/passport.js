@@ -33,7 +33,7 @@ passport.use(new LocalStratergy(function (username, password, done) {
         console.log('user: ',user)
         if(user==null)
         {return done(null,false,{message:'no such user'})}
-        else{console.log(user)
+        else{console.log('user in local',user)
             return done(null,user)}
     })
     .catch(err=>{

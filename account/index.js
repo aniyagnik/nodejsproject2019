@@ -8,15 +8,18 @@ app.use(express.urlencoded({extended: true}))
 //app.use(express.static(path.join(__dirname,'/publc')))
 app.use('/chat',require('./chat_app'))
 app.set('view engine', 'hbs')
+
 app.set('views', path.join(__dirname, '/views'));
 
+
+app.use(express.static(path.join(__dirname,'/uploads')))
 
 app.get('/dashboard',(req,res)=>{
     console.log('in dashboard',req.user)   
     if(req.user)
     {
-        const {username}=req.user
-        return res.render('dashboard',{username})
+        const user=req.user
+        return res.render('dashboard',{user})
     }
     else{
         res.redirect('/')

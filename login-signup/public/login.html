@@ -19,7 +19,7 @@
     <div>
         <center>
             <h2>SIGN-UP</h2>
-            <form action='/signup' method='POST' id="form" onsubmit="return checkForm(this);"> 
+            <form action='/signup' method='POST' id="form" enctype="multipart/form-data" onsubmit="return checkForm(this);" > 
                 <div class="col-xs-12">
                   User's Email Id:  <input type="email" name="email" id="email" placeholder="email id here...." required />
                 </div>
@@ -33,6 +33,9 @@
                         <option value="male">Male</option>
                     </select>
                 </div> -->
+                <div class="col-xs-12">
+                   Profile Photo: <input type="file" name="image" id="image" required />
+                </div>
                 <div class="col-xs-12">
                     Password : <input type="password" name="password" id="password" placeholder="enter password here..." required />
                 </div>

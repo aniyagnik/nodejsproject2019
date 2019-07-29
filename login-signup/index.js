@@ -2,21 +2,34 @@ const express = require('express')
 const app = express.Router()
 const path=require('path')
 const passport=require('./passport')
+const multer=require('multer')
+
+let storage=multer.diskStorage({
+  destination:function(req,res,cb){
+    cb(null,path.join(__dirname,'..\\account\\uploads\\'))
+  },
+  filename:function(req,file,cb){
+    cb(null,Date.now()+file.originalname)
+  }
+}
+)
+
+const upload=multer({storage:storage})
+
 const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc}=require('../databases/IdsDatabase')
+
 app.use(express.urlencoded({extended: true}))
 
 app.use('/user',require('../account'))
 
-app.use(express.static(path.join(__dirname,'/public')))
 
-
-app.get('/ids',(req,res)=>{
-    get_allLogins()
-    .then(allLogins => { 
-        console.log(allLogins)
-        res.render(path.join(__dirname, 'allLogins.hbs'),{allLogins})
-      })
-})
+// app.get('/ids',(req,res)=>{
+//     get_allLogins()
+//     .then(allLogins => { 
+//       //  console.log(allLogins)
+//         res.render(path.join(__dirname, 'allLogins.hbs'),{allLogins})
+//       })
+// })
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname,'/public/login.html'))
@@ -27,11 +40,14 @@ app.post('/login',passport.authenticate('local',{
     successRedirect:'/user/dashboard'
 }))
 
-app.post('/signup',(req,res)=>{
+app.post('/signup',upload.single('image'),(req,res)=>{
+    
+   // console.log('images :: ',req.file)
     const newAcc={
         email:req.body.email,
         username:req.body.username,
-        password:req.body.password
+        password:req.body.password,
+        image:req.file.filename
     }
     const addedUser=insert_loginAcc(newAcc)
     if(addedUser==null)

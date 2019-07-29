@@ -17,9 +17,8 @@ function takeUsers(){
     users=result.map(ele=>{ele.username});
   })
 }
-takeUsers();
-
 app.get('/chat', function(req, res){
+  takeUsers();
   const {username}=req.user
   res.render('index',{username});
 });

@@ -35,7 +35,7 @@ const  check_loginAcc =(username,password)=>
         res.send('error1')    
     })
     .then(collection=>{
-        //console.log(collection)
+       // console.log(collection)
         return collection.findOne({username:username})
     })  
     .then(document=>{
@@ -45,7 +45,7 @@ const  check_loginAcc =(username,password)=>
       }  
       else{      
       console.log('username matched')
-      console.log('document : ',document)  
+      //console.log('document : ',document)  
       if(document.password===password)
         {console.log('pASSWORD MATHCED')
             return document}
@@ -66,7 +66,7 @@ const  get_loginAcc =(username)=>
         res.send('error1')    
     })
     .then(collection=>{
-        //console.log(collection)
+      //  console.log(collection)
         return collection.findOne({username:username})
     })  
     .then(document=>{
@@ -91,7 +91,7 @@ const insert_loginAcc=(Id_info)=>
                 console.log('Error occurred while inserting');
                return null
             } else {
-               console.log('inserted record', response.ops[0]);
+              // console.log('inserted record', response.ops[0]);
               return response.ops[0]
             }
         })
@@ -105,7 +105,7 @@ const delete_loginAcc=(username)=>
     .then(db=>db.collection('loginIds'))
     .then(collection=>collection.deleteOne({username: new mongodb.ObjectID(username)}))
 
-get_db()
+
 console.log("accessing the database for ids")
 module.exports={
     get_allLogins,
