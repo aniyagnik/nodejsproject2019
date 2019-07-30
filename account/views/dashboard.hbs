@@ -24,7 +24,13 @@
     </form>
     <div>
       {{#each images}}
-        <img src='{{this}}' alt='{{this}}' height='20%' width='20%' >
+        <div class="card" style="width: 18rem;display:inline-block">
+          <img src="{{this}}" class="card-img-top" alt="{{this}}">
+          <div class="card-body">
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
       {{/each}}
     </div>
 <script>
