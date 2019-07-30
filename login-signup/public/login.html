@@ -11,7 +11,7 @@
 
 <body background="background.jpg"> 
     
-        <h1 > hahahah.com</h1>
+        <h1 style="color:white"> hahahah.com</h1>
             <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
 
             <div id="id01" class="modal">
@@ -34,7 +34,7 @@
 
         <div id="id02" class="modal">
         
-        <form class="modal-content animate" action="/hsfbshd">
+        <form class="modal-content animate" action='/signup' method='POST' id="form" enctype="multipart/form-data" onsubmit="return checkForm(this);">
 
             <div class="container">
             <label ><b>Email</b></label>

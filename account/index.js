@@ -18,6 +18,7 @@ const upload=multer({storage:storage})
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
+hbs.registerPartials(path.join(__dirname+'/partials'))
 
 app.use('/chat',require('./chat_app'))
 app.set('view engine', 'hbs')
