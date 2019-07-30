@@ -5,50 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
-     
+    <link rel="stylesheet" href="style.css">     
+   
+</head>
+
+<body background="background.jpg"> 
+    
+        <h1 > hahahah.com</h1>
+            <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+
+            <div id="id01" class="modal">
+            <form class="modal-content animate" action="/login" method='POST' id="form2">
+                <div class="container">
+                <label ><b>Username</b></label>
+                <input type="text" name="username" id="username" placeholder="Enter Username" required>
+                <label ><b>Password</b></label>
+                <input type="password" name="password" id="password" placeholder="Enter Password" required>
+                <button type="submit" id='submit'>Login</button>
+                </div>
+                <div class="container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                <span class="psw">Forgot <a href="#">password?</a></span>
+                </div>
+            </form>
+            </div>
+
+        <button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Signup</button>
+
+        <div id="id02" class="modal">
+        
+        <form class="modal-content animate" action="/hsfbshd">
+
+            <div class="container">
+            <label ><b>Email</b></label>
+            <input type="email" name="email" id="email" placeholder="Enter Email" required>   
+            <label><b>Username</b></label>
+            <input type="text" name="username" id="username" placeholder="Enter Username" required>
+            <label><b>Profile photo</b></label><br>
+            <input type="file" name="image" id="image"placeholder="Enter file" required>
+            <label ><b>Password</b></label>
+            <input type="password" name="password" id="password" placeholder="Enter Password" required>
+            <label ><b>Password</b></label>
+            <input type="password" name="Cpassword" id="Cpassword" placeholder="Enter Password" required>
+            <button type="submit">Login</button>
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+            <span class="psw">Forgot <a href="#">password?</a></span>
+            </div>
+        </form>
+    </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
     <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
      <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
-    <script src="./script.js"></script> 
-</head>
+    <script src="script.js"></script> 
+</body>
+</html>
 
-<body>
-    
-
-    <div>
-        <center>
-            <h2>SIGN-UP</h2>
-            <form action='/signup' method='POST' id="form" enctype="multipart/form-data" onsubmit="return checkForm(this);" > 
-                <div class="col-xs-12">
-                  User's Email Id:  <input type="email" name="email" id="email" placeholder="email id here...." required />
-                </div>
-                <div class="col-xs-12">
-                    Username :<input type="text" name="username" id="username" placeholder="enter username here..." required />
-                </div>
-                <!-- <div class="col-xs-12">
-                    <select class="dropdown" id="gender" onChange="changeColor(this)">
-                        <option value="" disabled selected>Gender</option>
-                        <option value="female">Female</option>
-                        <option value="male">Male</option>
-                    </select>
-                </div> -->
-                <div class="col-xs-12">
-                   Profile Photo: <input type="file" name="image" id="image" required />
-                </div>
-                <div class="col-xs-12">
-                    Password : <input type="password" name="password" id="password" placeholder="enter password here..." required />
-                </div>
-                
-                <div class="col-xs-12">
-                    Confirm Password : <input type="password" name="Cpassword" id="Cpassword" placeholder="enter password again..." required />
-                </div>
-                <input id="submit" class="button" type="submit" value="submit"/>
-            </form>
-        </center>
-    </div>
-
-    <br><br><br>
+ <!-- <div class="col-xs-12">
+        <select class="dropdown" id="gender" onChange="changeColor(this)">
+            <option value="" disabled selected>Gender</option>
+            <option value="female">Female</option>
+            <option value="male">Male</option>
+        </select>
+      </div>
+      
+     <br><br><br>
     <div>
         <center>
             <h3>LOGIN</h3>
@@ -62,6 +86,31 @@
                 <input id="submit" class="button" type="submit" value="submit"/>
             </form>
         </center>
+    </div>   
+    
+    
+    
+    <div>
+        <center>
+            <h2>SIGN-UP</h2>
+            <form action='/signup' method='POST' id="form" enctype="multipart/form-data" onsubmit="return checkForm(this);" > 
+                <div class="col-xs-12">
+                  User's Email Id:  <input type="email" name="email" id="email" placeholder="email id here...." required />
+                </div>
+                <div class="col-xs-12">
+                    Username :<input type="text" name="username" id="username" placeholder="enter username here..." required />
+                </div>
+                <div class="col-xs-12">
+                   Profile Photo: <input type="file" name="image" id="image" required />
+                </div>
+                <div class="col-xs-12">
+                    Password : <input type="password" name="password" id="password" placeholder="enter password here..." required />
+                </div>     
+                <div class="col-xs-12">
+                    Confirm Password : <input type="password" name="Cpassword" id="Cpassword" placeholder="enter password again..." required />
+                </div>
+                <input id="submit" class="button" type="submit" value="submit"/>
+            </form>
+        </center>
     </div>
-</body>
-</html>
+ -->

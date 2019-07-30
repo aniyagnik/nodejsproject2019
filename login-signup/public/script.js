@@ -1,62 +1,3 @@
-/*
-
-jQuery(function ($) {
-    $('#form').validate({
-        rules: {
-            email: {
-                required: true,
-                minlength: 6,
-                email: true
-            },
-            username: {
-                required: true,
-                minlength: 2,
-                maxlength: 20,
-                lettersonly: true
-            },
-            passowrd: {
-                required: true,
-                minlength: 4,
-                maxlength: 20,
-                nowhitespace: true
-            },
-            Cpassowrd: {
-                equalTo:'#password'
-            },
-            gender: {
-                required: true
-            },
-        },
-        messages: {
-            
-            email: {
-                required: "Please enter your email address",
-                minlength: "Password should be more than 6 characters",
-                email: "Please enter a valid email address"
-            },
-            username: {
-                required: "Please enter your username",
-                minlength: "Name should be more than 2 characters",
-                maxlength: "Name should be less than 20 characters",
-                lettersonly: "Name should contain only letters"
-            },
-            passowrd:{
-                required: "please enter your password",
-                minlength: "Password should be more than 4 characters",
-                maxlength: "password should be less than 20 characters",
-                lettersonly: "Password should contain only letters"
-            },
-            gender: {
-                equalTo:"passwords don't match"
-            },
-            Cpassowrd:{
-                depends: "password doesn't matches with confirmed password"
-            },
-        },
-    });
-});
-*/
-
 
 function checkForm(form)
   {
@@ -110,3 +51,21 @@ function checkForm(form)
     alert("You entered a valid password: " + form.password.value);
     return true;
   }
+
+
+  
+// Get the modal
+var modal1 = document.getElementById('id01');
+var modal2 = document.getElementById('id02');
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal1) {
+        modal1.style.display = "none";
+    }
+}
+
+window.onclick = function(event) {
+    if (event.target == modal2) {
+        modal2.style.display = "none";
+    }
+}
