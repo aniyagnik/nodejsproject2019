@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User's Wall</title>
+    <link rel="stylesheet" href="wallStyle.css">
+</head>
+<body>
+    {{>navbar}}
+    
+    <div class="bg" style=' background-image: url("{{userpic}}");'>
+        <img src="{{userpic}}" alt="{{user.username}}" id='profilepic'>
+    </div>
+    <div>
+      {{#each images}}
+        <img src='{{this}}' alt='{{this}}' height='20%' width='20%' >
+      {{/each}}
+    </div>
+    
+</body>
+</html>

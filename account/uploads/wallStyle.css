@@ -1,0 +1,23 @@
+
+body, html {
+    height: 100%;
+    margin: 0;
+  }
+  
+  .bg {
+  
+    /* Full height */
+    height: 50%; 
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  #profilepic{
+      border-radius:100%;
+      align-self: center;
+      width:30%;
+      height:30%;
+  }

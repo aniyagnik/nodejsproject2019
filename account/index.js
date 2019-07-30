@@ -15,7 +15,7 @@ let storage=multer.diskStorage({
 )
 let images=[]
 const upload=multer({storage:storage})
-
+const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,update_loginAcc,delete_loginAcc}=require('../databases/IdsDatabase')
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 hbs.registerPartials(path.join(__dirname+'/partials'))
@@ -80,6 +80,46 @@ app.post('/dashboard',(req,res)=>{
     }
 })
 
+app.post('/dashboard/search',(req,res)=>{
+    console.log('in post dashboard search')
+    if(req.user)
+    {
+       console.log('searching for:',req.body.searchUser)
+       get_loginAcc(req.body.searchUser)
+       .then(document=>{console.log("user found : ",document)
+             if(document!==null)
+             {
+                res.redirect('/user/wall?finduser='+req.body.searchUser+'&userpic='+document.image) 
+             }  
+             else{
+                res.redirect('/user/dashboard?return=no-such-user') 
+             }
+       })
+       .catch(err=>{
+           console.log('error occured : ',err)
+           res.redirect('/user/dashboard')
+       })
+    }
+    else{
+        res.redirect('/')
+    }
+})
+app.get('/wall',(req,res)=>{
+    if(req.user)
+    {
+        const {finduser}=req.query
+        const {userpic}=req.query
+        get_alluserImgs(finduser)
+        .then(result=>{
+            return result.images
+        })
+        .then(imagesArr=>{
+            images=imagesArr    
+            res.render('wall',{userpic,images})
+        })
+        
+    }
+})
 app.get('/chat',(req,res)=>{
     const {username}=req.query
     res.redirect('/user/chat')
