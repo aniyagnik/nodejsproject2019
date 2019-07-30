@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     hello,{{user.username}}
@@ -12,6 +13,30 @@
     <br><br>
     <img src='{{user.image}}' alt="{{user.username}}" height='30%' width='30%'>
     <br><br>
-    <big><a href="/edit">edit profile</a></big> 
+  
+    <form action='/user/dashboard/addImage' method='POST' id="form" enctype="multipart/form-data"  > 
+        <div class="col-xs-12">
+          select photo: <input type="file" name="Uimages" id="image" required />
+        </div>
+        <input id="submit" class="button" type="submit" value="submit"/>
+    </form>
+    <div>
+      {{#each images}}
+        <img src='{{this}}' alt='{{this}}' height='10%' width='10%' >
+      {{/each}}
+    </div>
+<script>
+// Get the modal
+var modal = document.getElementById('id01');
+var modal2 = document.getElementById('id02');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+
 </body>
 </html>

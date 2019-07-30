@@ -16,20 +16,12 @@ let storage=multer.diskStorage({
 
 const upload=multer({storage:storage})
 
-const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc}=require('../databases/IdsDatabase')
+const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,update_loginAcc,delete_loginAcc}=require('../databases/IdsDatabase')
 
 app.use(express.urlencoded({extended: true}))
-
+app.use(express.static(path.join(__dirname,'./public')))
 app.use('/user',require('../account'))
 
-
-// app.get('/ids',(req,res)=>{
-//     get_allLogins()
-//     .then(allLogins => { 
-//       //  console.log(allLogins)
-//         res.render(path.join(__dirname, 'allLogins.hbs'),{allLogins})
-//       })
-// })
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname,'/public/login.html'))

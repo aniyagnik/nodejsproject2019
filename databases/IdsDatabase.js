@@ -25,6 +25,36 @@ const get_allLogins=()=>{
 
 }
 
+ //inserting in collection loginIds
+ const insert_loginAcc=(Id_info)=>
+    get_db()
+    .then(db=>db.collection('userImages'))
+    .catch(err=>console.log('error in accessing in collection images '))
+    .then(collection=>{
+        add={username:Id_info.username,
+            images:[]
+        }
+        console.log("added file :",add)
+        collection.insertOne(add)
+        return true
+    })
+    .catch(err=>console.log('error in saving in collection images '))
+    .then(ha=>get_db())
+    .then(db=>db.collection('loginIds'))
+    .then(collection=>{
+        console.log('item saved in insert id')
+        get_db()
+        collection.insertOne(Id_info,function (error, response) {
+            if(error) {
+                console.log('Error occurred while inserting');
+                return null
+            } else {
+            console.log('inserted record', response.ops[0]);
+            return response.ops[0]
+            }
+        })
+    })
+    .catch(err=>console.log('error in saving collectio ids'))
 
 //get one login Id requested by client through username
 const  check_loginAcc =(username,password)=>
@@ -32,7 +62,7 @@ const  check_loginAcc =(username,password)=>
     .then(db=>db.collection('loginIds'))
     .catch(err=>{
         console.log('error in collection')
-        res.send('error1')    
+        return null    
     })
     .then(collection=>{
        // console.log(collection)
@@ -63,7 +93,7 @@ const  get_loginAcc =(username)=>
     .then(db=>db.collection('loginIds'))
     .catch(err=>{
         console.log('error in collection')
-        res.send('error1')    
+           
     })
     .then(collection=>{
       //  console.log(collection)
@@ -79,24 +109,38 @@ const  get_loginAcc =(username)=>
             return document
       }
     })
-
-    //inserting in collection loginIds
-const insert_loginAcc=(Id_info)=>
+const update_loginAcc=(username,password)=>
     get_db()
     .then(db=>db.collection('loginIds'))
-    .then(collection=>{
-        console.log('item saved')
-         collection.insertOne(Id_info,function (error, response) {
-            if(error) {
-                console.log('Error occurred while inserting');
-               return null
-            } else {
-              // console.log('inserted record', response.ops[0]);
-              return response.ops[0]
-            }
-        })
+    .catch(err=>{
+        console.log('error in collection')
+        res.send('error1')    
     })
-     .catch(err=>console.log('error in saving '))
+    .then(collection=>{
+    //  console.log(collection)
+        return collection.updateOne(
+            { username:'username' },
+            {
+              $set: { "password": password, status: "P" },
+              
+            }
+         )
+    })  
+    .then(document=>{
+    if(document==null){
+        console.log('error in finding username ')
+        return null
+    }  
+    else{      
+    console.log('username matched')
+            return document
+    }
+    })
+    .catch(err=>{
+        console.log('error in finding the account')
+        return done(err)
+    })
+
 
 
 //deleting in collection loginIds
@@ -112,5 +156,6 @@ module.exports={
     check_loginAcc,
     get_loginAcc,
     insert_loginAcc,
+    update_loginAcc,
     delete_loginAcc
 }
