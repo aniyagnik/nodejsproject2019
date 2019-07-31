@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>User's Wall</title>
+    <title>{{viewuser}}'s Wall</title>
     <link rel="stylesheet" href="wallStyle.css">
 </head>
 <body>
@@ -12,14 +12,15 @@
     
     <div class="bg" style=' background-image: url("{{userpic}}");'>
         <img src="{{userpic}}" alt="{{userpic}}" id='profilepic'>
+        <label >wall of {{viewuser}}</label>
     </div>
-   {{#if images}}
-      <div>
-        {{#each images}}
+   {{#if imagesArr}}
+      <div class='posts'> 
+        {{#each imagesArr}}
           <div class="card" style="width: 18rem;display:inline-block">
-            <img src="{{images.image}}" class="card-img-top" alt="{{images.image}}">
+            <img src="{{this.image}}" class="card-img-top" alt="{{this.image}}">
             <div class="card-body">
-                <p class="card-text">{{images.description}}</p>
+                <p class="card-text">{{this.description}}</p>
                 <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
           </div>

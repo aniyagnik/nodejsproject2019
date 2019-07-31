@@ -91,7 +91,7 @@ app.post('/dashboard/search',(req,res)=>{
        .then(document=>{console.log("user found : ",document)
              if(document!==null)
              {
-                res.redirect('/user/wall?finduser='+req.body.searchUser+'&userpic='+document.image) 
+                res.redirect('/user/wall?finduser='+req.body.searchUser+'&userpic='+document.image+'&viewuser'+req.body.searchUser) 
              }  
              else{
                 res.redirect('/user/dashboard?return=no-such-user') 
@@ -112,15 +112,15 @@ app.get('/wall',(req,res)=>{
     {
         const {finduser}=req.query
         const {userpic}=req.query  
+        const {viewuser}=req.query
         console.log('values taken :',finduser,userpic)    
         get_alluserImgs(finduser)
         .then(result=>{
             return result.images
         })
-        .then(imagesArr=>{
-            images=imagesArr    
+        .then(imagesArr=>{    
             console.log('images acquired : ',imagesArr)
-            res.render('wall',{userpic,imagesArr})
+            res.render('wall',{userpic,imagesArr,viewuser})
         })
     }
     else{res.redirect('/')}
