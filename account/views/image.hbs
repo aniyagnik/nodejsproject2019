@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>image</title>
+    <link rel="stylesheet" href="wallStyle.css">
+    <style>
+        .showimage{
+            height: 90%;
+            margin: 1%;            
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+
+    </style>
+</head>
+<body>
+    {{>navbar}}
+    
+    <div class="bg showimage" style=' background-image: url("{{showimage}}");'>
+    </div>
+    <div>
+        <label >comments</label>
+        <ul>
+            {{#each comments}}
+            <li>{{this.commentedBy}} : {{this.comments}}</li>
+            {{/each}}
+        </ul>
+        <form action="/addComment" method="post"> 
+            <textarea name="comments" id="comment"  placeholder="add comment..."></textarea><br
+            <button type="submit">Add comment :</button>
+        </form>
+    </div>
+</body>
+</html>
