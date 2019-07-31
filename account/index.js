@@ -3,6 +3,15 @@ const app = express()
 const hbs=require('hbs')
 const path=require('path')
 const multer=require('multer')
+
+app.use(express.urlencoded({extended: true}))
+app.use(express.json())
+hbs.registerPartials(path.join(__dirname+'/partials'))
+app.use('/chat',require('./chat_app'))
+app.set('view engine', 'hbs')
+app.set('views', path.join(__dirname, '/views'));
+app.use(express.static(path.join(__dirname,'/uploads')))
+
 const   {get_alluserImgs,insert_userImgs,delete_userImg}=require('../databases/imageDatabase')
 let storage=multer.diskStorage({
   destination:function(req,res,cb){
@@ -13,20 +22,10 @@ let storage=multer.diskStorage({
   }
 }
 )
-let images=[]
+let myAcc=[]
+var images=null
 const upload=multer({storage:storage})
 const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,update_loginAcc,delete_loginAcc}=require('../databases/IdsDatabase')
-app.use(express.urlencoded({extended: true}))
-app.use(express.json())
-hbs.registerPartials(path.join(__dirname+'/partials'))
-
-app.use('/chat',require('./chat_app'))
-app.set('view engine', 'hbs')
-let myAcc=[]
-app.set('views', path.join(__dirname, '/views'));
-
-
-app.use(express.static(path.join(__dirname,'/uploads')))
 
 app.get('/dashboard',(req,res)=>{
     console.log('in dashboard',req.user,images)  
@@ -41,6 +40,7 @@ app.get('/dashboard',(req,res)=>{
         .then(imagesArr=>{
             images=imagesArr    
             const user=req.user
+            console.log('images acquired : ',imagesArr)
             res.render('dashboard',{user,images})
         })
     }
@@ -54,13 +54,15 @@ app.post('/dashboard/addImage',upload.single('Uimages'),(req,res)=>{
     console.log('in addImage')   
     if(req.user)
     {
-       console.log('image:',req.file)
-       let image=req.file.filename
-       insert_userImgs(myAcc.username,image)
-       .then(uImages=>{console.log("images added : ",uImages)
+       console.log('image:',req.file,req.body.description)
+       
+       insert_userImgs(myAcc.username,req.file.filename,req.body.description)
+       .then(uImages=>{
+           console.log('in .then of insert image')
+           console.log("images added : ",uImages)
             images=uImages
              res.redirect('/user/dashboard')   
-    })
+        })
     }
     else{
         res.redirect('/')

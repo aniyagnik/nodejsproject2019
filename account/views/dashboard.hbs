@@ -20,19 +20,24 @@
         <div class="col-xs-12">
           select photo: <input type="file" name="Uimages" id="image" required />
         </div>
+        <div class="col-xs-12">
+         description: <input type="text" name="description" id="description" required />
+        </div>
         <input id="submit" class="button" type="submit" value="submit"/>
     </form>
-    <div>
-      {{#each images}}
-        <div class="card" style="width: 18rem;display:inline-block">
-          <img src="{{this}}" class="card-img-top" alt="{{this}}">
-          <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+    {{#if images}}
+      <div>
+        {{#each images}}
+          <div class="card" style="width: 18rem;display:inline-block">
+            <img src="{{this.image}}" class="card-img-top" alt="{{this.image}}">
+            <div class="card-body">
+                <p class="card-text">{{this.description}}</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
           </div>
-        </div>
-      {{/each}}
-    </div>
+        {{/each}}
+      </div>
+    {{/if}}
 <script>
 // Get the modal
 var modal = document.getElementById('id01');

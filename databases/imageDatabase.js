@@ -24,37 +24,29 @@ const get_alluserImgs=(username)=>{
 }
 let updateVal
     //inserting in collection loginIds
-const insert_userImgs=(username,image)=>
+const insert_userImgs=(username,filename,description)=>
     get_db()
-    .then(db=>db.collection('userImages'))
-    .then(collection=>collection.findOne({username:username}))
-    .catch(err=>console.log('error in finding username for image '))
-    .then(data=>{
-        console.log('images ',data,data.images)
-        data.images.push(image)
-        console.log('images 2',data.images)
-        return data.images
-     })
-     .catch(err=>console.log('error in saving 1'))
-    .then(images=>{
-        updateVal=images
-        console.log('update val : ',updateVal)
-        return get_db()})
-        .catch(err=>console.log('error in saving 2'))    
-    .then(db=>db.collection('userImages'))
-    .catch(err=>console.log('error in saving 3'))
-    .then(collection=>{
-        console.log('updation in process')
-        return collection.findOneAndUpdate(
-            {    username:username},
-            {    $set: {images:updateVal}},
-            {    new:true}
-
+    .then(db=>
+        db.collection('userImages').findOneAndUpdate(
+            {username:username},
+            { '$push': { images: 
+                { 
+                    image:filename,
+                    description:description
+                  } 
+                }
+            },
+            { new: true },
+            function (err, documents) {
+                console.log("document after insertion",documents,documents.value.images)
+                return documents.value.images ;
+            }
         )
+    )
+    .catch(err=>{console.log('error in finding username for image ',err)
+                       return null
     })
-    .then(document=>document.value.images)
-    .catch(err=>console.log('error in saving 4'))    
-   
+    
 
 //deleting in collection loginIds
 const delete_userImg=(image)=>

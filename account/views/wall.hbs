@@ -13,17 +13,18 @@
     <div class="bg" style=' background-image: url("{{userpic}}");'>
         <img src="{{userpic}}" alt="{{user.username}}" id='profilepic'>
     </div>
-    <div>
-      {{#each images}}
-        <div class="card" style="width: 18rem;display:inline-block">
-          <img src="{{this}}" class="card-img-top" alt="{{this}}">
-          <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+   {{#if images}}
+      <div>
+        {{#each images}}
+          <div class="card" style="width: 18rem;display:inline-block">
+            <img src="{{images.image}}" class="card-img-top" alt="{{images.image}}">
+            <div class="card-body">
+                <p class="card-text">{{images.description}}</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
           </div>
-        </div>
-      {{/each}}
-    </div>
-    
+        {{/each}}
+      </div>
+    {{/if}}    
 </body>
 </html>
