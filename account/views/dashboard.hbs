@@ -16,15 +16,26 @@
     <img src='{{user.image}}' alt="{{user.username}}" height='30%' width='30%'>
     <br><br>
   
-    <form action='/user/dashboard/addImage' method='POST' id="form" enctype="multipart/form-data"  > 
-        <div class="col-xs-12">
-          select photo: <input type="file" name="Uimages" id="image" required />
-        </div>
-        <div class="col-xs-12">
-         description: <input type="text" name="description" id="description" required />
-        </div>
-        <input id="submit" class="button" type="submit" value="submit"/>
-    </form>
+<button onclick="document.getElementById('addimgdiv').style.display='block'" class='addbutton' style="width:auto;">Add Image</button>
+<div id="addimgdiv" class="addImgModal">
+   <form class="modal-content-form animate" action='/user/dashboard/addImage' method='POST' id="form" enctype="multipart/form-data"  >
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('addimgdiv').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="{{user.image}}" alt="{{user.image}}" class="avatar">
+    </div>
+    <div class="containeraddimage">
+      <label><b>Select Image</b></label>
+      <input type="file" name='Uimages' id="image" required>
+      <label ><b>Description</b></label>
+      <input type="text" placeholder="Enter description" name="description" id='description' required>
+      <button type="submit" class='addbutton'>Add Image</button>
+    </div>
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('addimgdiv').style.display='none'" class="addbutton cancelbtn">Cancel</button>
+    </div>
+  </form>
+</div>
+
     {{#if images}}
       <div>
         {{#each images}}
@@ -38,10 +49,10 @@
         {{/each}}
       </div>
     {{/if}}
+
 <script>
 // Get the modal
-var modal = document.getElementById('id01');
-var modal2 = document.getElementById('id02');
+var modal = document.getElementById('addimagediv');
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
@@ -52,3 +63,18 @@ window.onclick = function(event) {
 </script>
 </body>
 </html>
+
+
+<!--
+  
+    <form action='/user/dashboard/addImage' method='POST' id="form" enctype="multipart/form-data"  > 
+        <div class="col-xs-12">
+          select photo: <input type="file" name="Uimages" id="image" required />
+        </div>
+        <div class="col-xs-12">
+         description: <input type="text" name="description" id="description" required />
+        </div>
+        <input id="submit" class="button" type="submit" value="submit"/>
+    </form>
+    
+-->
