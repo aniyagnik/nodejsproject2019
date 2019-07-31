@@ -4,7 +4,7 @@ var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 let path=require('path')
 
-const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc}=require('../../databases/IdsDatabase')
+const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc}=require('../../database/IdsCollection')
 //app.use(express.static((__dirname)+'/public'))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '/views'));

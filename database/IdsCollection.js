@@ -5,7 +5,7 @@ const client=new MongoClient('mongodb://localhost:27017')
 const get_db=()=>client.connect()
     .then(()=>{
         const db=client.db('testdb')
-       console.log(`database accessed`)
+       console.log(`database accessed for accessing ids collection`)
         return db
     })
 
@@ -150,7 +150,7 @@ const delete_loginAcc=(username)=>
     .then(collection=>collection.deleteOne({username: new mongodb.ObjectID(username)}))
 
 
-console.log("accessing the database for ids")
+console.log("accessing the collection for ids")
 module.exports={
     get_allLogins,
     check_loginAcc,

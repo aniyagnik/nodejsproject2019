@@ -5,7 +5,7 @@ const client=new MongoClient('mongodb://localhost:27017')
 const get_db=()=>client.connect()
     .then(()=>{
         const db=client.db('testdb')
-       console.log(`database accessed`)
+       console.log(`database accessed for accessing image collection`  )
         return db
     })
 //accessing collection for checking a loginAcc
@@ -55,7 +55,7 @@ const delete_userImg=(image)=>
     .then(collection=>collection.deleteOne({username: new mongodb.ObjectID(username)}))
 
 
-console.log("accessing the database for images")
+console.log("accessing the collection for images")
 module.exports={
     get_alluserImgs,
     insert_userImgs,

@@ -15,7 +15,7 @@ let storage=multer.diskStorage({
 )
 
 const upload=multer({storage:storage})
-const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,update_loginAcc,delete_loginAcc}=require('../databases/IdsDatabase')
+const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,update_loginAcc,delete_loginAcc}=require('../database/IdsCollection')
 app.use(express.urlencoded({extended: true}))
 app.use(express.static(path.join(__dirname,'./public')))
 app.use('/user',require('../account'))

@@ -115,7 +115,7 @@ span.psw {
 }
 
 /* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 600px) {
   span.psw {
      display: block;
      float: none;
@@ -123,4 +123,10 @@ span.psw {
   .cancelbtn {
      width: 100%;
   }
+
+  
+/* Modal Content/Box */
+.modal-content {
+   width: 90%; /* Could be more or less, depending on screen size */
+}
 }

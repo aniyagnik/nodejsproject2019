@@ -12,7 +12,8 @@ app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '/views'));
 app.use(express.static(path.join(__dirname,'/uploads')))
 
-const   {get_alluserImgs,insert_userImgs,delete_userImg}=require('../databases/imageDatabase')
+const   {get_alluserImgs,insert_userImgs,delete_userImg}=require('../database/imageCollection')
+const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,update_loginAcc,delete_loginAcc}=require('../database/IdsCollection')
 let storage=multer.diskStorage({
   destination:function(req,res,cb){
     cb(null,path.join(__dirname,'..\\account\\uploads\\'))
@@ -25,7 +26,6 @@ let storage=multer.diskStorage({
 let myAcc=[]
 var images=null
 const upload=multer({storage:storage})
-const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,update_loginAcc,delete_loginAcc}=require('../databases/IdsDatabase')
 
 app.get('/dashboard',(req,res)=>{
     console.log('in dashboard',req.user,images)  
@@ -107,20 +107,23 @@ app.post('/dashboard/search',(req,res)=>{
     }
 })
 app.get('/wall',(req,res)=>{
+    console.log('in wall get')
     if(req.user)
     {
         const {finduser}=req.query
-        const {userpic}=req.query
+        const {userpic}=req.query  
+        console.log('values taken :',finduser,userpic)    
         get_alluserImgs(finduser)
         .then(result=>{
             return result.images
         })
         .then(imagesArr=>{
             images=imagesArr    
-            res.render('wall',{userpic,images})
+            console.log('images acquired : ',imagesArr)
+            res.render('wall',{userpic,imagesArr})
         })
-        
     }
+    else{res.redirect('/')}
 })
 app.get('/chat',(req,res)=>{
     const {username}=req.query

@@ -21,3 +21,7 @@ body, html {
       width:30%;
       height:30%;
   }
+
+  .card{
+    margin-left:2%;
+  }
