@@ -38,8 +38,8 @@ const insert_userImgs=(username,filename,description)=>
             },
             { new: true },
             function (err, documents) {
-                console.log("document after insertion",documents,documents.value.images)
-                return documents.value.images ;
+               // console.log("document after insertion",documents,documents.value.images)
+                //return documents.value.images ;
             }
         )
     )

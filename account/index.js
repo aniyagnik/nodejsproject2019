@@ -40,7 +40,6 @@ app.get('/dashboard',(req,res)=>{
         .then(imagesArr=>{
             images=imagesArr    
             const user=req.user
-            console.log('images acquired : ',imagesArr)
             res.render('dashboard',{user,images})
         })
     }

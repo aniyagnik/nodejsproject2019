@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>dashboard</title>
-    
+    <style>
+      .divsize{
+        height:40%;
+      }
+    </style>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -39,7 +43,7 @@
     {{#if images}}
       <div class='posts'>
         {{#each images}}
-          <div class="card" style="width: 18rem;display:inline-block">
+          <div class="card divsize" style="width: 18rem;display:inline-block">
             <img src="{{this.image}}" class="card-img-top" alt="{{this.image}}">
             <div class="card-body">
                 <p class="card-text">{{this.description}}</p>

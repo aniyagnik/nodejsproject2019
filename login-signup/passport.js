@@ -16,8 +16,11 @@ passport.deserializeUser(function (username, done) {
     .then(user=>{
         
         if(user==null)
-        {return done(null,false,{message:'no such user'})}
-        else{return done(null,user)}
+        { 
+            console.log('usr NOT found')
+            return done(null,false,{message:'no such user'})}
+        else{console.log('usr found')
+            return done(null,user)}
     })
     .catch(err=>{
         console.log('error in finding the account')
