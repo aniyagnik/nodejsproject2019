@@ -11,7 +11,7 @@ app.use('/chat',require('./chat_app'))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '/views'));
 app.use('/',express.static(path.join(__dirname,'/uploads')))
-
+app.use('/wall',require('./wallIndex.js'))
 const   {get_alluserImgs,insert_userImgs,delete_userImg}=require('../database/imageCollection')
 const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,update_loginAcc,delete_loginAcc,}=require('../database/IdsCollection')
 let storage=multer.diskStorage({
@@ -83,12 +83,12 @@ app.post('/dashboard/search',(req,res)=>{
     console.log('in post dashboard search')
     if(req.user)
     {
-       console.log('searching for:',req.body.searchUser)
+       console.log('searching for and by:',req.body.searchUser,req.user.username)
        get_loginAcc(req.body.searchUser)
        .then(document=>{console.log("user found : ",document)
              if(document!==null)
              {
-                res.redirect('/user/wall?finduser='+req.body.searchUser+'&userpic='+document.image+'&userWall='+req.body.searchUser) 
+                res.redirect('/user/wall?findinguser='+req.user.username+'&userpic='+document.image+'&userWall='+req.body.searchUser) 
              }  
              else{
                 res.redirect('/user/dashboard?return=no-such-user') 
@@ -103,46 +103,6 @@ app.post('/dashboard/search',(req,res)=>{
         res.redirect('/')
     }
 })
-app.get('/wall',(req,res)=>{
-    console.log('in wall get')
-    if(req.user)
-    {
-        const {finduser}=req.query
-        const {userpic}=req.query  
-        const {userWall}=req.query
-        console.log('values taken :',finduser,userpic,userWall)    
-        get_alluserImgs(finduser)
-        .then(result=>{
-            return result.images
-        })
-        .then(imagesArr=>{    
-            console.log('images acquired : ',imagesArr)
-            res.render('wall',{userpic,imagesArr,userWall})
-        })
-    }
-    else{res.redirect('/')}
-})
-
-
-app.get('/wallviewImage',(req,res)=>{
-    console.log('in wall viewImage')
-    if(req.user)
-    {
-        const comments=[]
-        const showimage=req.query.image
-        const {userWall}=req.query
-        const {description}=req.query
-        console.log('values taken :',showimage,userWall,description)    
-        // get_alluserImgComment(image,userWall)
-        // .then(comments=>{    
-        //     console.log('comments acquired : ',comments)
-        //     res.render('wall',{image,userWall,comments})
-        // })
-        res.render('image',{showimage,userWall,comments,description})
-    }
-    else{res.redirect('/')}
-})
-
 app.get('/chat',(req,res)=>{
     const {username}=req.query
     res.redirect('/user/chat')

@@ -7,6 +7,8 @@ app.use(express.urlencoded({extended: true}))
 
 app.use('/user',express.static(path.join(__dirname,'account/uploads')))
 
+app.use('/user/wall',express.static(path.join(__dirname,'account/uploads')))
+
 app.use('/',express.static(path.join(__dirname,'login-signup/public')))
 
 app.use(function (req,res,next){

@@ -45,11 +45,10 @@
 </div>
 
     <ul class="flex-container">
-     {{#if user.username}}
      {{#if imagesArr}}
        {{#each imagesArr}}
        <li class='flex-item'>
-          <a href="./wallviewImage?username={{../username}}&image={{this.image}}&description={{this.description}}">
+          <a href="./wall/viewImage?image={{this.image}}&description={{this.description}}">
             <div class='size' style='background-image:url("{{this.image}}")'>
               <img src="null.png" alt="" class='size' style="height:100%; width:100%;">
             </div>
@@ -61,11 +60,8 @@
            <form action="/user/dashboard/deleteImage?image={{user.image}}" method="get">
               <button type="submit" style='width: 100%;  padding: 1px 2px;  margin: 3px 0;  display: inline-block;  border: 1px solid #ccc;  box-sizing: border-box;'>Delete</button>
             </form>
-            
-        </li>
-          
+        </li>          
        {{/each}}
-      {{/if}}    
       {{/if}}
     </ul>
 <script>

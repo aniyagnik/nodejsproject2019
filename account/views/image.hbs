@@ -21,6 +21,17 @@
         max-width: 100%;
         }
 
+                /* Full-width input fields */
+        input[type=text] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        }
+
+
     </style>
 </head>
 <body>
@@ -30,23 +41,28 @@
     <img class='show' src="{{showimage}}" />
     <div class="show" style=' background-image: url("{{showimage}}");'>
     </div>
-    <label style='font-size:1em;color:crimson; font-weight:bold;display:block;margin:2%;'>
-        {{userWall}}
-    </label>
-    <label style='font-size:1em;color:black;display:block;margin:2%;'>
-         {{description}}
-    </label>
-    <div>
-        <label >comments</label>
-        <ul>
-            {{#each comments}}
-            <li>{{this.commentedBy}} : {{this.comments}}</li>
-            {{/each}}
-        </ul>
-        <form action="/addComment" method="post"> 
-            <textarea name="comments" id="comment"  placeholder="add comment..."></textarea><br
-            <button type="submit">Add comment :</button>
-        </form>
-    </div>
+   <div style="margin:0.5%">
+        <label style='font-size:1em;color:crimson; font-weight:bold;display:block;'>
+        {{userWall}} 
+        </label>
+        <label style='font-size:1em;color:black;display:block;'>
+            {{description}}
+        </label>
+        <div style='backgroundcolor:grey'>        
+            <label >comments</label> 
+            <form action="/user/wall/viewImage" method="POST"> 
+                <input type="text" name="comment" id="comment"  placeholder="add comment as {{viewinguser}}..." >
+                <input type="hidden" value='{{showimage}}' name='imageName'>
+                <input type="hidden" value='{{userWall}}' name='userWall'>
+                <br>
+                <button type="submit">Add comment : </button>
+            </form>
+            <ul>
+                {{#each comments}}
+                <li>{{this.commentedBy}} : {{this.comments}}</li>
+                {{/each}}
+            </ul>
+        </div>
+   </div>
 </body>
 </html>
