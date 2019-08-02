@@ -13,15 +13,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    {{>navbar}} 
-        hello,{{user.username}}
+   {{>navbar}} 
+  <div style='margin:2.5%'>
+     hello,{{user.username}}
     <a href="/user/chat">go to chatting</a>
     <br><br>
-    <img src='{{user.image}}' alt="{{user.username}}" height='20%' width='20%'>
+    <img src='{{user.image}}' alt="{{user.username}}" id='profilepic'>
     <br><br>
   
 <button onclick="document.getElementById('addimgdiv').style.display='block'" class='addbutton' style="width:auto;">Add Image</button>
-<div id="addimgdiv" class="addImgModal">
+
+  </div>
+   <div id="addimgdiv" class="addImgModal">
    <form class="modal-content-form animate" action='/user/dashboard/addImage' method='POST' id="form" enctype="multipart/form-data"  >
     <div class="imgcontainer">
       <span onclick="document.getElementById('addimgdiv').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -32,6 +35,7 @@
       <input type="file" name='Uimages' id="image" required>
       <label ><b>Description</b></label>
       <input type="text" placeholder="Enter description" name="description" id='description' required>
+       <input type="hidden" value='{{user.username}}' name="username" >
       <button type="submit" class='addbutton'>Add Image</button>
     </div>
     <div class="container" style="background-color:#f1f1f1">
@@ -40,20 +44,30 @@
   </form>
 </div>
 
-    {{#if images}}
-      <div class='posts'>
-        {{#each images}}
-          <div class="card divsize" style="width: 18rem;display:inline-block">
-            <img src="{{this.image}}" class="card-img-top" alt="{{this.image}}">
-            <div class="card-body">
-                <p class="card-text">{{this.description}}</p>
-                <a href="#" class="btn btn-primary">View Post</a>
+    <ul class="flex-container">
+     {{#if user.username}}
+     {{#if imagesArr}}
+       {{#each imagesArr}}
+       <li class='flex-item'>
+          <a href="./wallviewImage?username={{../username}}&image={{this.image}}&description={{this.description}}">
+            <div class='size' style='background-image:url("{{this.image}}")'>
+              <img src="null.png" alt="" class='size' style="height:100%; width:100%;">
             </div>
-          </div>
-        {{/each}}
-      </div>
-    {{/if}}
-
+          </a> 
+          <details style="color: chocolate">
+              <summary>description</summary>
+              <p> {{this.description}}</p>
+            </details>
+           <form action="/user/dashboard/deleteImage?image={{user.image}}" method="get">
+              <button type="submit" style='width: 100%;  padding: 1px 2px;  margin: 3px 0;  display: inline-block;  border: 1px solid #ccc;  box-sizing: border-box;'>Delete</button>
+            </form>
+            
+        </li>
+          
+       {{/each}}
+      {{/if}}    
+      {{/if}}
+    </ul>
 <script>
 // Get the modal
 var modal = document.getElementById('addimagediv');

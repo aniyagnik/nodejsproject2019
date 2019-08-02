@@ -1,0 +1,86 @@
+
+body, html {
+  height: 100%;
+  width:100%;
+  margin: 0;
+}
+
+
+.bg {
+  
+  /* Full height */
+  height: 50%; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+#profilepic{
+  border-radius:100%;
+  align-self: center;
+  width:20%;
+  height:50%;
+}
+
+.flex-container {
+  padding: 0;
+  margin: 1%;
+  list-style: none;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+}
+
+.flex-item {
+  background: ghostwhite;
+  padding: 4px;
+  margin:1px;
+  width: 10%;
+  height: 10%;  
+  max-width: 20%;
+  max-height: 20%;  
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  text-align: center;
+  
+  object-fit: cover;
+  
+}
+
+a{
+  text-decoration: none;
+}
+.size{
+  height:100% ;
+  width:100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media screen and (min-device-width:300px)and (max-device-width:800px){
+    
+  .flex-item {
+    width: 34%;
+    height: 25%; 
+    max-width: 33%;
+    max-height: 30%;  
+    
+  }
+    
+  #profilepic{
+    border-radius:100%;
+    align-self: center;
+    width:30%;
+    height:30%;
+}
+}

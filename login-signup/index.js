@@ -42,7 +42,7 @@ app.post('/signup',upload.single('image'),(req,res)=>{
     const addedUser=insert_loginAcc(newAcc)
     if(addedUser==null)
     {res.redirect('/error')}
-    else{res.redirect('/user/dashboard')}
+    else{res.redirect('/')}
 })
 
 app.get('/error',(req,res)=>{

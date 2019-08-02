@@ -99,6 +99,87 @@ span.psw {
   animation: animatezoom 0.6s
 }
 
+
+body, html {
+  height: 100%;
+  width:100%;
+  margin: 0;
+}
+
+.bg {
+  
+  /* Full height */
+  height: 50%; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+#profilepic{
+  border-radius:100%;
+  align-self: center;
+  width:10%;
+  height:10%;
+  border:1px solid black
+}
+
+.flex-container {
+  padding: 0;
+  margin: 1%;
+  list-style: none;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+}
+
+.flex-item {
+  background: ghostwhite;
+  padding: 2px;
+  margin:1px;
+  width: 10%;
+  height: 15%;  
+  max-width: 20%;
+  max-height: 20%;  
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  text-align: center;
+  object-fit: cover;
+  
+}
+
+a{
+  text-decoration: none;
+}
+.size{
+  height:70% ;
+  width:100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media screen and (min-device-width:300px)and (max-device-width:800px){
+    
+  .flex-item {
+    width: 33%;
+    height: 30%; 
+    max-width: 32.75%;
+    max-height: 30%;  
+    
+  }
+    
+
+}
+
 @-webkit-keyframes animatezoom {
   from {-webkit-transform: scale(0)} 
   to {-webkit-transform: scale(1)}
@@ -121,6 +202,19 @@ span.psw {
   margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
+  }
+
+  
+  #profilepic{
+    border-radius:100%;
+    align-self: center;
+    width:20%;
+    height:10%;
+  }
+
+  .addbutton {
+    padding: 10px 15px;
+   
   }
 }
 

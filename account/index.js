@@ -23,24 +23,23 @@ let storage=multer.diskStorage({
   }
 }
 )
-let myAcc=[]
-var images=null
+
+
 const upload=multer({storage:storage})
 
 app.get('/dashboard',(req,res)=>{
-    console.log('in dashboard',req.user,images)  
-   
-    myAcc=req.user 
+    console.log('in dashboard',req.user)  
+    
     if(req.user)
     {
         get_alluserImgs(req.user.username)
         .then(result=>{
             return result.images
         })
-        .then(imagesArr=>{
-            images=imagesArr    
+        .then(imagesArr=>{   
             const user=req.user
-            res.render('dashboard',{user,images})
+           // console.log('imagesArr : ',imagesArr)
+            res.render('dashboard',{user,imagesArr})
         })
     }
     else{
@@ -55,11 +54,10 @@ app.post('/dashboard/addImage',upload.single('Uimages'),(req,res)=>{
     {
        console.log('image:',req.file,req.body.description)
        
-       insert_userImgs(myAcc.username,req.file.filename,req.body.description)
+       insert_userImgs(req.body.username,req.file.filename,req.body.description)
        .then(uImages=>{
            console.log('in .then of insert image')
-           console.log("images added : ",uImages)
-            images=uImages
+           //console.log("images added : ",uImages)
              res.redirect('/user/dashboard')   
         })
     }
@@ -69,17 +67,17 @@ app.post('/dashboard/addImage',upload.single('Uimages'),(req,res)=>{
    
 })
 
-app.post('/dashboard',(req,res)=>{
-    console.log('in post dashboard')
-    if(myAcc.password===req.query.password)
-    {   const edit=true
-        console.log('passwords are matCHED')
-        res.send(200)
-    }
-    else{
-        res.sendStatus()
-    }
-})
+// app.post('/dashboard',(req,res)=>{
+//     console.log('in post dashboard')
+//     if(myAcc.password===req.query.password)
+//     {   const edit=true
+//         console.log('passwords are matCHED')
+//         res.send(200)
+//     }
+//     else{
+//         res.sendStatus()
+//     }
+// })
 
 app.post('/dashboard/search',(req,res)=>{
     console.log('in post dashboard search')
@@ -133,13 +131,14 @@ app.get('/wallviewImage',(req,res)=>{
         const comments=[]
         const showimage=req.query.image
         const {userWall}=req.query
-        console.log('values taken :',showimage,userWall)    
+        const {description}=req.query
+        console.log('values taken :',showimage,userWall,description)    
         // get_alluserImgComment(image,userWall)
         // .then(comments=>{    
         //     console.log('comments acquired : ',comments)
         //     res.render('wall',{image,userWall,comments})
         // })
-        res.render('image',{showimage,comments})
+        res.render('image',{showimage,userWall,comments,description})
     }
     else{res.redirect('/')}
 })

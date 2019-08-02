@@ -4,7 +4,7 @@ const client=new MongoClient('mongodb://localhost:27017')
 //accessing database testdb and then sending  collection loginIds
 const get_db=()=>client.connect()
     .then(()=>{
-        const db=client.db('testdb')
+        const db=client.db('project')
        console.log(`database accessed for accessing image collection`  )
         return db
     })

@@ -18,8 +18,8 @@ body, html {
   #profilepic{
       border-radius:100%;
       align-self: center;
-      width:30%;
-      height:30%;
+      width:20%;
+      height:50%;
   }
 
   .card{
@@ -27,5 +27,20 @@ body, html {
   }
 
   .posts{
-    margin:3%;
+    margin-top:3%;
+    align-items: center;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+
+  @media screen and (max-width: 600px) {
+    
+  #profilepic{
+    border-radius:100%;
+    align-self: center;
+    width:30%;
+    height:30%;
+}
+
   }
