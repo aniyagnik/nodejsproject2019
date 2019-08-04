@@ -37,9 +37,10 @@ app.get('/dashboard',(req,res)=>{
             return result.images
         })
         .then(imagesArr=>{   
-            const user=req.user
+            const {username}=req.user
+            const {image}=req.user
            // console.log('imagesArr : ',imagesArr)
-            res.render('dashboard',{user,imagesArr})
+            res.render('dashboard',{username,image,imagesArr})
         })
     }
     else{

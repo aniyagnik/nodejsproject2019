@@ -4,6 +4,7 @@ const hbs=require('hbs')
 const path=require('path')
 
 const  {get_alluserImgs,insert_userImgs,delete_userImg}=require('../database/imageCollection')
+const  { get_allComments,insert_comment,delete_comment}=require('../database/imgCmtCollection')
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
@@ -34,21 +35,21 @@ app.get('/',(req,res)=>{
 
 
 app.get('/viewImage',(req,res)=>{
-    console.log('in wall viewImage')
+    console.log('in wall viewImage get')
     if(req.user)
     {
         const comments=[]
-        const showimage=req.query.image
+        const imageName=req.query.image
         const viewinguser=req.user.username
         const {userWall}=req.query
         const {description}=req.query
-        console.log('values taken :',showimage,viewinguser,userWall,description)    
-        // get_alluserImgComment(image,userWall)
-        // .then(comments=>{    
-        //     console.log('comments acquired : ',comments)
-        //     res.render('wall',{image,userWall,comments})
-        // })
-        res.render('image',{showimage,viewinguser,userWall,comments,description})
+        console.log('values taken :',imageName,viewinguser,userWall,description)    
+        get_allComments(userWall,imageName)
+        .then(comments=>{    
+            console.log('comments to be written : ',comments)
+            res.render('image',{imageName,viewinguser,userWall,comments,description})
+        })
+       
     }
     else{res.redirect('/')}
 })
@@ -58,16 +59,16 @@ app.post('/viewImage',(req,res)=>{
     if(req.user)
     {
         const {comment}=req.body
-        const {imageName}=req.body
-        const commentinguser=req.user.username
-        const {userWall}=req.body
-        console.log('values taken :',comment,imageName,commentinguser,userWall)    
-        // get_alluserImgComment(image,userWall)
-        // .then(comments=>{    
-        //     console.log('comments acquired : ',comments)
-        //     res.render('wall',{image,userWall,comments})
-        // })
-        res.render('image',{comments,imageName,commentinguser,userWall})
+        const imageName=req.body.imageName
+        const commentingUser=req.user.username
+        const username=req.body.userWall
+        const {description}=req.body
+        console.log('values taken :',comment,imageName,commentingUser,username)    
+        insert_comment(username,imageName,commentingUser,comment)
+        .then(comments=>{    
+            console.log('comments acquired : ',comments)
+            res.redirect('./viewImage?userWall='+username+'&image='+imageName+'&description='+description)
+        })
     }
     else{res.redirect('/')}  
 })

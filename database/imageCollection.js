@@ -35,17 +35,37 @@ const insert_userImgs=(username,filename,description)=>
                     description:description
                   } 
                 }
-            },
-            { new: true },
-            function (err, documents) {
-               // console.log("document after insertion",documents,documents.value.images)
-                //return documents.value.images ;
             }
         )
     )
     .catch(err=>{console.log('error in finding username for image ',err)
                        return null
     })
+    .then(value=>{
+        console.log('in insert image mongodb :: ',value)
+        return get_db()})
+    .then(db=>
+        db.collection('userComments').insertOne(
+            {
+                username:username,
+                image:filename,
+                comments:[]
+            },
+            function (error, response) {
+                if(error) {
+                    console.log('Error occurred while inserting comment array');
+                    return null
+                } else {
+                console.log('inserted record for image comments:', response.ops[0]);
+                return response.ops[0]
+                }
+            }           
+        )
+    )
+    .catch(err=>{console.log('error in finding username for image ',err)
+                       return null
+    })
+
     
 
 //deleting in collection loginIds
@@ -55,7 +75,7 @@ const delete_userImg=(image)=>
     .then(collection=>collection.deleteOne({username: new mongodb.ObjectID(username)}))
 
 
-console.log("accessing the collection for images")
+console.log("accessing the c0llection for images")
 module.exports={
     get_alluserImgs,
     insert_userImgs,

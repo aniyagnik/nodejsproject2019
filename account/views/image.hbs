@@ -33,13 +33,43 @@
 
 
     </style>
+
+    <script>
+        Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+
+    switch (operator) {
+        case '==':
+            return (v1 == v2) ? options.fn(this) : options.inverse(this);
+        case '===':
+            return (v1 === v2) ? options.fn(this) : options.inverse(this);
+        case '!=':
+            return (v1 != v2) ? options.fn(this) : options.inverse(this);
+        case '!==':
+            return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+        case '<':
+            return (v1 < v2) ? options.fn(this) : options.inverse(this);
+        case '<=':
+            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+        case '>':
+            return (v1 > v2) ? options.fn(this) : options.inverse(this);
+        case '>=':
+            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+        case '&&':
+            return (v1 && v2) ? options.fn(this) : options.inverse(this);
+        case '||':
+            return (v1 || v2) ? options.fn(this) : options.inverse(this);
+        default:
+            return options.inverse(this);
+    }
+});
+    </script>
 </head>
 <body>
     {{>navbar}}
     
     
-    <img class='show' src="{{showimage}}" />
-    <div class="show" style=' background-image: url("{{showimage}}");'>
+    <img class='show' src="{{imageName}}" />
+    <div class="show" style=' background-image: url("{{imageName}}");'>
     </div>
    <div style="margin:0.5%">
         <label style='font-size:1em;color:crimson; font-weight:bold;display:block;'>
@@ -52,14 +82,24 @@
             <label >comments</label> 
             <form action="/user/wall/viewImage" method="POST"> 
                 <input type="text" name="comment" id="comment"  placeholder="add comment as {{viewinguser}}..." >
-                <input type="hidden" value='{{showimage}}' name='imageName'>
+                <input type="hidden" value='{{imageName}}' name='imageName'>
                 <input type="hidden" value='{{userWall}}' name='userWall'>
+                 <input type="hidden" value='{{description}}' name='description'>
                 <br>
-                <button type="submit">Add comment : </button>
+                <button type="submit">Add comment  </button>
             </form>
             <ul>
                 {{#each comments}}
-                <li>{{this.commentedBy}} : {{this.comments}}</li>
+                <li>
+                    {{#if userwall}}
+                    {{#if this.commentBy '==' ../userWall}}
+                    <b>{{this.commentBy}}</b> : {{this.comment}}
+                    {{/if}}
+                    {{else}}
+                       {{this.commentBy}} : {{this.comment}}
+                    {{/if}}
+
+                </li>
                 {{/each}}
             </ul>
         </div>
