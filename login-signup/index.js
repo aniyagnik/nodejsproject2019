@@ -42,7 +42,7 @@ app.post('/signup',upload.single('image'),(req,res)=>{
       if(addedUser==undefined)
       {
         console.log('adduser is null')
-        res.redirect('/error')
+        res.redirect('/error').message()
       }
       else{
         console.log('adduser is not null')
@@ -52,8 +52,5 @@ app.post('/signup',upload.single('image'),(req,res)=>{
      add()
 })
 
-app.get('/error',(req,res)=>{
-    res.sendFile(path.join(__dirname,'/public/error.html'))
-})
 
 module.exports=app

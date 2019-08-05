@@ -5,6 +5,12 @@ const session=require('express-session')
 const passport=require('./login-signup/passport')
 app.use(express.urlencoded({extended: true}))
 
+
+app.get('/error',(req,res)=>{
+  message="haah ahhahaha ha"
+  res.render('error.hbs',{message})
+})
+
 app.use('/user',express.static(path.join(__dirname,'account/uploads')))
 
 app.use('/user/wall',express.static(path.join(__dirname,'account/uploads')))
