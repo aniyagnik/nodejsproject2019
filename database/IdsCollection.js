@@ -26,35 +26,53 @@ const get_allLogins=()=>{
 }
 
  //inserting in collection loginIds
- const insert_loginAcc=(Id_info)=>
-    get_db()
-    .then(db=>db.collection('userImages'))
-    .catch(err=>console.log('error in accessing in collection images '))
-    .then(collection=>{
-        add={username:Id_info.username,
-            images:[]
-        }
-        console.log("added file :",add)
-        collection.insertOne(add)
-        return true
-    })
-    .catch(err=>console.log('error in saving in collection images '))
-    .then(ha=>get_db())
-    .then(db=>db.collection('loginIds'))
-    .then(collection=>{
-        console.log('item saved in insert id')
-        get_db()
-        collection.insertOne(Id_info,function (error, response) {
-            if(error) {
-                console.log('Error occurred while inserting');
-                return null
-            } else {
-            console.log('inserted record', response.ops[0]);
-            return response.ops[0]
-            }
-        })
-    })
-    .catch(err=>console.log('error in saving collectio ids'))
+  async function insert_loginAcc (Id_info){
+      let value=1
+    const result= await get_db()
+                        .then(db=>db.collection('loginIds'))
+                        .catch(err=>{
+                            console.log('error in collection 1')
+                            return null    
+                        })
+                        .then(collection=>collection.findOne({username:Id_info.username}))
+                        .catch(err=>{
+                            console.log('error in collection 2')
+                            return null    
+                        })
+
+      
+    console.log('result :::: ',result )
+    if(!result)
+    {
+        value= await get_db()
+                .then(db=>db.collection('userImages'))
+                .catch(err=>console.log('error in accessing in collection images '))
+                .then(collection=>{
+                    add={username:Id_info.username,
+                        images:[]
+                    }
+                    console.log("added file :",add)
+                    collection.insertOne(add)
+                    return true
+                })
+                .catch(err=>console.log('error in saving in collection images '))
+                .then(ha=>get_db())
+                .then(db=>db.collection('loginIds'))
+                .then(collection=>collection.insertOne(Id_info))
+                .catch(err=>console.log('error in saving collectio ids 1',err))
+                .then(doc=>{
+                    console.log('inserted values is :',doc.ops[0])
+                    return doc.ops[0]
+                })
+                .catch(err=>console.log('error in saving collectio ids 2',err))
+        console.log('awaits ends')
+    } 
+    else{                
+        value=null
+    }           
+    console.log('value of insertion:',value)
+    return value
+}    
 
 //get one login Id requested by client through username
 const  check_loginAcc =(username,password)=>
@@ -85,6 +103,7 @@ const  check_loginAcc =(username,password)=>
         }
       }
     })
+ 
 
 
 //get one login Id requested by client through username

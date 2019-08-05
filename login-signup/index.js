@@ -31,18 +31,25 @@ app.post('/login',passport.authenticate('local',{
 }))
 
 app.post('/signup',upload.single('image'),(req,res)=>{
-    
-   // console.log('images :: ',req.file)
     const newAcc={
         email:req.body.email,
         username:req.body.username,
         password:req.body.password,
         image:req.file.filename
     }
-    const addedUser=insert_loginAcc(newAcc)
-    if(addedUser==null)
-    {res.redirect('/error')}
-    else{res.redirect('/')}
+    async function add(){
+      const addedUser=await insert_loginAcc(newAcc)
+      if(addedUser==undefined)
+      {
+        console.log('adduser is null')
+        res.redirect('/error')
+      }
+      else{
+        console.log('adduser is not null')
+        res.redirect('/')
+      }
+     }
+     add()
 })
 
 app.get('/error',(req,res)=>{
