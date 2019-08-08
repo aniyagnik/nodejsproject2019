@@ -7,20 +7,22 @@ let path=require('path')
 const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc}=require('../../database/IdsCollection')
 //app.use(express.static((__dirname)+'/public'))
 app.set('view engine', 'hbs')
-app.set('views', path.join(__dirname, '/views'));
+app.set('views', path.join(__dirname, '/public'));
 
 let users=[]
 
 function takeUsers(){
   get_allLogins().then(result=>{
-    console.log(result);
+    console.log("all users",result);
     users=result.map(ele=>{ele.username});
   })
 }
+
 app.get('/chat', function(req, res){
   takeUsers();
   const {username}=req.user
-  res.render('index',{username});
+  res.sendFile(path.join(__dirname,'/public/index.html'))
+  io.emit('get_user',{users:users})
 });
 
 
@@ -49,16 +51,7 @@ io.on('connection', function(socket){
         io.emit('get_user',{users:users})
     });
 
-    //logging a client in
-    socket.on('login',(data)=>{
-        users.push({
-          name:data.user,
-          id:socket.id
-        })
-       console.log('io.emit')
-     // io.emit('get_user',{users:users})
-    })
- 
+    
     //reading a message and then sending
     socket.on('message',(msg_taken)=>{
       //console.log('in message index',msg_taken.message)

@@ -62,12 +62,11 @@ app.post('/viewImage',(req,res)=>{
         const imageName=req.body.imageName
         const commentingUser=req.user.username
         const username=req.body.userWall
-        const {description}=req.body
         console.log('values taken :',comment,imageName,commentingUser,username)    
         insert_comment(username,imageName,commentingUser,comment)
         .then(comments=>{    
             console.log('comments acquired : ',comments)
-            res.redirect('./viewImage?userWall='+username+'&image='+imageName+'&description='+description)
+            res.sendStatus(200)
         })
     }
     else{res.redirect('/')}  

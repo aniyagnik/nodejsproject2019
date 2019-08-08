@@ -32,8 +32,7 @@
         }
 
     </style>
-    <script src="bundle.js"></script>
-    <script src="image.js"></script>
+   
 </head>
 <body>
     {{>navbar}}
@@ -49,22 +48,23 @@
         <label style='font-size:1em;color:black;display:block;'>
             {{description}}
         </label>
+    
         <div style='backgroundcolor:grey'>        
             <label >comments</label> 
-            <form action="/user/wall/viewImage" method="POST"> 
+            <form action="#" > 
                 <input type="text" name="comment" id="comment"  placeholder="add comment as {{viewinguser}}..." >
-                <input type="hidden" value='{{imageName}}' name='imageName'>
-                <input type="hidden" value='{{userWall}}' name='userWall'>
-                 <input type="hidden" value='{{description}}' name='description'>
+                <input type="hidden" value='{{imageName}}' id='imageName'>
+                <input type="hidden" value='{{userWall}}' id='userWall'>
+                 <input type="hidden" value='{{viewinguser}}' id='viewinguser'>
                 <br>
-                <button type="submit">Add comment  </button>
+                <button type="button" id='addComment'>Add comment  </button>
             </form>
-            <ul>
+            <ul id='comments'>
                 {{#each comments}}
                 <li>
                     {{#if userwall}}
                     {{#if this.commentBy '==' ../userWall}}
-                    <b>{{this.commentBy}}</b> : {{this.comment}}
+                    <b>{{../userWall}} {{this.commentBy}}</b> : {{this.comment}}
                     {{/if}}
                     {{else}}
                        {{this.commentBy}} : {{this.comment}}
@@ -75,5 +75,10 @@
             </ul>
         </div>
    </div>
+    
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="image.js"></script>
+
 </body>
 </html>

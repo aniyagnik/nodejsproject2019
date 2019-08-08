@@ -6,14 +6,18 @@ const multer=require('multer')
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
+
 hbs.registerPartials(path.join(__dirname+'/partials'))
+
 app.use('/chat',require('./chat_app'))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '/views'));
 app.use('/',express.static(path.join(__dirname,'/uploads')))
 app.use('/wall',require('./wallIndex.js'))
+
 const   {get_alluserImgs,insert_userImgs,delete_userImg}=require('../database/imageCollection')
 const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,update_loginAcc,delete_loginAcc,}=require('../database/IdsCollection')
+
 let storage=multer.diskStorage({
   destination:function(req,res,cb){
     cb(null,path.join(__dirname,'..\\account\\uploads\\'))
@@ -104,9 +108,17 @@ app.post('/dashboard/search',(req,res)=>{
         res.redirect('/')
     }
 })
+
 app.get('/chat',(req,res)=>{
-    const {username}=req.query
-    res.redirect('/user/chat')
+    console.log('in chat get')
+    if(req.user)
+    {
+        res.redirect('/user/chat')
+    }
+    else{
+        res.redirect('/')
+    }
+    
 })
 
 module.exports=app
