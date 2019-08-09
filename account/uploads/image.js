@@ -1,3 +1,6 @@
+const socket = io();
+let selected_user=[]
+
 /*
     const exphbs = require('express-handlebars');
             
@@ -31,7 +34,6 @@ switch (operator) {
 }
 });
 */
-const addComment=$('#addComment')
 addComment.click(()=>{
       const value=$('#comment').val()
       const imageName=$('#imageName').val()   
@@ -51,3 +53,4 @@ addComment.click(()=>{
     )
 
 })
+

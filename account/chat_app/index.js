@@ -17,12 +17,19 @@ function takeUsers(){
     users=result.map(ele=>{ele.username});
   })
 }
+console.log('hoohohoh')
 
-app.get('/chat', function(req, res){
-  takeUsers();
+app.get('/', function(req, res){
+  console.log('in chat get') 
+  // takeUsers();
+  if(req.user){
   const {username}=req.user
   res.sendFile(path.join(__dirname,'/public/index.html'))
-  io.emit('get_user',{users:users})
+  //io.emit('get_user',{users:users})
+  }
+  else{
+    res.redirect('/')
+  }
 });
 
 

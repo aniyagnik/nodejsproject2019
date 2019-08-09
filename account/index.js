@@ -9,7 +9,7 @@ app.use(express.json())
 
 hbs.registerPartials(path.join(__dirname+'/partials'))
 
-app.use('/chat',require('./chat_app'))
+app.use('/chat',require('./chat_app/index'))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '/views'));
 app.use('/',express.static(path.join(__dirname,'/uploads')))
@@ -107,18 +107,6 @@ app.post('/dashboard/search',(req,res)=>{
     else{
         res.redirect('/')
     }
-})
-
-app.get('/chat',(req,res)=>{
-    console.log('in chat get')
-    if(req.user)
-    {
-        res.redirect('/user/chat')
-    }
-    else{
-        res.redirect('/')
-    }
-    
 })
 
 module.exports=app
