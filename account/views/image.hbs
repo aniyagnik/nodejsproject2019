@@ -34,9 +34,24 @@
 
         #addComment{
             width:13%;
-            padding: 12px 20px; 
+            margin-left:0.2%;
+            padding: 12px;
             background-color: antiquewhite;
         }
+        
+      
+        @media screen and (max-width: 600px) {
+            #addComment {
+                 width:99%;                
+            }
+            input[type=text] {
+                width: 99%;
+            }
+              #spanBtn{
+            text-align: center;
+        }    
+        }
+
 
     </style>
    
@@ -62,11 +77,13 @@
                 <input type="text" name="comment" id="comment"  placeholder="add comment as {{viewinguser}}..." >
                 <input type="hidden" value='{{imageName}}' id='imageName'>
                 <input type="hidden" value='{{userWall}}' id='userWall'>
-                 <input type="hidden" value='{{viewinguser}}' id='viewinguser'>
+                <input type="hidden" value='{{viewinguser}}' id='viewinguser'>
+                <span id='divBtn'>
+                    <button type="button" id='addComment'>Add comment  </button>
+                </span>
                 
-                <button type="button" id='addComment'>Add comment  </button>
             </form> <br>
-            <ul id='comments'>
+            <ul id='comments' style='list-style-type: none;'>
                 {{#each comments}}
                 <li>
                    

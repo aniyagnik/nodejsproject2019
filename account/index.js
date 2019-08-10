@@ -121,4 +121,18 @@ app.get('/chat',(req,res)=>{
     
 })
 
+
+app.get('/logout',(req,res)=>{
+    console.log('in chat get')
+    if(req.user)
+    {
+        req.session.destroy()
+        res.redirect('/')
+    }
+    else{
+        res.redirect('/')
+    }
+    
+})
+
 module.exports=app
