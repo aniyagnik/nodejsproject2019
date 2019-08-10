@@ -18,16 +18,17 @@ app.get('/',(req,res)=>{
     if(req.user)
     {
         const {findinguser}=req.query
-        const {userpic}=req.query  
+        const {userpic}=req.query
         const {userWall}=req.query
-        console.log('values taken :',findinguser,userpic,userWall)    
+        const {wallpic}=req.query
+        console.log('values taken :',findinguser,userpic,userWall,wallpic)    
         get_alluserImgs(userWall)
         .then(result=>{
             return result.images
         })
         .then(imagesArr=>{    
             console.log('images acquired : ',imagesArr)
-            res.render('wall',{findinguser,userpic,imagesArr,userWall})
+            res.render('wall',{findinguser,userpic,imagesArr,wallpic,userWall})
         })
     }
     else{res.redirect('/')}

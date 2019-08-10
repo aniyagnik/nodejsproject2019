@@ -14,7 +14,7 @@ input[type=text], input[type=file] {
 .addbutton {
   background-color: #4CAF50;
   color: white;
-  padding: 14px 20px;
+  padding: 10px 10px;
   margin: 8px 0;
   border: none;
   cursor: pointer;
@@ -121,8 +121,8 @@ body, html {
 #profilepic{
   border-radius:100%;
   align-self: center;
-  width:10%;
-  height:10%;
+  width:50%;
+  
   border:1px solid black
 }
 
@@ -208,12 +208,13 @@ a{
   #profilepic{
     border-radius:100%;
     align-self: center;
-    width:20%;
-    height:10%;
+    width:100%;
   }
 
   .addbutton {
-    padding: 10px 15px;
+    padding: 5px 10px;
+    margin: 1px 0;
+    font-size: 1em;
    
   }
 }

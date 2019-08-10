@@ -16,7 +16,7 @@ app.use('/',express.static(path.join(__dirname,'/uploads')))
 app.use('/wall',require('./wallIndex.js'))
 
 const   {get_alluserImgs,insert_userImgs,delete_userImg}=require('../database/imageCollection')
-const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,update_loginAcc,delete_loginAcc,}=require('../database/IdsCollection')
+const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,update_loginAcc,delete_loginAcc,change_userProfilePic,change_userWallPic}=require('../database/IdsCollection')
 
 let storage=multer.diskStorage({
   destination:function(req,res,cb){
@@ -72,17 +72,38 @@ app.post('/dashboard/addImage',upload.single('Uimages'),(req,res)=>{
    
 })
 
-// app.post('/dashboard',(req,res)=>{
-//     console.log('in post dashboard')
-//     if(myAcc.password===req.query.password)
-//     {   const edit=true
-//         console.log('passwords are matCHED')
-//         res.send(200)
-//     }
-//     else{
-//         res.sendStatus()
-//     }
-// })
+app.post('/dashboard',upload.single('profilePic'),(req,res)=>{
+    console.log('in post dashboard')
+    if(req.user)
+    {
+       console.log('image:',req.file)
+       change_userProfilePic(req.user.username,req.file.filename)
+       .then(uImages=>{
+           console.log('in .then of insert image')
+             res.redirect('/user/dashboard')   
+        })
+    }
+    else{
+        res.redirect('/')
+    }
+})
+
+
+app.post('/dashboard/edit',upload.single('wallPic'),(req,res)=>{
+    console.log('in post dashboard')
+    if(req.user)
+    {
+       console.log('image:',req.file)
+       change_userWallPic(req.user.username,req.file.filename)
+       .then(uImages=>{
+           console.log('in .then of insert image')
+             res.redirect('/user/dashboard')   
+        })
+    }
+    else{
+        res.redirect('/')
+    }
+})
 
 app.post('/dashboard/search',(req,res)=>{
     console.log('in post dashboard search')
@@ -93,7 +114,7 @@ app.post('/dashboard/search',(req,res)=>{
        .then(document=>{console.log("user found : ",document)
              if(document!==null)
              {
-                res.redirect('/user/wall?findinguser='+req.user.username+'&userpic='+document.image+'&userWall='+req.body.searchUser) 
+                res.redirect('/user/wall?findinguser='+req.user.username+'&userpic='+document.image+'&wallpic='+document.wallPic +'&userWall='+req.body.searchUser) 
              }  
              else{
                 res.redirect('/user/dashboard?return=no-such-user') 

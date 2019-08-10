@@ -10,19 +10,60 @@
         height:40%;
       }
     </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
    {{>navbar}} 
-  <div style='margin:2.5%'>
+  <div style='margin:2%'>
      hello,{{username}}
-    <a href="/user/chat">go to chatting</a>
-    <br><br>
-    <img src='{{image}}' alt="{{username}}" id='profilepic'>
-    <br><br>
-  
-<button onclick="document.getElementById('addimgdiv').style.display='block'" class='addbutton' style="width:auto;">Add Image</button>
+    <br> <br>
+   
+    <div class='row'>
+      <div class='col-3 item'>
+         <img src='{{image}}' alt="{{username}}" id='profilepic' onclick="document.getElementById('changeProfilePic').style.display='block'">
+      </div>
+       <div class='col-3 item' style='text-align:center; padding-top:2.5%;'>
+          <button onclick="document.getElementById('changeProfile').style.display='block'" class='addbutton' style="width:auto;">change Profile</button>
+      </div>
+    </div>
+    <br>
+  <button onclick="document.getElementById('addimgdiv').style.display='block'" class='addbutton' style="width:auto;">Add Image</button>
+  </div>
+   
+  <div id="changeProfilePic" class="addImgModal">
+   <form class="modal-content-form animate" action='/user/dashboard' method='POST' id="form" enctype="multipart/form-data"  >
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('changeProfilePic').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="{{image}}" alt="{{image}}" class="avatar">
+    </div>
+    <div class="containeraddimage">
+      <label><b>Select Image</b></label>
+      <input type="file" name='profilePic' id="image" required>
+      <button type="submit" class='addbutton'>Change Profile Pic</button>
+    </div>
+     <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('changeProfilePic').style.display='none'" class="addbutton cancelbtn">Cancel</button>
+     </div>
+    </form>
+  </div>
 
+  
+  <div id="changeProfile" class="addImgModal">
+   <form class="modal-content-form animate" action='/user/dashboard/edit' method='POST' id="form" enctype="multipart/form-data"  >
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('changeProfile').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="{{image}}" alt="{{image}}" class="avatar">
+    </div>
+    <div class="containeraddimage">
+      <label><b>Select Wall(visible to viewer)</b></label>
+      <input type="file" name='wallPic' id="image" required>
+      <button type="submit" class='addbutton'>Save Changes</button>
+    </div>
+     <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('changeProfile').style.display='none'" class="addbutton cancelbtn">Cancel</button>
+     </div>
+    </form>
   </div>
    <div id="addimgdiv" class="addImgModal">
    <form class="modal-content-form animate" action='/user/dashboard/addImage' method='POST' id="form" enctype="multipart/form-data"  >
@@ -30,6 +71,7 @@
       <span onclick="document.getElementById('addimgdiv').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="{{image}}" alt="{{image}}" class="avatar">
     </div>
+
     <div class="containeraddimage">
       <label><b>Select Image</b></label>
       <input type="file" name='Uimages' id="image" required>
