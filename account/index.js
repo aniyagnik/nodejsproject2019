@@ -109,4 +109,30 @@ app.post('/dashboard/search',(req,res)=>{
     }
 })
 
+app.get('/chat',(req,res)=>{
+    console.log('in chat get')
+    if(req.user)
+    {
+        res.redirect('/user/chat')
+    }
+    else{
+        res.redirect('/')
+    }
+    
+})
+
+
+app.get('/logout',(req,res)=>{
+    console.log('in logout')
+    if(req.user)
+    {
+        req.session.destroy()
+        res.redirect('/')
+    }
+    else{
+        res.redirect('/')
+    }
+    
+})
+
 module.exports=app

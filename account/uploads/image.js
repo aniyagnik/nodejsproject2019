@@ -34,12 +34,14 @@ switch (operator) {
 }
 });
 */
+const addComment=$('#addComment')
+const comments=$('#comments')
 addComment.click(()=>{
       const value=$('#comment').val()
       const imageName=$('#imageName').val()   
       const userWall=$('#userWall').val()   
       const viewinguser=$('#viewinguser').val()
-      $('#comments').append($(`<li>${viewinguser} : ${value}</li>`))
+      comments.append($(`<li><b>${viewinguser}</b> : ${value}</li>`))
       $('#comment').val(' ')
       $.ajax({
         url: '/user/wall/viewImage', 
@@ -54,3 +56,9 @@ addComment.click(()=>{
 
 })
 
+
+comments.click((e)=>{
+    const index=e.target.innerText.split(' ')[0]
+    console.log(index)
+    $('#comment').val(`@${index} : `)
+})

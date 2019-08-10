@@ -23,15 +23,35 @@
 
                 /* Full-width input fields */
         input[type=text] {
-        width: 100%;
+        width: 86%;
         padding: 12px 20px;
-        margin: 8px 0;
+        margin-left: 0.3%;
+        margin-top:0.2%;
         display: inline-block;
         border: 1px solid #ccc;
         box-sizing: border-box;
         }
 
+        #addComment{
+            width:13%;
+            margin-left:0.2%;
+            padding: 12px;
+            background-color: antiquewhite;
+        }
         
+      
+        @media screen and (max-width: 600px) {
+            #addComment {
+                 width:99%;                
+            }
+            input[type=text] {
+                width: 99%;
+            }
+              #spanBtn{
+            text-align: center;
+        }    
+        }
+
 
     </style>
    
@@ -49,29 +69,26 @@
         </label>
         <label style='font-size:1em;color:black;display:block;'>
             {{description}}
-        </label>
-    
-        <div style='backgroundcolor:grey'>        
-            <label >comments</label> 
+        </label> <br>
+        <label>COMMENTS :::</label>
+        <div style='background-color:#ccc '>        
+             
             <form action="#" > 
                 <input type="text" name="comment" id="comment"  placeholder="add comment as {{viewinguser}}..." >
                 <input type="hidden" value='{{imageName}}' id='imageName'>
                 <input type="hidden" value='{{userWall}}' id='userWall'>
-                 <input type="hidden" value='{{viewinguser}}' id='viewinguser'>
-                <br>
-                <button type="button" id='addComment'>Add comment  </button>
-            </form>
-            <ul id='comments'>
+                <input type="hidden" value='{{viewinguser}}' id='viewinguser'>
+                <span id='divBtn'>
+                    <button type="button" id='addComment'>Add comment  </button>
+                </span>
+                
+            </form> <br>
+            <ul id='comments' style='list-style-type: none;'>
                 {{#each comments}}
                 <li>
-                    {{#if userwall}}
-                    {{#if this.commentBy '==' ../userWall}}
-                    <b>{{../userWall}} {{this.commentBy}}</b> : {{this.comment}}
-                    {{/if}}
-                    {{else}}
-                       {{this.commentBy}} : {{this.comment}}
-                    {{/if}}
-
+                   
+                    <b>{{this.commentBy}}</b> : {{this.comment}}
+                   
                 </li>
                 {{/each}}
             </ul>
