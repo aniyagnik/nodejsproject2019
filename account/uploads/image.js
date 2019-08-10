@@ -1,5 +1,4 @@
-const socket = io();
-let selected_user=[]
+
 
 /*
     const exphbs = require('express-handlebars');
