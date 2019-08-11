@@ -35,26 +35,40 @@ switch (operator) {
 */
 const addComment=$('#addComment')
 const comments=$('#comments')
+
 addComment.click(()=>{
-      const value=$('#comment').val()
+      let value=$('#comment').val()
       const imageName=$('#imageName').val()   
       const userWall=$('#userWall').val()   
-      const viewinguser=$('#viewinguser').val()
-      comments.append($(`<li><b>${viewinguser}</b> : ${value}</li>`))
-      $('#comment').val(' ')
+      let viewinguser=$('#viewinguser').val()
+      let arr=value.split(' ')
+      var name=arr[0]
+      console.log('assd',name, arr)
+      if(value[0]=='@'){
+        name=name.substr(1)
+        arr.shift()
+        arr.shift()
+        value=arr.toString()
+        value=value.split(',').join(' ')
+        console.log('ha',name, arr)
+        console.log('ds',viewinguser)
+      }
+      else{name=false}
+      comments.append($(`<li><b>${viewinguser}</b> <a href="/user/dashboard/search?searchUser=${name}">:@${name}</a> ${value}</li>`))
+      $('#comment').val('')
       $.ajax({
         url: '/user/wall/viewImage', 
         type: 'POST', 
         contentType: 'application/json', 
         data: JSON.stringify({
             comment:value,
+            tagged:name,
             imageName:imageName,
             userWall:userWall,   
         })}
     )
 
 })
-
 
 comments.click((e)=>{
     const index=e.target.innerText.split(' ')[0]

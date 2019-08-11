@@ -86,9 +86,12 @@
             <ul id='comments' style='list-style-type: none;'>
                 {{#each comments}}
                 <li>
-                   
-                    <b>{{this.commentBy}}</b> : {{this.comment}}
-                   
+                   {{#if this.tagged}}
+                    <b>{{this.commentBy}}{{{" "}}}</b> : <a href="/user/dashboard/search?searchUser={{this.tagged}}"> @{{this.tagged}}</a> {{this.comment}}
+                   {{else}}
+                     <b>{{this.commentBy}}</b> :  
+                      {{this.comment}}
+                   {{/if}}
                 </li>
                 {{/each}}
             </ul>

@@ -33,7 +33,7 @@ const get_allComments=(userWall,imageName)=>{
 }
 let updateVal
     //inserting in collection loginIds
-const insert_comment=(username,imageName,cmntdBy,comment)=>
+const insert_comment=(username,imageName,cmntdBy,comment,tagged)=>
     get_db()
     .then(db=>
         db.collection('userComments').findOneAndUpdate(
@@ -45,6 +45,7 @@ const insert_comment=(username,imageName,cmntdBy,comment)=>
             { '$push': { comments: 
                 { 
                     commentBy:cmntdBy,
+                    tagged:tagged,
                     comment:comment
                   } 
                 }, 

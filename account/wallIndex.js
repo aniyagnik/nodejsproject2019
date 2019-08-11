@@ -60,11 +60,12 @@ app.post('/viewImage',(req,res)=>{
     if(req.user)
     {
         const {comment}=req.body
+        const {tagged}=req.body
         const imageName=req.body.imageName
         const commentingUser=req.user.username
         const username=req.body.userWall
-        console.log('values taken :',comment,imageName,commentingUser,username)    
-        insert_comment(username,imageName,commentingUser,comment)
+        console.log('values taken :',comment,tagged,imageName,commentingUser,username)    
+        insert_comment(username,imageName,commentingUser,comment,tagged)
         .then(comments=>{    
             console.log('comments acquired : ',comments)
             res.sendStatus(200)

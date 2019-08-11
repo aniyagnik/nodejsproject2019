@@ -130,6 +130,31 @@ app.post('/dashboard/search',(req,res)=>{
     }
 })
 
+app.get('/dashboard/search',(req,res)=>{
+    console.log('in get dashboard search')
+    if(req.user)
+    {
+       console.log('searching for and by:',req.query.searchUser,req.user.username)
+       get_loginAcc(req.body.searchUser)
+       .then(document=>{console.log("user found : ",document)
+             if(document!==null)
+             {
+                res.redirect('/user/wall?findinguser='+req.user.username+'&userpic='+document.image+'&wallpic='+document.wallPic +'&userWall='+req.body.searchUser) 
+             }  
+             else{
+                res.redirect('/user/dashboard?return=no-such-user') 
+             }
+       })
+       .catch(err=>{
+           console.log('error occured : ',err)
+           res.redirect('/user/dashboard')
+       })
+    }
+    else{
+        res.redirect('/')
+    }
+})
+
 app.get('/chat',(req,res)=>{
     console.log('in chat get')
     if(req.user)
