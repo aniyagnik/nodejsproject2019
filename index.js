@@ -11,6 +11,9 @@ app.get('/error',(req,res)=>{
   res.render('error.hbs',{message})
 })
 
+
+app.use('/user/chat',express.static(path.join(__dirname,'account/chat_app/public')))
+
 app.use('/user',express.static(path.join(__dirname,'account/uploads')))
 
 app.use('/user/wall',express.static(path.join(__dirname,'account/uploads')))

@@ -7,8 +7,7 @@ let path=require('path')
 const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc}=require('../../database/IdsCollection')
 //app.use(express.static((__dirname)+'/public'))
 app.set('view engine', 'hbs')
-app.set('views', path.join(__dirname, '/public'));
-
+app.set('views', path.join(__dirname, '/views'));
 let users=[]
 
 function takeUsers(){
@@ -24,7 +23,7 @@ app.get('/', function(req, res){
   // takeUsers();
   if(req.user){
   const {username}=req.user
-  res.sendFile(path.join(__dirname,'/public/index.html'))
+  res.render('index')
   //io.emit('get_user',{users:users})
   }
   else{
