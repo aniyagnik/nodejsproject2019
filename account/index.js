@@ -135,11 +135,11 @@ app.get('/dashboard/search',(req,res)=>{
     if(req.user)
     {
        console.log('searching for and by:',req.query.searchUser,req.user.username)
-       get_loginAcc(req.body.searchUser)
+       get_loginAcc(req.query.searchUser)
        .then(document=>{console.log("user found : ",document)
              if(document!==null)
              {
-                res.redirect('/user/wall?findinguser='+req.user.username+'&userpic='+document.image+'&wallpic='+document.wallPic +'&userWall='+req.body.searchUser) 
+                res.redirect('/user/wall?findinguser='+req.user.username+'&userpic='+document.image+'&wallpic='+document.wallPic +'&userWall='+req.query.searchUser) 
              }  
              else{
                 res.redirect('/user/dashboard?return=no-such-user') 

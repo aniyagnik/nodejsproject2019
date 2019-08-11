@@ -51,10 +51,13 @@ addComment.click(()=>{
         value=arr.toString()
         value=value.split(',').join(' ')
         console.log('ha',name, arr)
-        console.log('ds',viewinguser)
+        console.log('ds',viewinguser) 
+        comments.append($(`<li><b>${viewinguser}</b> <a href="/user/dashboard/search?searchUser=${name}">:@${name}</a> ${value}</li>`))
       }
-      else{name=false}
-      comments.append($(`<li><b>${viewinguser}</b> <a href="/user/dashboard/search?searchUser=${name}">:@${name}</a> ${value}</li>`))
+      else{
+        name=false
+        comments.append($(`<li><b>${viewinguser}</b> : ${value}</li>`))  
+        }
       $('#comment').val('')
       $.ajax({
         url: '/user/wall/viewImage', 
