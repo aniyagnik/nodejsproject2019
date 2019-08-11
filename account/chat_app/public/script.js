@@ -1,6 +1,6 @@
-const socket = io();
+//const socket = io();
 let selected_user=[]
-//const my_username=req.user.username
+/*const my_username=req.user.username
 socket.on('connected', () => {
     console.log("Connected " + socket.id)
 })
@@ -113,3 +113,4 @@ socket.on('connected', () => {
              }
     })
  
+*/

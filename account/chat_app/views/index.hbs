@@ -42,6 +42,27 @@
       box-sizing: border-box;
       text-transform: uppercase;
     }
+
+    .msgBox{
+      border:2px solid black; 
+      width:50%;
+      display:inline-block;
+    }
+
+    @media screen and (max-width: 600px){
+      .msgBox{
+        border:2px solid black; 
+        width:99%;
+        display:inline-block;
+      }
+    }
+
+    .chatMsgInput{
+      border:1px solid black; 
+      width:98%; 
+      display:inline-block; 
+      text-align:center;"
+    }
   </style>
   </head>
   <body>
@@ -53,7 +74,7 @@
       </div>
       <div id='msg'>
          <h2>messaging</h2><br> 
-        <div style="border:2px solid black; width:50%; display:inline-block;">
+        <div class='msgBox'>
           <div id="div_recieve" >
               messages recieved:
               <ul id="recieved_msg"></ul>
@@ -63,7 +84,7 @@
               <ul id="sent_msg"></ul>
           </div>
           <div style='text-align:center; padding:3px;'>
-            <div style="border:1px solid black; width:98%; display:inline-block; text-align:center;">
+            <div class='chatMsgInput'>
               <input type="text" placeholder="enter message here..." id="send_msg">
               <button id="msg_btn">send message</button> 
             </div>
@@ -80,9 +101,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
    
-     {{!-- <script src="script.js"></script> --}}
- 
-    </script>
+     <script src="script.js"></script>
+  
 
   </body>
 </html>
