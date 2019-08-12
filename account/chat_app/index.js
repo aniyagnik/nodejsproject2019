@@ -1,9 +1,10 @@
 const express=require('express')
 var app = express();
 var http = require('http').createServer(app);
-let server=app.listen(3000,()=>{console.log('listening at 3000')})  
+let server=app.listen(808,()=>{console.log('listening at 808 chat_app')})  
 
 var io = require('socket.io')(server);
+
 let path=require('path')
 
 const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc}=require('../../database/IdsCollection')
@@ -21,14 +22,14 @@ function takeUsers(){
 app.get('/', function(req, res){
   console.log('in chat get') 
   // takeUsers();
-  if(req.user){
-  const {username}=req.user
+ // if(req.user){
+ // const {username}=req.user
   res.render('index')
   //io.emit('get_user',{users:users})
-  }
+  /*}
   else{
     res.redirect('/')
-  }
+  }*/
 });
 
 /*

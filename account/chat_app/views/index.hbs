@@ -49,7 +49,7 @@
       display:inline-block;
     }
 
-    @media screen and (max-width: 600px){
+    @media screen and (min-width:200px) and (max-width: 800px){
       .msgBox{
         border:2px solid black; 
         width:99%;
@@ -66,7 +66,7 @@
   </style>
   </head>
   <body>
-    {{>navbar}} 
+    {{!-- {{>navbar}}  --}}
      <div style="margin:2%">
       <div>
         <input class='searchInput' type="text" placeholder="search user to chat..">
@@ -100,7 +100,7 @@
      </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-   
+      <script src="/socket.io/socket.io.js"></script>
      <script src="script.js"></script>
   
 
