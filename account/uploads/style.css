@@ -1,5 +1,28 @@
-body {font-family: Arial, Helvetica, sans-serif;}
+body {font-family: Arial, Helvetica, sans-serif;background-color: greenyellow;}
 
+
+.section-top{
+  display:flex;
+  align-items: center;
+  text-align:center;
+  width: 100%; 
+  padding:5px;
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
+}
+
+
+.section-inside{
+  display:flex;
+  flex-wrap: wrap;
+  align-items: center;
+  text-align:center;
+  justify-content: space-evenly;
+  width: 100%; /* Full width */
+  padding:5px;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(194, 38, 38, 0.733); /* Black w/ opacity */ 
+}
 /* Full-width input fields */
 input[type=text], input[type=file] {
   width: 100%;
@@ -121,8 +144,7 @@ body, html {
 #profilepic{
   border-radius:100%;
   align-self: center;
-  width:50%;
-  
+  width:100%;  
   border:1px solid black
 }
 
