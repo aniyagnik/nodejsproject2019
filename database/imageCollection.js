@@ -69,10 +69,16 @@ const insert_userImgs=(username,filename,description)=>
     
 
 //deleting in collection loginIds
-const delete_userImg=(image)=>
+const delete_userImg=(username,image)=>
     get_db()
     .then(db=>db.collection('userImages'))
-    .then(collection=>collection.deleteOne({username: new mongodb.ObjectID(username)}))
+    .then(collection=>collection.updateOne(
+        {username:username},
+        {
+             $pull: { images: { image: image  }}
+        }
+      )
+    )
 
 
 console.log("accessing the c0llection for images")

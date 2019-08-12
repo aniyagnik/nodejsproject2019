@@ -155,6 +155,22 @@ app.get('/dashboard/search',(req,res)=>{
     }
 })
 
+app.post('/dashboard/deleteImage',(req,res)=>{
+    console.log('in deleteImage')
+    if(req.user)
+    {
+        const {image}=req.body
+        console.log('iamge to delete : ',image)
+        delete_userImg(req.user.username,image)
+        .then(result=>{
+           
+            res.redirect('/user/dashboard')})
+    }
+    else{
+        res.redirect('/')
+    }
+    
+})
 app.get('/chat',(req,res)=>{
     console.log('in chat get')
     if(req.user)
