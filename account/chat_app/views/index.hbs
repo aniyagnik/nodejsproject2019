@@ -66,7 +66,12 @@
   </style>
   </head>
   <body>
-    {{!-- {{>navbar}}  --}}
+    {{>navbar}}
+  
+    <div>
+        hello, {{username}}  
+      <input type="hidden" id='logname' value='{{username}}'>
+    </div>
      <div style="margin:2%">
       <div>
         <input class='searchInput' type="text" placeholder="search user to chat..">
@@ -85,8 +90,8 @@
           </div>
           <div style='text-align:center; padding:3px;'>
             <div class='chatMsgInput'>
-              <input type="text" placeholder="enter message here..." id="send_msg">
-              <button id="msg_btn">send message</button> 
+              <input type="text" class='searchInput' placeholder="enter message here..." id="send_msg">
+              <button class='searchBtn' id="msg_btn">send message</button> 
             </div>
           </div>
         </div>     

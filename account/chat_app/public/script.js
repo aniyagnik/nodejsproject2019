@@ -1,7 +1,7 @@
 const socket = io();
 let selected_user=[]
 console.log('in script js')
-/*const my_username=req.user.username
+let my_username=$('#logname').val()
 socket.on('connected', () => {
     console.log("Connected " + socket.id)
 })
@@ -114,4 +114,3 @@ socket.on('connected', () => {
              }
     })
  
-*/

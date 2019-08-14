@@ -2,23 +2,26 @@ const express=require('express')
 var app = express();
 let path=require('path')
 
-const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc}=require('../../database/IdsCollection')
+const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc,edit_onlineStatus}=require('../../database/IdsCollection')
 app.use(express.static((__dirname)+'/public'))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '/views'));
 let users=[]
 
-function takeUsers(){
-  get_allLogins().then(result=>{
-    console.log("all users",result);
-    users=result.map(ele=>{ele.username});
-  })
-}
-
 module.exports=function(io){
   app.get('/', function(req, res){
     console.log('in chat get') 
-   res.render('index')
+    if(req.user)
+    {
+      const {username}=req.user
+      edit_onlineStatus(username)
+      .then(result=>{
+        res.render('index',{username})
+      })
+    }
+    else{
+      res.redirect('/')
+    }
   });
      
   io.on('connection', function(socket){
@@ -26,24 +29,8 @@ module.exports=function(io){
 
     //deleting a client
     socket.on('disconnect', function(){
-      console.log('user disconnected');
-      let new_users_list=[]
-      function socket_to_delete(users){
-        for(let i=0;i<users.length;i++)
-        {
-          if(users[i].id===socket.id)
-          {return i}
-        }
-      }
-      const delete_socket_id=socket_to_delete(users)
-      for(let i=0;i<users.length;i++)
-        {
-          if(i!==delete_socket_id){
-            new_users_list.push(users[i])
-          }
-        }
-        users=new_users_list
-        io.emit('get_user',{users:users})
+      console.log('user disconnected',username);
+      edit_onlineStatus(username)
     });
 
     
