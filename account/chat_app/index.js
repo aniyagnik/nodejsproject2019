@@ -1,10 +1,5 @@
 const express=require('express')
 var app = express();
-var http = require('http').createServer(app);
-let server=app.listen(808,()=>{console.log('listening at 808 chat_app')})  
-
-var io = require('socket.io')(server);
-
 let path=require('path')
 
 const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc}=require('../../database/IdsCollection')
@@ -19,28 +14,21 @@ function takeUsers(){
     users=result.map(ele=>{ele.username});
   })
 }
-app.get('/', function(req, res){
-  console.log('in chat get') 
-  // takeUsers();
- // if(req.user){
- // const {username}=req.user
-  res.render('index')
-  //io.emit('get_user',{users:users})
-  /*}
-  else{
-    res.redirect('/')
-  }*/
-});
 
-/*
-io.on('connection', function(socket){
+module.exports=function(io){
+  app.get('/', function(req, res){
+    console.log('in chat get') 
+   res.render('index')
+  });
+     
+  io.on('connection', function(socket){
     console.log('a user connected ',socket.id);
-  
+
     //deleting a client
     socket.on('disconnect', function(){
-       console.log('user disconnected');
-       let new_users_list=[]
-       function socket_to_delete(users){
+      console.log('user disconnected');
+      let new_users_list=[]
+      function socket_to_delete(users){
         for(let i=0;i<users.length;i++)
         {
           if(users[i].id===socket.id)
@@ -65,10 +53,10 @@ io.on('connection', function(socket){
       console.log(msg_taken.selected_user)
       if(msg_taken.selected_user.length===0)
       {console.log('sending to all not personal')
-           io.emit('res_msg',{
-           user:msg_taken.user,
-           message:msg_taken.message,
-           personal:false
+          io.emit('res_msg',{
+          user:msg_taken.user,
+          message:msg_taken.message,
+          personal:false
           })
       }
       else{console.log('sending to selected personal')
@@ -83,11 +71,12 @@ io.on('connection', function(socket){
               user:msg_taken.user,
               message:msg_taken.message,
               personal:true
-             })
+            })
             
       }
-     
+    
     })
   });
-*/
-module.exports=app
+  
+  return app;
+}

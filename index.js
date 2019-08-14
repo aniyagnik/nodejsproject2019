@@ -3,6 +3,9 @@ const app = express()
 const path=require('path')
 const session=require('express-session')
 const passport=require('./login-signup/passport')
+var http = require('http').createServer(app);
+var io = require('socket.io')(http);
+
 app.use(express.urlencoded({extended: true}))
 
 
@@ -35,7 +38,7 @@ app.use(session({
 app.use(passport.initialize())   //tells express app to use passport
 app.use(passport.session())     //tells express to user sessions with passport
 
-
+app.use('/user/chat',require('./account/chat_app')(io))
 app.use('/',require('./login-signup'))
 app.use('/user',require('./account'))
-app.listen(8080,()=>{console.log('listening at 8080')})
+http.listen(8080,()=>{console.log('listening at 8080')})
