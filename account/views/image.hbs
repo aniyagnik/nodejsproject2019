@@ -18,7 +18,7 @@
         display: block;
         margin: 0.1% auto;
         max-height: 92%;
-        max-width: 100%;
+        max-width: 99.5%;
         }
 
                 /* Full-width input fields */
@@ -85,7 +85,7 @@
             </form> <br>
             <ul id='comments' style='list-style-type: none;'>
                 {{#each comments}}
-                <li>
+                <li style="font-family:'Segoe UI';font-size:1.5em;font-weight: 700;color:white;">
                    {{#if this.tagged}}
                     <b>{{this.commentBy}}{{{" "}}}</b> : <a href="/user/dashboard/search?searchUser={{this.tagged}}"> @{{this.tagged}}</a> {{this.comment}}
                    {{else}}

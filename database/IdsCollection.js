@@ -246,7 +246,7 @@ const change_userProfilePic=(username,filename)=>
     })
     .catch(err=>{
         console.log('error in finding the account')
-        return done(err)
+        return err
     })
 
 
@@ -280,7 +280,7 @@ const change_userWallPic=(username,filename)=>
     })
     .catch(err=>{
         console.log('error in finding the account')
-        return done(err)
+        return err
     })
    
 
@@ -321,7 +321,7 @@ const edit_onlineStatus=(username)=>
     })
     .catch(err=>{
         console.log('error in finding the account')
-        return done(err)
+        return err
     })
 
 console.log("accessing the collection for ids")

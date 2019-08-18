@@ -52,11 +52,11 @@ addComment.click(()=>{
         value=value.split(',').join(' ')
         console.log('ha',name, arr)
         console.log('ds',viewinguser) 
-        comments.append($(`<li><b>${viewinguser}</b> <a href="/user/dashboard/search?searchUser=${name}">:@${name}</a> ${value}</li>`))
+        comments.append($(`<li style="font-family:'Segoe UI';font-size:1em;font-weight: 700;color:white;"><b>${viewinguser}</b> :<a href="/user/dashboard/search?searchUser=${name}">@${name}</a> ${value}</li>`))
       }
       else{
         name=false
-        comments.append($(`<li><b>${viewinguser}</b> : ${value}</li>`))  
+        comments.append($(`<li style="font-family:'Segoe UI';font-size:1em;font-weight: 700;color:white;"><b>${viewinguser}</b> : ${value}</li>`))  
         }
       $('#comment').val('')
       $.ajax({
