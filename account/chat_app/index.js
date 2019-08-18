@@ -2,7 +2,7 @@ const express=require('express')
 var app = express();
 let path=require('path')
 
-const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc,edit_onlineStatus}=require('../../database/IdsCollection')
+const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc,change_onlineStatus}=require('../../database/IdsCollection')
 app.use(express.static((__dirname)+'/public'))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '/views'));
@@ -11,17 +11,18 @@ let users=[]
 module.exports=function(io){
   app.get('/', function(req, res){
     console.log('in chat get') 
-    if(req.user)
+   // if(req.user)
     {
-      const {username}=req.user
-      edit_onlineStatus(username)
-      .then(result=>{
-        res.render('index',{username})
-      })
+     // const {username}=req.user
+      //change_onlineStatus(username,true)
+     // .then(result=>{
+        res.render('index',/*{username}*/)
+     // })
     }
-    else{
+    /*else
+    {
       res.redirect('/')
-    }
+    }*/
   });
      
   io.on('connection', function(socket){

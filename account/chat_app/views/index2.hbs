@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+  <style>
+    
+    .user_btn{
+      background-color: chartreuse;
+      color:chocolate;
+      border:none;
+      padding-left:20px;
+      padding-right: 20px;
+      padding-top: 7px;
+      padding-bottom: 7px;
+      font-family: 'Courier New', Courier, monospace;
+      border-radius:12px;
+    }
+
+
+    .selected{
+      background-color: aqua;
+      color:darkblue;
+      font-size: 20px;
+      border-radius: 20px
+    }  
+    
+    .searchInput{
+      width: 80%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .searchBtn{
+      width: 19%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      text-transform: uppercase;
+    }
+
+    .msgBox{
+      border:2px solid black; 
+      width:50%;
+      display:inline-block;
+    }
+
+    @media screen and (min-width:200px) and (max-width: 800px){
+      .msgBox{
+        border:2px solid black; 
+        width:99%;
+        display:inline-block;
+      }
+    }
+
+    .chatMsgInput{
+      border:1px solid black; 
+      width:98%; 
+      display:inline-block; 
+      text-align:center;"
+    }
+  </style>
+  </head>
+  <body>
+    {{>navbar}}
+  
+    <div>
+        hello, {{username}}  
+      <input type="hidden" id='logname' value='{{username}}'>
+    </div>
+     <div style="margin:2%">
+      <div>
+        <input class='searchInput' type="text" placeholder="search user to chat..">
+        <button class='searchBtn' type="submit">search</button>
+      </div>
+      <div id='msg'>
+         <h2>messaging</h2><br> 
+        <div class='msgBox'>
+          <div id="div_recieve" >
+              messages recieved:
+              <ul id="recieved_msg"></ul>
+          </div>            
+          <div id="div_sent" >
+              messages you sent:
+              <ul id="sent_msg"></ul>
+          </div>
+          <div style='text-align:center; padding:3px;'>
+            <div class='chatMsgInput'>
+              <input type="text" class='searchInput' placeholder="enter message here..." id="send_msg">
+              <button class='searchBtn' id="msg_btn">send message</button> 
+            </div>
+          </div>
+        </div>     
+         
+                
+      </div>
+        
+      <ul id="user_list" ></ul>
+        
+      
+     </div>
+   
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+      <script src="/socket.io/socket.io.js"></script>
+     <script src="script.js"></script>
+  
+
+  </body>
+</html>

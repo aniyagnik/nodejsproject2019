@@ -97,7 +97,7 @@ const  check_loginAcc =(username,password)=>
       if(document.password===password)
         {
             console.log('pASSWORD MATHCED')
-            change_onlineStatus(document.username)
+            change_onlineStatus(document.username,true)
             return document
         }
         else{
@@ -107,7 +107,7 @@ const  check_loginAcc =(username,password)=>
       }
     })
     
-const change_onlineStatus=(username)=>
+const change_onlineStatus=(username,status)=>
      get_db()
      .then(db=>db.collection('loginIds'))
      .catch(err=>{
@@ -119,7 +119,7 @@ const change_onlineStatus=(username)=>
          return collection.updateOne(
              { username:username },
              {
-             $set: { online: true },
+             $set: { online: status },
              
              }
          )
@@ -292,38 +292,6 @@ const delete_loginAcc=(username)=>
     .then(collection=>collection.deleteOne({username: new mongodb.ObjectID(username)}))
 
 
-const edit_onlineStatus=(username)=>
-    get_db()
-    .then(db=>db.collection('loginIds'))
-    .catch(err=>{
-        console.log('error in collection')
-        res.send('error1')    
-    })
-    .then(collection=>{
-    //  console.log(collection)
-        return collection.updateOne(
-            { username:username },
-            {
-            $set: { online: !online },
-            
-            }
-        )
-    })  
-    .then(document=>{
-    if(document==null){
-        console.log('error in finding username ')
-        return null
-    }  
-    else{      
-    console.log('username matched online satus edited')
-            return document
-    }
-    })
-    .catch(err=>{
-        console.log('error in finding the account')
-        return err
-    })
-
 console.log("accessing the collection for ids")
 module.exports={
     get_allLogins,
@@ -334,5 +302,5 @@ module.exports={
     delete_loginAcc,
     change_userProfilePic,
     change_userWallPic,
-    edit_onlineStatus
+    change_onlineStatus
 }

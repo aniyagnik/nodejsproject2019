@@ -1,113 +1,142 @@
-<!doctype html>
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Chatk</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Socket.IO chat</title>
-  <style>
-    
-    .user_btn{
-      background-color: chartreuse;
-      color:chocolate;
-      border:none;
-      padding-left:20px;
-      padding-right: 20px;
-      padding-top: 7px;
-      padding-bottom: 7px;
-      font-family: 'Courier New', Courier, monospace;
-      border-radius:12px;
-    }
-
-
-    .selected{
-      background-color: aqua;
-      color:darkblue;
-      font-size: 20px;
-      border-radius: 20px
-    }  
-    
-    .searchInput{
-      width: 80%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-
-    .searchBtn{
-      width: 19%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-      text-transform: uppercase;
-    }
-
-    .msgBox{
-      border:2px solid black; 
-      width:50%;
-      display:inline-block;
-    }
-
-    @media screen and (min-width:200px) and (max-width: 800px){
-      .msgBox{
-        border:2px solid black; 
-        width:99%;
-        display:inline-block;
-      }
-    }
-
-    .chatMsgInput{
-      border:1px solid black; 
-      width:98%; 
-      display:inline-block; 
-      text-align:center;"
-    }
-  </style>
-  </head>
-  <body>
-    {{>navbar}}
-  
-    <div>
-        hello, {{username}}  
-      <input type="hidden" id='logname' value='{{username}}'>
-    </div>
-     <div style="margin:2%">
-      <div>
-        <input class='searchInput' type="text" placeholder="search user to chat..">
-        <button class='searchBtn' type="submit">search</button>
-      </div>
-      <div id='msg'>
-         <h2>messaging</h2><br> 
-        <div class='msgBox'>
-          <div id="div_recieve" >
-              messages recieved:
-              <ul id="recieved_msg"></ul>
-          </div>            
-          <div id="div_sent" >
-              messages you sent:
-              <ul id="sent_msg"></ul>
+	<head>
+		<title>Chat</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+	</head>
+	<body  background= '#c23616';>
+		{{>navbar}}
+		<div style='margin:2%'> 
+		  <div>
+			<input class='searchInput' type="text" placeholder="search user to chat..">
+			<button class='searchBtn' type="submit">search</button>
           </div>
-          <div style='text-align:center; padding:3px;'>
-            <div class='chatMsgInput'>
-              <input type="text" class='searchInput' placeholder="enter message here..." id="send_msg">
-              <button class='searchBtn' id="msg_btn">send message</button> 
-            </div>
-          </div>
-        </div>     
-         
-                
-      </div>
-        
-      <ul id="user_list" ></ul>
-        
-      
-     </div>
-   
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-      <script src="/socket.io/socket.io.js"></script>
-     <script src="script.js"></script>
-  
+		  	hello,{{username}}
+ 		</div>
+	
+		<div class=" h-100">
+			<div class="row justify-content-center h-100" style='margin-left:0px;margin-right:0px;'>
+				
+				<div class="col-md-8 col-xl-6 col-sm-12 chat" style='flex-basis: 100%; max-width: 90%;'>
+					<div class="card">
+						<div class="card-header msg_head">
+							<div class="d-flex bd-highlight">
+								<div class="img_cont">
+									<img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg" class="rounded-circle user_img">
+									<span class="online_icon"></span>
+								</div>
+								<div class="user_info">
+									<span>Chat with Maryam Naz</span>
+									<p>1767 Messages</p>
+								</div>
+							</div>
+							<span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
+							<div class="action_menu">
+								<ul>
+									<li><i class="fas fa-user-circle"></i> View profile</li>
+									<li><i class="fas fa-users"></i> Add to close friends</li>
+									<li><i class="fas fa-plus"></i> Add to group</li>
+									<li><i class="fas fa-ban"></i> Block</li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-body msg_card_body">
+							<div class="d-flex justify-content-start mb-4">
+								<div class="img_cont_msg">
+									<img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg" class="rounded-circle user_img_msg">
+								</div>
+								<div class="msg_cotainer">
+									Hi, how are you samim?
+									<span class="msg_time">8:40 AM, Today</span>
+								</div>
+							</div>
+							<div class="d-flex justify-content-end mb-4">
+								<div class="msg_cotainer_send">
+									Hi Maryam i am good tnx how about you?
+									<span class="msg_time_send">8:55 AM, Today</span>
+								</div>
+								<div class="img_cont_msg">
+							<img src="#" alt='fun' class="rounded-circle user_img_msg">
+								</div>
+							</div>
+							<div class="d-flex justify-content-start mb-4">
+								<div class="img_cont_msg">
+									<img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg" class="rounded-circle user_img_msg">
+								</div>
+								<div class="msg_cotainer">
+									I am good too, thank you for your chat template
+									<span class="msg_time">9:00 AM, Today</span>
+								</div>
+							</div>
+							<div class="d-flex justify-content-end mb-4">
+								<div class="msg_cotainer_send">
+									You welcome Maryam
+									<span class="msg_time_send">9:05 AM, Today</span>
+								</div>
+								<div class="img_cont_msg">
+							<img src="#" alt='fun 2' class="rounded-circle user_img_msg">
+								</div>
+							</div>
+							<div class="d-flex justify-content-start mb-4">
+								<div class="img_cont_msg">
+									<img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg" class="rounded-circle user_img_msg">
+								</div>
+								<div class="msg_cotainer">
+									I am looking for your next templates
+									<span class="msg_time">9:07 AM, Today</span>
+								</div>
+							</div>
+							<div class="d-flex justify-content-end mb-4">
+								<div class="msg_cotainer_send">
+									Ok, thank you have a good day
+									<span class="msg_time_send">9:10 AM, Today</span>
+								</div>
+								<div class="img_cont_msg">
+						<img src="#" alt='fun3' class="rounded-circle user_img_msg">
+								</div>
+							</div>
+							<div class="d-flex justify-content-start mb-4">
+								<div class="img_cont_msg">
+									<img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg" class="rounded-circle user_img_msg">
+								</div>
+								<div class="msg_cotainer">
+									Bye, see you
+									<span class="msg_time">9:12 AM, Today</span>
+								</div>
+							</div>
+						</div>
+						<div class="card-footer">
+							<div class="input-group">
+								<div class="input-group-append">
+									<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
+								</div>
+								<textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+								<div class="input-group-append">
+									<span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
 
-  </body>
+</body>
 </html>
