@@ -128,36 +128,57 @@ const  get_loginAcc =(username)=>
             return document
       }
     })
-const update_loginAcc=(username,password)=>
+const change_userPass=(username,newPassword,oldPassword)=>
     get_db()
     .then(db=>db.collection('loginIds'))
     .catch(err=>{
         console.log('error in collection')
         res.send('error1')    
     })
-    .then(collection=>{
-    //  console.log(collection)
-        return collection.updateOne(
-            { username:'username' },
-            {
-              $set: { "password": password, status: "P" },
-              
-            }
-         )
-    })  
+    .then(collection=>collection.findOne({username:username}))  
     .then(document=>{
     if(document==null){
         console.log('error in finding username ')
-        return null
+        return false
     }  
     else{      
     console.log('username matched')
-            return document
+            if(document.password===oldPassword)
+            {
+                document.password=newPassword
+                return true
+            }
+            else{
+                return false
+            }
     }
     })
+    .then(ha=>
+        {
+            if(ha){
+              return get_db()
+            }
+            else{return false}
+        }
+    )
+    .then(db=>db.collection('loginIds'))
+    .catch(err=>{
+        console.log('error in collection')
+        return false   
+    })
+    .then(collection=>{
+    //  console.log(collection)
+        return collection.updateOne(
+            { username:username },
+            {
+            $set: { password :newPassword },
+            
+            }
+        )
+    })  
     .catch(err=>{
         console.log('error in finding the account')
-        return done(err)
+        return false
     })
 
  
@@ -274,7 +295,7 @@ module.exports={
     check_loginAcc,
     get_loginAcc,
     insert_loginAcc,
-    update_loginAcc,
+    change_userPass,
     delete_loginAcc,
     change_userProfilePic,
     change_userWallPic,

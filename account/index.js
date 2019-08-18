@@ -15,7 +15,7 @@ app.use('/',express.static(path.join(__dirname,'/uploads')))
 app.use('/wall',require('./wallIndex.js'))
 
 const   {get_alluserImgs,insert_userImgs,delete_userImg}=require('../database/imageCollection')
-const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,update_loginAcc,delete_loginAcc,change_userProfilePic,change_userWallPic}=require('../database/IdsCollection')
+const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,change_userPass,delete_loginAcc,change_userProfilePic,change_userWallPic}=require('../database/IdsCollection')
 
 let storage=multer.diskStorage({
   destination:function(req,res,cb){
@@ -171,6 +171,27 @@ app.post('/dashboard/deleteImage',(req,res)=>{
     
 })
 
+app.post('/dashboard/changePassword',(req,res)=>{
+    console.log('in post change PASS')
+    if(req.user)
+    {
+       if(req.body.newPass===req.body.cNewPass)
+       {
+            change_userPass(req.user.username,req.body.newPass,req.body.oldPass)
+            .then(done=>{
+                if(done===false)
+                  res.redirect('/error')
+                res.redirect('/user/dashboard')})
+       }
+       else{
+           console.log('password not match')
+           res.redirect('/error')
+       }
+    }
+    else{
+        res.redirect('/')
+    }
+})
 
 app.get('/logout',(req,res)=>{
     console.log('in logout')

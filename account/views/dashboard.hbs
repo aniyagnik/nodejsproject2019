@@ -25,10 +25,15 @@
        <div class='col-md-3  item' style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size:30%;font-size: xx-large;font-weight: 800;color:white;">
           hello,{{username}}
        </div>
-       <div class='col-md-7 col-xs-12 item' style='text-align:center;';>
+       <div class='col-md-7 col-xs-12 item' style='text-align:center;'>
          <div class='section-inside'>
-           <div>
-             <button onclick="document.getElementById('changeProfile').style.display='block'" class='addbutton' style="width:auto;">change Profile</button>
+           <div class='dropdown'>
+             <button  class='addbutton' style="width:auto;">edit Profile</button>
+             <div class="dropdown-content" style="left:0;">
+              <a onclick='return show(changeProfilePic.id)' href="#changeProfilePic">change profile Pic</a> 
+              <a onclick='return show(changeProfile.id)' href="#changeProfile">add wall image</a>
+              <a  onclick='return show(changePass.id)' href='#changePass'>change password</a>
+             </div>
             </div>
            <div>
              <button onclick="document.getElementById('addimgdiv').style.display='block'" class='addbutton' style="width:auto;">Add Image</button>
@@ -80,26 +85,49 @@
      </div>
     </form>
   </div>
-   <div id="addimgdiv" class="addImgModal">
-   <form class="modal-content-form animate" action='/user/dashboard/addImage' method='POST' id="form" enctype="multipart/form-data"  >
+
+  
+  <div id="changePass" class="addImgModal">
+   <form class="modal-content-form animate" action='/user/dashboard/changePassword' method='POST' id="form"   >
     <div class="imgcontainer">
-      <span onclick="document.getElementById('addimgdiv').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <span onclick="document.getElementById('changePass').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="{{image}}" alt="{{image}}" class="avatar">
     </div>
-
     <div class="containeraddimage">
-      <label><b>Select Image</b></label>
-      <input type="file" name='Uimages' id="image" required>
-      <label ><b>Description</b></label>
-      <input type="text" placeholder="Enter description" name="description" id='description' required>
-       <input type="hidden" value='{{username}}' name="username" >
-      <button type="submit" class='addbutton'>Add Image</button>
+      <label><b>New Password</b></label>
+      <input type="password" name='newPass' id="newPass" required>
+      <label><b>Confirm New Password</b></label>
+      <input type="password" name='cNewPass' id="cNewPass" required>
+      <label><b>Old Password</b></label>
+      <input type="password" name='oldPass' id="oldPass" required>
+      <button type="submit" class='addbutton'>Change password</button>
     </div>
-    <div class="container" style="background-color:#f1f1f1">
-      <button type="button" onclick="document.getElementById('addimgdiv').style.display='none'" class="addbutton cancelbtn">Cancel</button>
+     <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('changePass').style.display='none'" class="addbutton cancelbtn">Cancel</button>
+     </div>
+    </form>
+   </div>
+
+   <div id="addimgdiv" class="addImgModal">
+      <form class="modal-content-form animate" action='/user/dashboard/addImage' method='POST' id="form" enctype="multipart/form-data"  >
+        <div class="imgcontainer">
+          <span onclick="document.getElementById('addimgdiv').style.display='none'" class="close" title="Close Modal">&times;</span>
+          <img src="{{image}}" alt="{{image}}" class="avatar">
+        </div>
+
+        <div class="containeraddimage">
+          <label><b>Select Image</b></label>
+          <input type="file" name='Uimages' id="image" required>
+          <label ><b>Description</b></label>
+          <input type="text" placeholder="Enter description" name="description" id='description' required>
+          <input type="hidden" value='{{username}}' name="username" >
+          <button type="submit" class='addbutton'>Add Image</button>
+        </div>
+        <div class="container" style="background-color:#f1f1f1">
+          <button type="button" onclick="document.getElementById('addimgdiv').style.display='none'" class="addbutton cancelbtn">Cancel</button>
+        </div>
+      </form>
     </div>
-  </form>
-</div>
 
     <ul class="flex-container">
       {{#if username}}
@@ -125,15 +153,21 @@
        {{/if}}
     </ul>
 <script>
-// Get the modal
-var modal = document.getElementById('addimagediv');
+  // Get the modal
+  var modal = document.getElementById('addimagediv');
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
-}
+  }
+  
+  function show(val){
+    console.log('fun hai yaha',val)
+    document.getElementById(val).style.display='block'
+    return true
+  }
 </script>
 </body>
 </html>
