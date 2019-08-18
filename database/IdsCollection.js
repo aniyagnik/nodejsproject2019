@@ -95,15 +95,50 @@ const  check_loginAcc =(username,password)=>
       console.log('username matched')
       //console.log('document : ',document)  
       if(document.password===password)
-        {console.log('pASSWORD MATHCED')
-            return document}
+        {
+            console.log('pASSWORD MATHCED')
+            change_onlineStatus(document.username)
+            return document
+        }
         else{
             console.log('error in password')
-            return null
+            return 'k'
         }
       }
     })
- 
+    
+const change_onlineStatus=(username)=>
+     get_db()
+     .then(db=>db.collection('loginIds'))
+     .catch(err=>{
+         console.log('error in collection')
+         res.send('error1')    
+     })
+     .then(collection=>{
+     //  console.log(collection)
+         return collection.updateOne(
+             { username:username },
+             {
+             $set: { online: true },
+             
+             }
+         )
+     })  
+     .then(document=>{
+     if(document==null){
+         console.log('error in finding username ')
+         return null
+     }  
+     else{      
+     console.log('user online status updated')
+             return document
+     }
+     })
+     .catch(err=>{
+         console.log('error in finding the account')
+         return err
+     })
+    
 
 
 //get one login Id requested by client through username
