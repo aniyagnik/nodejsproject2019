@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Chatk</title>
   <link rel="stylesheet" href="./style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 </head>
 <body>
 <!-- partial:index.partial.html -->
@@ -21,12 +22,20 @@
 		{{>navbar}}
 		<div style='margin:2%'> 
 		  <div>
-			<input class='searchInput' type="text" placeholder="search user to chat..">
-			<button class='searchBtn' type="submit">search</button>
+			 <form action="/user/chat" method="post">
+			    <input class='searchInput' type="text" name='searchUser' placeholder="search user to chat..">
+				<input type="hidden" value={{username}} id='username'>
+				<input type="hidden" value={{chatWith}} id='chatUser'>
+			    <button class='searchBtn' type="submit">search</button>		 
+			 </form> 
           </div>
 		  	hello,{{username}}
  		</div>
-	
+	    <div id='waitingMsgContainer'>
+			<select name="waitingMsg" id="waitingMsg">
+
+			</select>
+		</div>
 		<div class=" h-100">
 			<div class="row justify-content-center h-100" style='margin-left:0px;margin-right:0px;'>
 				
@@ -35,12 +44,12 @@
 						<div class="card-header msg_head">
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
-									<img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg" class="rounded-circle user_img">
+									<img src="#" alt='pic' class="rounded-circle user_img">
 									<span class="online_icon"></span>
 								</div>
 								<div class="user_info">
-									<span>Chat with Maryam Naz</span>
-									<p>1767 Messages</p>
+									<span>Chat with {{chatWith}}</span>
+									<p>1767 messages</p>
 								</div>
 							</div>
 							<span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
@@ -53,79 +62,17 @@
 								</ul>
 							</div>
 						</div>
-						<div class="card-body msg_card_body">
-							<div class="d-flex justify-content-start mb-4">
-								<div class="img_cont_msg">
-									<img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg" class="rounded-circle user_img_msg">
-								</div>
-								<div class="msg_cotainer">
-									Hi, how are you samim?
-									<span class="msg_time">8:40 AM, Today</span>
-								</div>
-							</div>
-							<div class="d-flex justify-content-end mb-4">
-								<div class="msg_cotainer_send">
-									Hi Maryam i am good tnx how about you?
-									<span class="msg_time_send">8:55 AM, Today</span>
-								</div>
-								<div class="img_cont_msg">
-							<img src="#" alt='fun' class="rounded-circle user_img_msg">
-								</div>
-							</div>
-							<div class="d-flex justify-content-start mb-4">
-								<div class="img_cont_msg">
-									<img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg" class="rounded-circle user_img_msg">
-								</div>
-								<div class="msg_cotainer">
-									I am good too, thank you for your chat template
-									<span class="msg_time">9:00 AM, Today</span>
-								</div>
-							</div>
-							<div class="d-flex justify-content-end mb-4">
-								<div class="msg_cotainer_send">
-									You welcome Maryam
-									<span class="msg_time_send">9:05 AM, Today</span>
-								</div>
-								<div class="img_cont_msg">
-							<img src="#" alt='fun 2' class="rounded-circle user_img_msg">
-								</div>
-							</div>
-							<div class="d-flex justify-content-start mb-4">
-								<div class="img_cont_msg">
-									<img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg" class="rounded-circle user_img_msg">
-								</div>
-								<div class="msg_cotainer">
-									I am looking for your next templates
-									<span class="msg_time">9:07 AM, Today</span>
-								</div>
-							</div>
-							<div class="d-flex justify-content-end mb-4">
-								<div class="msg_cotainer_send">
-									Ok, thank you have a good day
-									<span class="msg_time_send">9:10 AM, Today</span>
-								</div>
-								<div class="img_cont_msg">
-						<img src="#" alt='fun3' class="rounded-circle user_img_msg">
-								</div>
-							</div>
-							<div class="d-flex justify-content-start mb-4">
-								<div class="img_cont_msg">
-									<img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg" class="rounded-circle user_img_msg">
-								</div>
-								<div class="msg_cotainer">
-									Bye, see you
-									<span class="msg_time">9:12 AM, Today</span>
-								</div>
-							</div>
+						<div class="card-body msg_card_body" id='chat_messages'>
+							
 						</div>
 						<div class="card-footer">
 							<div class="input-group">
 								<div class="input-group-append">
 									<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
 								</div>
-								<textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+								<textarea name="" class="form-control type_msg" id='send_msg' placeholder="Type your ..."></textarea>
 								<div class="input-group-append">
-									<span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
+									<span class="input-group-text send_btn" id='msg_btn'><i class="fas fa-location-arrow"></i></span>
 								</div>
 							</div>
 						</div>
@@ -137,6 +84,6 @@
 </html>
 <!-- partial -->
   <script  src="./script.js"></script>
-
+  <script src="./socketClient.js"></script>
 </body>
 </html>
