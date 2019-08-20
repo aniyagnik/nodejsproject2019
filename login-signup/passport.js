@@ -1,6 +1,6 @@
 const passport=require('passport')
 const LocalStratergy=require('passport-local').Strategy
-const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc}=require('../database/IdsCollection')
+const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc,change_onlineStatus}=require('../database/IdsCollection')
 
 /*in serializeUser we send user(how to store a user in a session) and
  in serialize user we get the user(how to actually recover the user from the session)
@@ -37,6 +37,7 @@ passport.use(new LocalStratergy(function (username, password, done) {
         if(user==null)
         {return done(null,false,{message:'no such user'})}
         else{
+            change_onlineStatus(username,true)
             return done(null,user)}
     })
     .catch(err=>{

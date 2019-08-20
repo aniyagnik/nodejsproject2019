@@ -1,8 +1,8 @@
 const express=require('express')
 var app = express();
 let path=require('path')
-const {create_chatInfo,add_chatComment}=require('../../database/chatCollection')
-const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc,change_onlineStatus}=require('../../database/IdsCollection')
+const {create_chatInfo,add_chatComment,save_unseenChat}=require('../../database/chatCollection')
+const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc,change_chatStatus,change_onlineStatus}=require('../../database/IdsCollection')
 app.use(express.static((__dirname)+'/public'))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '/views'));
@@ -15,7 +15,29 @@ module.exports=function(io){
     {
       const {chatWith}=req.query
       const {username}=req.user
-      res.render('index',{username,chatWith})
+      const {senderMsg}=req.params
+      const {sender}=req.params
+      async function ch(){
+        let k=await change_chatStatus(username,true)
+        console.log('haaaaaaaaaaaaaaa',senderMsg)
+        res.render('index',{username,chatWith})
+        if(typeof senderMsg!=='undefined' && users!== 'undefined')
+        {
+          const recievingUser=users.find(ele=>ele.username===sender)
+          if(typeof recievingUser!=='undefined')
+          {
+            const id=recievingUser.socketId
+            io.to(id).emit('res_msg',{
+              user:sender,
+              message:senderMsg,
+            })
+            const chatters=msg_taken.user+'and'+msg_taken.selected_user
+            console.log('chatters',chatters)
+            add_chatComment(chatters,msg_taken.user,msg_taken.message)   
+          }
+        }
+      }
+      ch() 
     }
     else
     {
@@ -64,8 +86,10 @@ module.exports=function(io){
     //deleting a client
     socket.on('disconnect', function(){
       console.log('user disconnected',socket.id);
+      const username=users.reduce(ele=>ele.socketId===socket.id)
       users=users.filter(ele=>ele.socketId!==socket.id)
       console.log('on removal of one user',users)
+      change_chatStatus(username,false)
     });
 
     

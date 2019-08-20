@@ -37,7 +37,8 @@ app.post('/signup',upload.single('image'),(req,res)=>{
         password:req.body.password,
         image:req.file.filename,
         wallPic:null,
-        online:false
+        online:false,
+        inChat:false
     }
     async function add(){
       const addedUser=await insert_loginAcc(newAcc)

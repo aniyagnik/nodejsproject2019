@@ -63,6 +63,16 @@ socket.on('connected', () => {
                                 </div>`))
         }
         else{
-            waitingMsg.append($(`<option>${res_msg.user}::${res_msg.message}</option>`))
-        }                                                              
+            waitingMsg.append($(`<div  id='unseenMsg' > 
+                                    <form action='/user/chat?chatWith=${res_msg.user}' method='POST'>
+                                    <p style="color: chocolate" open=''>
+                                        <p style='color:black; font-style:bold;' id='senderUser'>${res_msg.user}</p>
+                                        <p id='senderMsg'> ${res_msg.message}</p>
+                                        <input type="hidden" id='senderMsg' value= ${res_msg.message}>
+                                        <input type="hidden" id="senderUser" value=${res_msg.user}>
+                                        <button id='msgLink' type='submit'>chat</button>
+                                    </p>
+                                    </form>
+                                </div>`))
+        }                                                                
     })

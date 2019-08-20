@@ -1,14 +1,13 @@
 const {MongoClient}=require('mongodb')
-const client=new MongoClient('mongodb://localhost:27017')
-
-
+//const client=new MongoClient('mongodb://localhost:27017')
+//client.connect()
 //accessing database testdb and then sending  collection loginIds
-const get_db=()=>client.connect()
-    .then(()=>{
+const get_db=()=>{       
         const db=client.db('project')
-       console.log(`database accessed for accessing ids collection`)
-        return db
-    })
+        return new Promise(function(resolve, reject){
+            resolve(db);
+        });
+    }
 
 const create_chatInfo=(addChatInfo)=>
      get_db()

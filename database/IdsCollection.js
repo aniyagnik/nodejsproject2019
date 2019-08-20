@@ -1,14 +1,15 @@
 const { MongoClient }=require('mongodb')
-const client=new MongoClient('mongodb://localhost:27017')
-
+client=new MongoClient('mongodb://localhost:27017/project',{ useNewUrlParser: true })
+client.connect()
 //accessing database testdb and then sending  collection loginIds
-const get_db=()=>client.connect()
-    .then(()=>{
+const get_db=()=>{       
         const db=client.db('project')
-       console.log(`database accessed for accessing ids collection`)
-        return db
-    })
+        return new Promise(function(resolve, reject){
+            resolve(db);
+        });
+    }
 
+    
 
 //accessing collection for checking a loginAcc
 const get_allLogins=()=>{
@@ -97,7 +98,6 @@ const  check_loginAcc =(username,password)=>
       if(document.password===password)
         {
             console.log('pASSWORD MATHCED')
-            change_onlineStatus(document.username,true)
             return document
         }
         else{
@@ -140,6 +140,39 @@ const change_onlineStatus=(username,status)=>
      })
     
 
+
+     const change_chatStatus=(username,status)=>
+     get_db()
+     .then(db=>db.collection('loginIds'))
+     .catch(err=>{
+         console.log('error in collection')
+         res.send('error1')    
+     })
+     .then(collection=>{
+     //  console.log(collection)
+         return collection.updateOne(
+             { username:username },
+             {
+             $set: { chat: status },
+             
+             }
+         )
+     })  
+     .then(document=>{
+     if(document==null){
+         console.log('error in finding username ')
+         return null
+     }  
+     else{      
+     console.log('user chat status updated')
+             return document
+     }
+     })
+     .catch(err=>{
+         console.log('error in finding the account')
+         return err
+     })
+    
 
 //get one login Id requested by client through username
 const  get_loginAcc =(username)=>
@@ -302,5 +335,6 @@ module.exports={
     delete_loginAcc,
     change_userProfilePic,
     change_userWallPic,
-    change_onlineStatus
+    change_onlineStatus,
+    change_chatStatus
 }

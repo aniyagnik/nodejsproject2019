@@ -15,7 +15,7 @@ app.use('/',express.static(path.join(__dirname,'/uploads')))
 app.use('/wall',require('./wallIndex.js'))
 
 const   {get_alluserImgs,insert_userImgs,delete_userImg}=require('../database/imageCollection')
-const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,change_userPass,delete_loginAcc,change_userProfilePic,change_userWallPic}=require('../database/IdsCollection')
+const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,change_userPass,delete_loginAcc,change_userProfilePic,change_onlineStatus,change_userWallPic}=require('../database/IdsCollection')
 
 let storage=multer.diskStorage({
   destination:function(req,res,cb){
@@ -197,6 +197,7 @@ app.get('/logout',(req,res)=>{
     console.log('in logout')
     if(req.user)
     {
+        change_onlineStatus(req.user.username,false)
         req.session.destroy()
         res.redirect('/')
     }
