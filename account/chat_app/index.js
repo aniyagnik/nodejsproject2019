@@ -17,11 +17,12 @@ module.exports=function(io){
       const {username}=req.user
       const {senderMsg}=req.params
       const {sender}=req.params
-      async function ch(){
-        let k=await change_chatStatus(username,true)
-        console.log('haaaaaaaaaaaaaaa',senderMsg)
+     
+      change_chatStatus(username,true)
+      .then(doc=>{
+        // console.log('haaaaaaaaaaaaaaa',senderMsg)
         res.render('index',{username,chatWith})
-        if(typeof senderMsg!=='undefined' && users!== 'undefined')
+        /*if(typeof senderMsg!=='undefined' && users!== 'undefined')
         {
           const recievingUser=users.find(ele=>ele.username===sender)
           if(typeof recievingUser!=='undefined')
@@ -35,9 +36,8 @@ module.exports=function(io){
             console.log('chatters',chatters)
             add_chatComment(chatters,msg_taken.user,msg_taken.message)   
           }
-        }
-      }
-      ch() 
+        }*/
+      })
     }
     else
     {

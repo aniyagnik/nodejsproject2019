@@ -56,11 +56,11 @@ app.post('/dashboard/addImage',upload.single('Uimages'),(req,res)=>{
     console.log('in addImage')   
     if(req.user)
     {
-       console.log('image:',req.file,req.body.description)
+      // console.log('image:',req.file,req.body.description)
        
        insert_userImgs(req.body.username,req.file.filename,req.body.description)
        .then(uImages=>{
-           console.log('in .then of insert image')
+           //console.log('in .then of insert image')
            //console.log("images added : ",uImages)
              res.redirect('/user/dashboard')   
         })
@@ -75,10 +75,10 @@ app.post('/dashboard',upload.single('profilePic'),(req,res)=>{
     console.log('in post dashboard')
     if(req.user)
     {
-       console.log('image:',req.file)
+       //console.log('image:',req.file)
        change_userProfilePic(req.user.username,req.file.filename)
        .then(uImages=>{
-           console.log('in .then of insert image')
+         //  console.log('in .then of insert image')
              res.redirect('/user/dashboard')   
         })
     }

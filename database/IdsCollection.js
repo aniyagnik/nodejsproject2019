@@ -52,7 +52,7 @@ const get_allLogins=()=>{
                     add={username:Id_info.username,
                         images:[]
                     }
-                    console.log("added file :",add)
+                 //   console.log("added file :",add)
                     collection.insertOne(add)
                     return true
                 })
@@ -62,7 +62,7 @@ const get_allLogins=()=>{
                 .then(collection=>collection.insertOne(Id_info))
                 .catch(err=>console.log('error in saving collectio ids 1',err))
                 .then(doc=>{
-                    console.log('inserted values is :',doc.ops[0])
+                   // console.log('inserted values is :',doc.ops[0])
                     return doc.ops[0]
                 })
                 .catch(err=>console.log('error in saving collectio ids 2',err))
@@ -102,7 +102,7 @@ const  check_loginAcc =(username,password)=>
         }
         else{
             console.log('error in password')
-            return 'k'
+            return null
         }
       }
     })

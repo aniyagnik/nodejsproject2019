@@ -21,7 +21,7 @@ app.get('/',(req,res)=>{
         const {userpic}=req.query
         const {userWall}=req.query
         const {wallpic}=req.query
-        console.log('values taken :',findinguser,userpic,userWall,wallpic)    
+        //console.log('values taken :',findinguser,userpic,userWall,wallpic)    
         get_alluserImgs(userWall)
         .then(result=>{
             return result.images
@@ -44,10 +44,10 @@ app.get('/viewImage',(req,res)=>{
         const viewinguser=req.user.username
         const {userWall}=req.query
         const {description}=req.query
-        console.log('values taken :',imageName,viewinguser,userWall,description)    
+       // console.log('values taken :',imageName,viewinguser,userWall,description)    
         get_allComments(userWall,imageName)
         .then(comments=>{    
-            console.log('comments to be written : ',comments)
+          //  console.log('comments to be written : ',comments)
             res.render('image',{imageName,viewinguser,userWall,comments,description})
         })
        
@@ -64,7 +64,7 @@ app.post('/viewImage',(req,res)=>{
         const imageName=req.body.imageName
         const commentingUser=req.user.username
         const username=req.body.userWall
-        console.log('values taken :',comment,tagged,imageName,commentingUser,username)    
+       // console.log('values taken :',comment,tagged,imageName,commentingUser,username)    
         insert_comment(username,imageName,commentingUser,comment,tagged)
         .then(comments=>{    
             console.log('comments acquired : ',comments)

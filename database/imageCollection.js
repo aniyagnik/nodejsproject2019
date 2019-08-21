@@ -43,7 +43,7 @@ const insert_userImgs=(username,filename,description)=>
                        return null
     })
     .then(value=>{
-        console.log('in insert image mongodb :: ',value)
+       // console.log('in insert image mongodb :: ',value)
         return get_db()})
     .then(db=>
         db.collection('userComments').insertOne(

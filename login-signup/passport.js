@@ -33,7 +33,7 @@ passport.use(new LocalStratergy(function (username, password, done) {
     console.log('in LocalStratergy  : ',username,password)
     check_loginAcc(username,password)
     .then(user=>{
-      
+        console.log("user in local stratergy is ::",user)
         if(user==null)
         {return done(null,false,{message:'no such user'})}
         else{
