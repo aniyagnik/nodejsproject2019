@@ -115,7 +115,6 @@ const change_onlineStatus=(username,status)=>
          res.send('error1')    
      })
      .then(collection=>{
-     //  console.log(collection)
          return collection.updateOne(
              { username:username },
              {

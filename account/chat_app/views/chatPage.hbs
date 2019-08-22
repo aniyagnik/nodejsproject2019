@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>Chatk</title>
+  <title>Chat</title>
   <link rel="stylesheet" href="./style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 </head>
@@ -24,12 +24,11 @@
 		  <div>
 			 <form action="/user/chat" method="post">
 			    <input class='searchInput' type="text" name='searchUser' placeholder="search user to chat..">
-				<input type="hidden" value={{username}} id='username'>
-				<input type="hidden" value={{chatWith}} id='chatUser'>
 			    <button class='searchBtn' type="submit">search</button>		 
 			 </form> 
           </div>
 		  	hello,{{username}}
+			<input type="hidden" value='{{username}}'id='username'>  
  		</div>
 	   <div class='dropdown'>
              <button  class='addbutton' style="width:auto;">messages</button>
@@ -49,6 +48,7 @@
 								</div>
 								<div class="user_info">
 									<span>Chat with {{chatWith}}</span>
+									<input type="hidden" value='{{chatWith}}' id='chatUser'>
 									<p>1767 messages</p>
 								</div>
 							</div>
@@ -83,7 +83,6 @@
 	</body>
 </html>
 <!-- partial -->
-  <script  src="./script.js"></script>
   <script src="./socketClient.js"></script>
 </body>
 </html>

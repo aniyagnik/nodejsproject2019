@@ -9,6 +9,24 @@ const get_db=()=>{
         });
     }
 
+async function check_chatCollection(username){
+   let k=await get_db()
+    .then(db=>db.collection('chatCollection'))
+    .catch(err=>{console.log('error in finding collection',err);return null})
+    .then(collection=>{
+        console.log('upadating...')
+        return collection.updateOne(
+                {username:username},
+                {
+                    $setOnInsert:{username:username,chat:[]},
+                },
+                {upsert:true}
+            )
+        })
+    .catch(err=>{console.log('error in inserting',err);return null})
+    console.log('at check chat :',k.result)
+    return k
+}     
 const create_chatInfo=(addChatInfo)=>
      get_db()
      .then(db=>db.collection('chatCollection'))
@@ -20,15 +38,19 @@ const create_chatInfo=(addChatInfo)=>
      })
      .catch(err=>console.log('error in saving collectio ids 2',err))    
 
-const add_chatComment=(chatters,chatBy,message)=>
+const add_sendChatComment=(username,chatWith,message)=>
     get_db()
     .then(db=>db.collection('chatCollection'))
     .then(collection=>collection.findOneAndUpdate(
-        {chat:chatters},
-        { '$push': { chat: 
-            { 
-                chatBy:chatBy,
-                message:message
+        {
+            username:username,
+            'chat.chatWith':chatWith
+        },
+        { 
+            $setOnInsert:{},
+            '$push': { 
+            messages:{ 
+                "send":message
               } 
             }
         }
@@ -39,7 +61,44 @@ const add_chatComment=(chatters,chatBy,message)=>
     })    
 
 
+    const add_recievedChatComment=(username,chatWith,message)=>
+    get_db()
+    .then(db=>db.collection('chatCollection'))
+    .then(collection=>collection.findOneAndUpdate(
+        {
+            username:username,
+            'chat.chatWith':chatWith
+        },
+        { '$push': { 
+            messages:{ 
+                "recieve":message
+              } 
+            }
+        }
+      )
+    ) 
+    .catch(err=>{console.log('error in finding username for image ',err)
+                       return null
+    })    
+
+    
+const save_unseenChat=(sender,reciever,message)=>
+    get_db()
+    .then(db=>db.collection('chatCollection'))
+    .then(collection=>collection.findOneAndUpdate(
+        {
+            sender:sender,
+            'chat.reciever':reciever
+        },
+        {
+            '$push':{
+                "chat.message":message
+               }
+        }
+
+    ))
 module.exports={
-    create_chatInfo,
-    add_chatComment,
+    check_chatCollection,
+    add_sendChatComment,
+    add_recievedChatComment
 }    

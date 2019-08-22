@@ -61,6 +61,11 @@ socket.on('connected', () => {
                                         <span class="msg_time">8:40 AM, Today</span>
                                     </div>
                                 </div>`))
+            socket.emit("messageRecieved",{
+                user:my_username,
+                sender:selected_user,
+                message:res_msg.message
+            })                    
         }
         else{
             waitingMsg.append($(`<div  id='unseenMsg' > 
@@ -76,3 +81,10 @@ socket.on('connected', () => {
                                 </div>`))
         }                                                                
     })
+
+$(document).ready(function(){
+    $('#action_menu_btn').click(function(){
+        $('.action_menu').toggle();
+    });
+});
+    
