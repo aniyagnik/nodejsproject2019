@@ -82,7 +82,6 @@ const delete_userImg=(username,image)=>
     )
 
 
-console.log("accessing the c0llection for images")
 module.exports={
     get_alluserImgs,
     insert_userImgs,

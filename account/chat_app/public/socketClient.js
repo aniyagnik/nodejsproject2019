@@ -40,6 +40,7 @@ socket.on('connected', () => {
                                 <span class="msg_time_send">8:55 AM, Today</span>
                              </div>
                            </div>`))
+        $('#send_msg').val("")                    
         socket.emit('message',{
             selected_user:selected_user,
             user:my_username,
@@ -62,19 +63,18 @@ socket.on('connected', () => {
                                     </div>
                                 </div>`))
             socket.emit("messageRecieved",{
-                user:my_username,
+                reciever:my_username,
                 sender:selected_user,
                 message:res_msg.message
             })                    
         }
         else{
             waitingMsg.append($(`<div  id='unseenMsg' > 
-                                    <form action='/user/chat?chatWith=${res_msg.user}' method='POST'>
+                                    <form action='/user/chat/unseenMessage?chatWith=${res_msg.user}' method='GET'>
                                     <p style="color: chocolate" open=''>
-                                        <p style='color:black; font-style:bold;' id='senderUser'>${res_msg.user}</p>
-                                        <p id='senderMsg'> ${res_msg.message}</p>
-                                        <input type="hidden" id='senderMsg' value= ${res_msg.message}>
-                                        <input type="hidden" id="senderUser" value=${res_msg.user}>
+                                        <p style='color:black; font-style:bold;'>${res_msg.user}</p>
+                                        <input type='hidden' value='${res_msg.user}' name='senderUser'>
+                                        <p>${res_msg.message}</p>
                                         <button id='msgLink' type='submit'>chat</button>
                                     </p>
                                     </form>

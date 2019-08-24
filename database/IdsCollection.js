@@ -52,7 +52,6 @@ const get_allLogins=()=>{
                     add={username:Id_info.username,
                         images:[]
                     }
-                 //   console.log("added file :",add)
                     collection.insertOne(add)
                     return true
                 })
@@ -119,7 +118,6 @@ const change_onlineStatus=(username,status)=>
              { username:username },
              {
              $set: { online: status },
-             
              }
          )
      })  
@@ -179,7 +177,6 @@ const  get_loginAcc =(username)=>
     .then(db=>db.collection('loginIds'))
     .catch(err=>{
         console.log('error in collection')
-           
     })
     .then(collection=>{
       //  console.log(collection)
@@ -324,7 +321,6 @@ const delete_loginAcc=(username)=>
     .then(collection=>collection.deleteOne({username: new mongodb.ObjectID(username)}))
 
 
-console.log("accessing the collection for ids")
 module.exports={
     get_allLogins,
     check_loginAcc,

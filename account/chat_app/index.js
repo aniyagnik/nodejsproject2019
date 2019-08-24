@@ -1,10 +1,11 @@
+const url = require('url');
 const express=require('express')
 var app = express();
 let path=require('path')
 const hbs=require('hbs')
 hbs.registerPartials(path.join(__dirname,'../partials'))
 
-const {check_chatCollection,add_recievedChatComment,add_sendChatComment,save_unseenChat}=require('../../database/chatCollection')
+const {check_chatCollection,add_recievedChatComment,add_sendChatComment,get_userChat,save_unseenChat}=require('../../database/chatCollection')
 const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc,change_chatStatus,change_onlineStatus}=require('../../database/IdsCollection')
 app.use(express.static((__dirname)+'/public'))
 app.set('view engine', 'hbs')
@@ -15,17 +16,32 @@ let users=[]
     console.log('in chat get') 
     if(req.user)
     {
-      const {chatWith}=req.params
+      const chatWith=req.query.searchUser
       const {username}=req.user
       const {senderMsg}=req.params
       const {sender}=req.params
-      check_chatCollection(username)
-      .then(result=>change_chatStatus(username,true))
-      .then(ha=>{
-      //  console.log("resulr of chat",ha)
-        res.render('chatPage',{username,chatWith})
+      change_chatStatus(username,true)
+      .then(hmm=>{
+        if(typeof chatWith!=='undefined'){
+          return get_userChat(username,chatWith)
+         }
+         else{
+           console.log('in else')
+           return null
+         }
+      })  
+      .then(chat=>{
+        console.log('chat is this : ',chat)
+        if(chat!==null)
+        {
+          let {message}=chat
+          console.log("geting chat for displaying",chatWith,message)
+          res.render('chatPage',{username,chatWith,message})
+        }
+        else{
+          res.render('chatPage',{username,chatWith})
+        }
       })
-      console.log('aniruddh yagnik')
     }
     else
     {
@@ -38,12 +54,18 @@ app.post('/', function(req, res){
   if(req.user)
   {
     const {username}=req.user
+    const chatWith=req.body.searchUser
+    console.log('user to be find and chat : ',req.body.searchUser)
     get_loginAcc(req.body.searchUser)
-      .then(document=>{console.log("user found : ",document)
+    .then(document=>{console.log("user found : ",document)
             if(document!==null)
             {
-              const chatWith=req.body.searchUser
-              res.render('chatPage',{username,chatWith})
+              res.redirect(url.format({
+                pathname:"/user/chat",
+                query: {
+                  searchUser:chatWith
+                 }
+              }))
             }  
             else{
               res.redirect('/user/chat?return=no-such-user') 
@@ -59,7 +81,41 @@ app.post('/', function(req, res){
     res.redirect('/')
   }
 });
- 
+
+
+app.get('/unseenMessage', function(req, res){
+  console.log('in chat get unseen') 
+  if(req.user)
+  {
+    const {username}=req.user
+    const chatWith=req.query.senderUser
+    console.log('user to be find and chat : ',chatWith)
+    get_loginAcc(chatWith)
+      .then(document=>{console.log("user found : ",document)
+            if(document!==null)
+            {
+              console.log('in unseen post sending render')
+              res.redirect(url.format({
+                pathname:"/user/chat",
+                query: {
+                  searchUser:chatWith
+                 }
+              }))
+            }  
+            else{
+              res.redirect('/user/chat?return=no-such-user') 
+            }
+      })
+      .catch(err=>{
+          console.log('error occured : ',err)
+          res.redirect('/user/chat')
+      })
+  }
+  else
+  {
+    res.redirect('/')
+  }
+});
   module.exports=function(io){
  
      
@@ -85,7 +141,8 @@ app.post('/', function(req, res){
         users=users.filter(ele=>ele.socketId!==socket.id)
         console.log('on removal of one user',users)
         if(typeof username!=='undefined')
-            change_chatStatus(username,false)
+           console.log('changing chat staus to false') 
+           change_chatStatus(username,false)
       } 
     });
 
@@ -102,10 +159,13 @@ app.post('/', function(req, res){
           user:msg_taken.user,
           message:msg_taken.message,
         })
-        add_sendChatComment(msg_taken.user,reciever.username,msg_taken.message)
+        add_sendChatComment(msg_taken.user,msg_taken.selected_user,msg_taken.message)
+        .then(val=>add_recievedChatComment(msg_taken.selected_user,msg_taken.user,msg_taken.message))
       }
       else{
-        save_unseenChat(msg_taken.user,reciever.username,msg_taken.message)
+        add_sendChatComment(msg_taken.user,msg_taken.selected_user,msg_taken.message)
+        .then(val=>add_recievedChatComment(msg_taken.selected_user,msg_taken.user,msg_taken.message))
+        .then(val=>add_unseenChat(msg_taken.selected_user,msg_taken.user,msg_taken.message))
       }
       
     })
@@ -114,8 +174,8 @@ app.post('/', function(req, res){
     socket.on('messageRecieved',(msg_taken)=>{
       //console.log('in message index',msg_taken.message)
       //console.log(msg_taken.selected_user)
-      console.log('recieverand sender is :',msg_taken.user,msg_taken.sender)
-        add_recievedChatComment(msg_taken.user,reciever.user,msg_taken.message)
+      console.log('recieverand sender is :',msg_taken.reciever,msg_taken.sender)
+        
     })
   });
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Chat</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="chatStyle.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 </head>
 <body>
@@ -63,7 +63,26 @@
 							</div>
 						</div>
 						<div class="card-body msg_card_body" id='chat_messages'>
-							
+							{{#if message}}
+							  {{#each message}}
+								{{#if this.recieve}}
+									<div class="d-flex justify-content-start mb-4">
+										<div class="msg_cotainer">
+											{{this.recieve}}reciecve
+											<span class="msg_time">8:40 AM, Today</span>
+										</div>
+									</div>
+								{{else}}
+									<div class="d-flex justify-content-end mb-4">
+									<div class="msg_cotainer_send">
+										{{this.sent}}sent
+										<span class="msg_time_send">8:55 AM, Today</span>
+									</div>
+									</div>
+								{{/if}}	
+							  {{/each}}
+							{{/if}}	
+
 						</div>
 						<div class="card-footer">
 							<div class="input-group">
@@ -83,6 +102,6 @@
 	</body>
 </html>
 <!-- partial -->
-  <script src="./socketClient.js"></script>
+  <script src="socketClient.js"></script>
 </body>
 </html>

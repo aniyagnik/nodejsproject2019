@@ -64,7 +64,6 @@ const delete_comment=(image)=>
     .then(collection=>collection.deleteOne({username: new mongodb.ObjectID(username)}))
 
 
-console.log("accessing the collection for image Comments")
 module.exports={
     get_allComments,
     insert_comment,
