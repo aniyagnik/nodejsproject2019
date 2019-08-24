@@ -21,13 +21,14 @@
 	<body  background= '#c23616';>
 		{{>navbar}}
 		<div style='margin:2%'> 
+			hello,{{username}}
 		  <div>
-			 <form action="/user/chat" method="post">
+			 <form action="/user/chat" method="GET">
 			    <input class='searchInput' type="text" name='searchUser' placeholder="search user to chat..">
 			    <button class='searchBtn' type="submit">search</button>		 
 			 </form> 
           </div>
-		  	hello,{{username}}
+		  	
 			<input type="hidden" value='{{username}}'id='username'>  
  		</div>
 	   <div class='dropdown'>
@@ -43,7 +44,7 @@
 						<div class="card-header msg_head">
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
-									<img src="#" alt='pic' class="rounded-circle user_img">
+									<img src="{{chatterImg}}" alt='pic' class="rounded-circle user_img">
 									<span class="online_icon"></span>
 								</div>
 								<div class="user_info">
@@ -68,14 +69,14 @@
 								{{#if this.recieve}}
 									<div class="d-flex justify-content-start mb-4">
 										<div class="msg_cotainer">
-											{{this.recieve}}reciecve
+											{{this.recieve}}
 											<span class="msg_time">8:40 AM, Today</span>
 										</div>
 									</div>
 								{{else}}
 									<div class="d-flex justify-content-end mb-4">
 									<div class="msg_cotainer_send">
-										{{this.sent}}sent
+										{{this.sent}}
 										<span class="msg_time_send">8:55 AM, Today</span>
 									</div>
 									</div>

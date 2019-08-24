@@ -16,72 +16,49 @@ let users=[]
     console.log('in chat get') 
     if(req.user)
     {
+      let chatterImg
       const chatWith=req.query.searchUser
       const {username}=req.user
       const {senderMsg}=req.params
       const {sender}=req.params
-      change_chatStatus(username,true)
-      .then(hmm=>{
-        if(typeof chatWith!=='undefined'){
-          return get_userChat(username,chatWith)
-         }
-         else{
-           console.log('in else')
-           return null
-         }
-      })  
-      .then(chat=>{
-        console.log('chat is this : ',chat)
-        if(chat!==null)
-        {
-          let {message}=chat
-          console.log("geting chat for displaying",chatWith,message)
-          res.render('chatPage',{username,chatWith,message})
-        }
-        else{
-          res.render('chatPage',{username,chatWith})
-        }
-      })
+      if(typeof chatWith!=='undefined')
+      {
+        change_chatStatus(username,true)
+        .then(res=>get_loginAcc(chatWith))
+        .then(document=>{//console.log("user found : ",document)
+              if(document!==null)
+              {
+                chatterImg=document.image
+                return true
+              }  
+              else{
+                res.redirect('/user/chat?return=no-such-user') 
+              }
+        })
+        .then(hmm=>get_userChat(username,chatWith))  
+        .then(chat=>{
+          console.log('chat is this : ',chat)
+          if(chat!==null)
+          {
+            let {message}=chat
+            console.log("geting chat for displaying",chatWith,message,chatterImg)
+            res.render('chatPage',{username,chatWith,message,chatterImg})
+          }
+          else{
+            res.render('chatPage',{username,chatWith})
+          }
+        })  
+      }
+      else{
+        change_chatStatus(username,true)
+        .then(as=>res.render('chatPage',{username}))
+      }
     }
     else
     {
       res.redirect('/')
     }
   });
-
-app.post('/', function(req, res){
-  console.log('in chat post') 
-  if(req.user)
-  {
-    const {username}=req.user
-    const chatWith=req.body.searchUser
-    console.log('user to be find and chat : ',req.body.searchUser)
-    get_loginAcc(req.body.searchUser)
-    .then(document=>{console.log("user found : ",document)
-            if(document!==null)
-            {
-              res.redirect(url.format({
-                pathname:"/user/chat",
-                query: {
-                  searchUser:chatWith
-                 }
-              }))
-            }  
-            else{
-              res.redirect('/user/chat?return=no-such-user') 
-            }
-      })
-      .catch(err=>{
-          console.log('error occured : ',err)
-          res.redirect('/user/chat')
-      })
-  }
-  else
-  {
-    res.redirect('/')
-  }
-});
-
 
 app.get('/unseenMessage', function(req, res){
   console.log('in chat get unseen') 
