@@ -15,16 +15,18 @@ app.get('/error',(req,res)=>{
 })
 
 
+app.use('/user/uploads',express.static(path.join(__dirname,'uploads')))
+
 app.use('/user/chat',express.static(path.join(__dirname,'account/chat_app/public')))
 
-app.use('/user',express.static(path.join(__dirname,'account/uploads')))
+app.use('/user',express.static(path.join(__dirname,'account/public')))
 
 app.use('/user/wall',express.static(path.join(__dirname,'account/uploads')))
 
 app.use('/',express.static(path.join(__dirname,'login-signup/public')))
 
 app.use(function (req,res,next){
-  console.log('handling request : ',req.url+req.method);
+  console.log('handling request : ',req.url+" with method "+req.method);
   next();
 })
 

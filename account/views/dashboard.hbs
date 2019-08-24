@@ -20,7 +20,7 @@
     <br>  
     <div class='row section-top ' style=" margin-left: 0px;">
        <div class='col-md-2 col-xs-4 item '  style="max-width:30%">
-         <img src='{{image}}' alt="{{username}}" id='profilepic' onclick="document.getElementById('changeProfilePic').style.display='block'">
+         <img src='./uploads/{{image}}' alt="{{username}}" id='profilepic' onclick="document.getElementById('changeProfilePic').style.display='block'">
        </div>
        <div class='col-md-4  item' style="font-family:'Segoe UI';max-width:70%;font-size:1.5em;font-size: xx-large;font-weight: 700;color:white;">
           hello,{{username}}
@@ -55,7 +55,7 @@
    <form class="modal-content-form animate" action='/user/dashboard' method='POST' id="form" enctype="multipart/form-data"  >
     <div class="imgcontainer">
       <span onclick="document.getElementById('changeProfilePic').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="{{image}}" alt="{{image}}" class="avatar">
+      <img src="./uploads/{{image}}" alt="{{image}}" class="avatar">
     </div>
     <div class="containeraddimage">
       <label><b>Select Image</b></label>
@@ -73,7 +73,7 @@
    <form class="modal-content-form animate" action='/user/dashboard/edit' method='POST' id="form" enctype="multipart/form-data"  >
     <div class="imgcontainer">
       <span onclick="document.getElementById('changeProfile').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="{{image}}" alt="{{image}}" class="avatar">
+      <img src="./uploads/{{image}}" alt="{{image}}" class="avatar">
     </div>
     <div class="containeraddimage">
       <label><b>Select Wall(visible to viewer)</b></label>
@@ -91,7 +91,7 @@
    <form class="modal-content-form animate" action='/user/dashboard/changePassword' method='POST' id="form"   >
     <div class="imgcontainer">
       <span onclick="document.getElementById('changePass').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="{{image}}" alt="{{image}}" class="avatar">
+      <img src="./uploads/{{image}}" alt="{{image}}" class="avatar">
     </div>
     <div class="containeraddimage">
       <label><b>New Password</b></label>
@@ -112,7 +112,7 @@
       <form class="modal-content-form animate" action='/user/dashboard/addImage' method='POST' id="form" enctype="multipart/form-data"  >
         <div class="imgcontainer">
           <span onclick="document.getElementById('addimgdiv').style.display='none'" class="close" title="Close Modal">&times;</span>
-          <img src="{{image}}" alt="{{image}}" class="avatar">
+          <img src="./uploads/{{image}}" alt="{{image}}" class="avatar">
         </div>
 
         <div class="containeraddimage">
@@ -135,7 +135,7 @@
           {{#each imagesArr}}
           <li class='flex-item'>
             <a href="./wall/viewImage?userWall={{../username}}&image={{this.image}}&description={{this.description}}">
-              <div class='size' style='background-image:url("{{this.image}}")'>
+              <div class='size' style='background-image:url("./uploads/{{this.image}}")'>
                 <img src="null.png" alt="" class='size' style="height:100%; width:100%;">
               </div>
             </a> 

@@ -112,7 +112,7 @@ app.get('/unseenMessage', function(req, res){
     //deleting a client
     socket.on('disconnect', function(){
       console.log('user disconnected',socket.id);
-      if(typeof users!=='undefined')
+      if(users.length!==0)
       {
         const username=users.reduce(ele=>ele.socketId===socket.id)
         users=users.filter(ele=>ele.socketId!==socket.id)

@@ -19,7 +19,7 @@ const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,change_userPas
 
 let storage=multer.diskStorage({
   destination:function(req,res,cb){
-    cb(null,path.join(__dirname,'..\\account\\uploads\\'))
+    cb(null,path.join(__dirname,'..\\uploads\\'))
   },
   filename:function(req,file,cb){
     cb(null,Date.now()+file.originalname)

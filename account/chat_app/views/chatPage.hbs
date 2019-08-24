@@ -27,15 +27,17 @@
 			    <input class='searchInput' type="text" name='searchUser' placeholder="search user to chat..">
 			    <button class='searchBtn' type="submit">search</button>		 
 			 </form> 
-          </div>
+			 <input type="hidden" value='{{username}}'id='username'>  
+		  </div>
+		  <div class='dropdown'>
+			<button  class='addbutton' style="width:auto;">recieved messages</button>
+			<div class="dropdown-content" style="left:0;" id='waitingMsg'>
+			</div>
+		  </div>
+        </div>
 		  	
-			<input type="hidden" value='{{username}}'id='username'>  
- 		</div>
-	   <div class='dropdown'>
-             <button  class='addbutton' style="width:auto;">messages</button>
-             <div class="dropdown-content" style="left:0;" id='waitingMsg'>
-             </div>
-            </div>
+			
+       {{#if messages}}
 		<div class=" h-100">
 			<div class="row justify-content-center h-100" style='margin-left:0px;margin-right:0px;'>
 				
@@ -44,7 +46,7 @@
 						<div class="card-header msg_head">
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
-									<img src="{{chatterImg}}" alt='pic' class="rounded-circle user_img">
+									<img src="/user/uploads/{{chatterImg}}" alt='pic' class="rounded-circle user_img">
 									<span class="online_icon"></span>
 								</div>
 								<div class="user_info">
@@ -64,7 +66,7 @@
 							</div>
 						</div>
 						<div class="card-body msg_card_body" id='chat_messages'>
-							{{#if message}}
+							
 							  {{#each message}}
 								{{#if this.recieve}}
 									<div class="d-flex justify-content-start mb-4">
@@ -82,7 +84,6 @@
 									</div>
 								{{/if}}	
 							  {{/each}}
-							{{/if}}	
 
 						</div>
 						<div class="card-footer">
@@ -100,6 +101,11 @@
 				</div>
 			</div>
 		</div>
+		{{else}}
+		<div style='text-align:center; margin:20%'>
+			<h1>SELECT USER TO CHAT</h1>
+		</div>
+	   {{/if}}	
 	</body>
 </html>
 <!-- partial -->
