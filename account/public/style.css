@@ -1,6 +1,9 @@
-body {font-family: Arial, Helvetica, sans-serif;background-color: greenyellow;}
+body {font-family: Arial, Helvetica, sans-serif;background-color: rgb(251, 253, 137);}
 
-
+.nopadding{
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+}
 .section-top{
   display:flex;
   align-items: center;
@@ -21,8 +24,8 @@ body {font-family: Arial, Helvetica, sans-serif;background-color: greenyellow;}
   justify-content: space-evenly;
   width: 100%; /* Full width */
   padding:5px;
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(194, 38, 38, 0.733); /* Black w/ opacity */ 
+  background-color: rgb(218, 173, 173); /* Fallback color */
+  background-color: rgba(255, 238, 0, 0.233); /* Black w/ opacity */ 
 }
 /* Full-width input fields */
 input[type=text], input[type=file],input[type=password] {
@@ -36,17 +39,17 @@ input[type=text], input[type=file],input[type=password] {
 
 /* Set a style for all buttons */
 .addbutton {
-  background-color: #4CAF50;
+  background-color: rgb(72, 45, 230);
   color: white;
   padding: 10px 10px;
   margin: 8px 0;
-  border: none;
+  border: 1px dashed cyan;
   cursor: pointer;
   width: 100%;
 }
 
-button:hover {
-  background-color: rgb(158, 206, 160);
+.addbutton:hover {
+  background-color: rgb(33, 150, 247)
 }
 
 /* Extra styles for the cancel button */
@@ -56,7 +59,9 @@ button:hover {
   padding: 10px 18px;
   background-color: #f44336;
 }
-
+.cancelbtn:hover{
+  background-color: crimson;
+}
 /* Center the image and position the close button */
 .imgcontainer {
   text-align: center;
@@ -65,7 +70,8 @@ button:hover {
 }
 
 img.avatar {
-  width: 30%;
+  width: 40vh;
+  height:40vh;
   border-radius: 50%;
 }
 
@@ -73,6 +79,10 @@ img.avatar {
   padding: 16px;
 }
 
+.container{
+  padding-top:10px;
+  padding-bottom:10px;
+}
 span.psw {
   float: right;
   padding-top: 16px;
@@ -106,7 +116,7 @@ span.psw {
   position: absolute;
   right: 25px;
   top: 0;
-  color: #000;
+  color: rgb(0, 0, 0);
   font-size: 35px;
   font-weight: bold;
 }
@@ -144,8 +154,12 @@ body, html {
 #profilepic{
   border-radius:100%;
   align-self: center;
-  width:100%;  
-  border:1px solid black
+  width:95%;
+  height:95%;  
+  border:1px solid black;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .flex-container {
@@ -160,6 +174,7 @@ body, html {
   -webkit-flex-flow: row wrap;
   justify-content: flex-end;
   flex-direction: row-reverse;
+  align-content: center;
 }
 
 .flex-item {
@@ -175,6 +190,7 @@ body, html {
   font-size: 15px;
   text-align: center;
   object-fit: cover;
+  align-items: center;
   
 }
 
@@ -182,11 +198,10 @@ a{
   text-decoration: none;
 }
 .size{
-  height:70% ;
-  width:100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  align-items: center;
+  text-align:center;
+  width:22vw;
+  height: 22vw;
 }
 
 
@@ -220,7 +235,11 @@ a{
     max-height: 30%;  
     
   }
-    
+  
+  .size{
+    width:22vw;
+    height: 22vw;
+  }
 
 }
 
@@ -233,33 +252,47 @@ a{
   from {transform: scale(0)} 
   to {transform: scale(1)}
 }
+@media screen and (min-width: 900px) {
+  
 
+}
 /* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 600px) {
+  
   span.psw {
      display: block;
      float: none;
   }
  
+  .size{
+    width:26vw;
+    height: 26vw;
+  }
+  
+img.avatar {
+  width: 25vh;
+  height:25vh;
+  border-radius: 50%;
+}
   .modal-content-form {
-  background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
   }
 
   
   #profilepic{
     border-radius:100%;
     align-self: center;
-    width:100%;
+    width:95%;
+    height:95%;
   }
 
   .addbutton {
-    padding: 5px 10px;
     margin: 1px 0;
     font-size: 1em;
-   
+    padding-top:10px;
   }
 }
 

@@ -1,5 +1,6 @@
 body{
     margin:0px;
+    background-color: yellow
 }
 .menu{
   display:flex;
@@ -49,22 +50,26 @@ input[type=search] {
     width: 15%;
   }
   
-a{
+a.web{
     color: aquamarine;
     text-decoration:none;
 }  
+a.web:hover{
+  text-decoration: none;
+  color: white;
+}
 
-.dropdown {
+.dropdownNav {
     position: relative;
     display: inline-block;
   }
 
-.dropbtn {
+.dropbtnNav {
     background-color: Transparent ; 
     color: aquamarine;
     border-radius: 15px;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
     padding-top:10px;
     padding-bottom:10px;
     font-size: 16px;
@@ -73,30 +78,31 @@ a{
   }
   
   
-  .dropdown-content {
+  .dropdown-contentNav {
     display: none;
     position: absolute;
     right: 0;
     background-color: #f9f9f9;
-    min-width: 160px;
+    max-width: 20vw;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    font-size: 1.5em !important;
   }
   
-  .dropdown-content a {
+  .dropdown-contentNav a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
   }
   
-  .dropdown-content a:hover {background-color: #f1f1f1;}
+  .dropdown-contentNav a:hover {background-color: #f1f1f1;}
   
-  .dropdown:hover .dropdown-content {
+  .dropdownNav:hover .dropdown-contentNav {
     display: block;
   }
   
-  .dropdown:hover .dropbtn {
+  .dropdownNav:hover .dropbtnNav {
     background-color: #2e3b2f;
   }
 @media screen and (max-width: 600px) {

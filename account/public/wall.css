@@ -7,11 +7,7 @@ body, html {
 
 
 .bg {
-  
-  /* Full height */
   height: 50%; 
-
-  /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -21,8 +17,9 @@ body, html {
 #profilepic{
   border-radius:100%;
   align-self: center;
-  width:20%;
-  height:50%;
+  width:10vw;
+  height: 10vw;
+  margin: 1%
 }
 
 .flex-container {
@@ -80,7 +77,8 @@ a{
   #profilepic{
     border-radius:100%;
     align-self: center;
-    width:30%;
-    height:30%;
-}
+    width:27vw;
+    height: 27vw;
+    margin: 2%
+  }
 }
