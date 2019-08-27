@@ -56,6 +56,17 @@ const get_allLogins=()=>{
                     return true
                 })
                 .catch(err=>console.log('error in saving in collection images '))
+                get_db()
+                .then(db=>db.collection('unseenChatCollection'))
+                .catch(err=>console.log('error in accessing in collection unseenChat '))
+                .then(collection=>{
+                    add={username:Id_info.username,
+                        unseenChats:[]
+                    }
+                    collection.insertOne(add)
+                    return true
+                })
+                .catch(err=>console.log('error in adding in collection messages '))                                   
                 .then(ha=>get_db())
                 .then(db=>db.collection('loginIds'))
                 .then(collection=>collection.insertOne(Id_info))
@@ -138,7 +149,7 @@ const change_onlineStatus=(username,status)=>
     
 
 
-     const change_chatStatus=(username,status)=>
+const change_chatStatus=(username,status)=>
      get_db()
      .then(db=>db.collection('loginIds'))
      .catch(err=>{

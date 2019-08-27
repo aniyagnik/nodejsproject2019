@@ -5,7 +5,7 @@ let path=require('path')
 const hbs=require('hbs')
 hbs.registerPartials(path.join(__dirname,'../partials'))
 
-const {check_chatCollection,add_recievedChatComment,add_sendChatComment,get_userChat,save_unseenChat}=require('../../database/chatCollection')
+const {check_chatCollection,add_recievedChatComment,add_sendChatComment,get_userChat,save_unseenChats,get_unseenUserChats,delete_unseenUserChats}=require('../../database/chatCollection')
 const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc,change_chatStatus,change_onlineStatus}=require('../../database/IdsCollection')
 app.use(express.static((__dirname)+'/public'))
 app.set('view engine', 'hbs')
@@ -16,43 +16,48 @@ let users=[]
     console.log('in chat get') 
     if(req.user)
     {
-      let chatterImg
+      let chatterImg,unseenChats
       const chatWith=req.query.searchUser
       const {username}=req.user
       const {senderMsg}=req.params
       const {sender}=req.params
-      if(typeof chatWith!=='undefined')
-      {
-        change_chatStatus(username,true)
-        .then(res=>get_loginAcc(chatWith))
-        .then(document=>{//console.log("user found : ",document)
-              if(document!==null)
-              {
-                chatterImg=document.image
-                return true
-              }  
-              else{
-                res.redirect('/user/chat?return=no-such-user') 
-              }
-        })
-        .then(hmm=>get_userChat(username,chatWith))  
-        .then(chat=>{
-          console.log('chat is this : ',chat)
-          if(chat!==null)
-          {
-            let {message}=chat
-            console.log("geting chat for displaying",chatWith,message,chatterImg)
-            res.render('chatPage',{username,chatWith,message,chatterImg})
-          }
-          else{
-            res.render('chatPage',{username,chatWith})
-          }
-        })  
-      }
-      else{
-        change_chatStatus(username,true)
-        .then(as=>res.render('chatPage',{username}))
-      }
+      get_unseenUserChats(username)
+      .then(document=>{console.log('undeen chats arae : ',document); unseenChats=document;return true})
+      .then(val=>{
+        if(typeof chatWith!=='undefined')
+        {
+          change_chatStatus(username,true)
+          .then(res=>get_loginAcc(chatWith))
+          .then(document=>{//console.log("user found : ",document)
+                if(document!==null)
+                {
+                  chatterImg=document.image
+                  return true
+                }  
+                else{
+                  res.redirect('/user/chat?return=no-such-user') 
+                }
+          })
+          .then(hmm=>get_userChat(username,chatWith))  
+          .then(chat=>{
+           // console.log('chat is this : ',chat)
+            if(chat!==null)
+            {
+              let {message}=chat
+             // console.log("geting chat for displaying",chatWith,message,chatterImg)
+              res.render('chatPage',{username,chatWith,message,chatterImg,unseenChats})
+            }
+            else{
+              res.render('chatPage',{username,chatWith,chatterImg,unseenChats})
+            }
+          })  
+        }
+        else{
+          change_chatStatus(username,true)
+          .then(as=>res.render('chatPage',{username,unseenChats}))
+        }  
+      })
+      
     }
     else
     {
@@ -106,7 +111,7 @@ app.get('/unseenMessage', function(req, res){
                    socketId:userInfo.socketId
                 }
       users.push(user)
-       console.log('all active users :: ',users)
+       //console.log('all active users :: ',users)
     })
 
     //deleting a client
@@ -116,7 +121,7 @@ app.get('/unseenMessage', function(req, res){
       {
         const username=users.reduce(ele=>ele.socketId===socket.id)
         users=users.filter(ele=>ele.socketId!==socket.id)
-        console.log('on removal of one user',users)
+       // console.log('on removal of one user',users)
         if(typeof username!=='undefined')
            console.log('changing chat staus to false') 
            change_chatStatus(username,false)
@@ -124,10 +129,12 @@ app.get('/unseenMessage', function(req, res){
     });
 
     
+    
+
     //reading a message and then sending
     socket.on('message',(msg_taken)=>{
       //console.log('in message index',msg_taken.message)
-      console.log("message send to : ",msg_taken.selected_user)
+      console.log("message send to : "+msg_taken.selected_user+'by '+msg_taken.user)
       const reciever=users.find(ele=>ele.username===msg_taken.selected_user)
       console.log('reciever is :',reciever)
       if(typeof reciever!=="undefined")
@@ -142,22 +149,26 @@ app.get('/unseenMessage', function(req, res){
       else{
         add_sendChatComment(msg_taken.user,msg_taken.selected_user,msg_taken.message)
         .then(val=>add_recievedChatComment(msg_taken.selected_user,msg_taken.user,msg_taken.message))
-        .then(val=>add_unseenChat(msg_taken.selected_user,msg_taken.user,msg_taken.message))
+        .then(val=>save_unseenChats(msg_taken.selected_user,msg_taken.user,msg_taken.message))
       }
       
     })
 
-    //reading a message and then sending
+    //recieved message
     socket.on('messageRecieved',(msg_taken)=>{
-      //console.log('in message index',msg_taken.message)
-      //console.log(msg_taken.selected_user)
-      console.log('recieverand sender is :',msg_taken.reciever,msg_taken.sender)
-        
+      console.log('reciever and sender is :',msg_taken.reciever,msg_taken.sender)
+      save_unseenChats(msg_taken.reciever,msg_taken.sender,msg_taken.message)
     })
+
+    socket.on('deleteUnseen',msg_taken=>{
+      console.log('deleted unseen of : ',msg_taken.sender)
+      delete_unseenUserChats(msg_taken.reciever,msg_taken.sender)
+    });
+    
   });
 
-  
-  
+ 
+
   return app;
 }
  /*if(typeof senderMsg!=='undefined' && users!== 'undefined')

@@ -32,12 +32,30 @@
 		  <div class='dropdown'>
 			<button  class='addbutton' style="width:auto;">recieved messages</button>
 			<div class="dropdown-content" style="left:0;" id='waitingMsg'>
+				{{#if unseenChats}}
+				  {{#each unseenChats}}
+				     <div  id='unseenMsg' > 
+                                    <form action='/user/chat/unseenMessage?chatWith=${res_msg.user}' method='GET' onSubmit='return deleteUnseen(this);'>
+                                    <p style="color: chocolate" open=''>
+                                        <p style='color:black; font-style:bold;'>{{this.sender}}</p>
+                                        <input type='hidden' value='${res_msg.user}' name='senderUser' id='senderUser'>
+                                        <p> {{this.unseenMessage}}   {{this.count}}</p>
+                                        <button id='msgLink' type='submit'>chat</button>
+                                    </p>
+                                    </form>
+                                </div>
+				  {{/each}}
+				{{else}}
+				   <div id='unseenMsg'>
+					   <p>No Unseen Message</p>
+				   </div>  
+				{{/if}}
 			</div>
 		  </div>
         </div>
 		  	
 			
-       {{#if messages}}
+       {{#if chatWith}}
 		<div class=" h-100">
 			<div class="row justify-content-center h-100" style='margin-left:0px;margin-right:0px;'>
 				
@@ -52,7 +70,7 @@
 								<div class="user_info">
 									<span>Chat with {{chatWith}}</span>
 									<input type="hidden" value='{{chatWith}}' id='chatUser'>
-									<p>1767 messages</p>
+									{{!-- <p>1767 messages</p> --}}
 								</div>
 							</div>
 							<span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>

@@ -62,23 +62,23 @@ socket.on('connected', () => {
                                         <span class="msg_time">8:40 AM, Today</span>
                                     </div>
                                 </div>`))
-            socket.emit("messageRecieved",{
-                reciever:my_username,
-                sender:selected_user,
-                message:res_msg.message
-            })                    
         }
         else{
             waitingMsg.append($(`<div  id='unseenMsg' > 
-                                    <form action='/user/chat/unseenMessage?chatWith=${res_msg.user}' method='GET'>
+                                    <form action='/user/chat/unseenMessage?chatWith=${res_msg.user}' method='GET' onSubmit='return deleteUnseen(this);'>
                                     <p style="color: chocolate" open=''>
                                         <p style='color:black; font-style:bold;'>${res_msg.user}</p>
-                                        <input type='hidden' value='${res_msg.user}' name='senderUser'>
+                                        <input type='hidden' value='${res_msg.user}' name='senderUser' id='senderUser'>
                                         <p>${res_msg.message}</p>
                                         <button id='msgLink' type='submit'>chat</button>
                                     </p>
                                     </form>
                                 </div>`))
+            socket.emit("messageRecieved",{
+                reciever:my_username,
+                sender:res_msg.user,
+                message:res_msg.message
+            })                              
         }                                                                
     })
 
@@ -88,3 +88,12 @@ $(document).ready(function(){
     });
 });
     
+
+function deleteUnseen(form){
+    console.log('deleting unssen user chat ',form.unseenUser.value)
+    socket.emit('deleteUnseen',{
+        reciever:my_username,
+        sender:form.unseenUser.value
+    })
+    return true
+}
