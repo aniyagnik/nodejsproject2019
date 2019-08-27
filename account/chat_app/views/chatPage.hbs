@@ -34,12 +34,12 @@
 			<div class="dropdown-content" style="left:0;" id='waitingMsg'>
 				{{#if unseenChats}}
 				  {{#each unseenChats}}
-				     <div  id='unseenMsg' > 
+				     <div  id='unseenMsg {{this.sender}}'> 
                                     <form action='/user/chat/unseenMessage?chatWith=${res_msg.user}' method='GET' onSubmit='return deleteUnseen(this);'>
                                     <p style="color: chocolate" open=''>
                                         <p style='color:black; font-style:bold;'>{{this.sender}}</p>
                                         <input type='hidden' value='${res_msg.user}' name='senderUser' id='senderUser'>
-                                        <p> {{this.unseenMessage}}   {{this.count}}</p>
+                                        <p id='uMsg{{this.sender}}'> {{this.unseenMessage}}   {{this.count}}</p>
                                         <button id='msgLink' type='submit'>chat</button>
                                     </p>
                                     </form>

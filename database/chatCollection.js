@@ -213,10 +213,11 @@ const delete_unseenUserChats=(username,chatWith)=>
         username:username,
       },
       {
-        $pull: { 'unseenChats': { 'chatWith': chatWith  }}
+        $pull: { 'unseenChats': { 'sender': chatWith  }}
       }
     )
   )
+  .catch(err=>{console.log('err in deleting unseen chat : ',err)})
   
 
 module.exports={

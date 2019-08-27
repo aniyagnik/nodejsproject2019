@@ -64,16 +64,23 @@ socket.on('connected', () => {
                                 </div>`))
         }
         else{
-            waitingMsg.append($(`<div  id='unseenMsg' > 
-                                    <form action='/user/chat/unseenMessage?chatWith=${res_msg.user}' method='GET' onSubmit='return deleteUnseen(this);'>
-                                    <p style="color: chocolate" open=''>
-                                        <p style='color:black; font-style:bold;'>${res_msg.user}</p>
-                                        <input type='hidden' value='${res_msg.user}' name='senderUser' id='senderUser'>
-                                        <p>${res_msg.message}</p>
-                                        <button id='msgLink' type='submit'>chat</button>
-                                    </p>
-                                    </form>
-                                </div>`))
+            let unseenUserChat=$(`#uMsg${res_msg.user}`)
+            if(k==null)
+            {
+                waitingMsg.append($(`<div  id='unseenMsg' > 
+                                        <form action='/user/chat/unseenMessage?chatWith=${res_msg.user}' method='GET' onSubmit='return deleteUnseen(this);'>
+                                        <p style="color: chocolate" open=''>
+                                            <p style='color:black; font-style:bold;'>${res_msg.user}</p>
+                                            <input type='hidden' value='${res_msg.user}' name='senderUser' id='senderUser'>
+                                            <p>${res_msg.message}</p>
+                                            <button id='msgLink' type='submit'>chat</button>
+                                        </p>
+                                        </form>
+                                    </div>`))
+            }
+            else{
+                unseenUserChat.text(`${res_msg.message}`)
+            }                    
             socket.emit("messageRecieved",{
                 reciever:my_username,
                 sender:res_msg.user,

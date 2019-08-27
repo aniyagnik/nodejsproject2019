@@ -76,13 +76,16 @@ app.get('/unseenMessage', function(req, res){
       .then(document=>{console.log("user found : ",document)
             if(document!==null)
             {
-              console.log('in unseen post sending render')
-              res.redirect(url.format({
-                pathname:"/user/chat",
-                query: {
-                  searchUser:chatWith
-                 }
-              }))
+              delete_unseenUserChats(username,chatWith)
+              .then(hm=>{
+                console.log('in unseen post sending render')
+                res.redirect(url.format({
+                  pathname:"/user/chat",
+                  query: {
+                    searchUser:chatWith
+                  }
+                }))
+              })
             }  
             else{
               res.redirect('/user/chat?return=no-such-user') 
