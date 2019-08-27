@@ -65,7 +65,7 @@ socket.on('connected', () => {
         }
         else{
             let unseenUserChat=$(`#uMsg${res_msg.user}`)
-            if(k==null)
+            if(unseenUserChat==null)
             {
                 waitingMsg.append($(`<div  id='unseenMsg' > 
                                         <form action='/user/chat/unseenMessage?chatWith=${res_msg.user}' method='GET' onSubmit='return deleteUnseen(this);'>

@@ -1,0 +1,25 @@
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../public/navbar.css" > 
+
+<div class='menu'>
+    <div class='inside-menu'>
+        <a href="#">Website Name</a>
+    </div>
+    <div class='inside-menu' style="flex-grow: 7">
+    <form  action='/user/dashboard/search' method="POST">
+        <input  type="search" placeholder="Search other users..." name='searchUser'  />
+        <button  type="submit" class='submitbutton fa fa-search'>
+        </button>
+    </form>
+    </div>
+    <div class='inside-menu'>
+        <div class="dropdown" >
+            <button class="dropbtn" style="border:1px solid cyan;">account</button>
+            <div class="dropdown-content">
+            <a href="/user/dashboard" class='fa fa-home'>dashboard</a>
+            <a href="/user/logout" class='fa fa-sign-out'>logout</a>
+            </div>
+    </div>
+</div>

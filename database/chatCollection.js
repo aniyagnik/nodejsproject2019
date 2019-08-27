@@ -47,7 +47,7 @@ const  get_userChat =(username,chatWith)=>
         return null
       }  
       else{      
-      console.log('username matched, user reciever chat is',document)
+      console.log('username matched, user reciever chat ')
             return document
       }
     })
@@ -76,7 +76,7 @@ const add_sendChatComment=(username,chatWith,message)=>
       )
     ) 
     .then(result=>{
-        console.log('add_sendChatComment : ',result.message.documents)
+        console.log('saved add_sendChatComment  ')
         return result
     })
     .catch(err=>{console.log('error in finding username for image ',err)
@@ -107,7 +107,7 @@ const add_recievedChatComment=(username,chatWith,message)=>
     ) 
 
     .then(result=>{
-        console.log('add_recievedChatComment : ',result)
+        console.log('add_recievedChatComment  ')
         return result
     })
     .catch(err=>{console.log('error in finding username for reciving msg ',err)
@@ -144,7 +144,7 @@ async function save_unseenChats(username,sender,message){
             { upsert : true }
         )) 
         .then(result=>{
-            console.log('save unseenChatComment sub array pushed : ',result)
+            console.log('save unseenChatComment sub array pushed  ')
             return result
         })
         .catch(err=>{console.log('no  username like this exists  for unseen message ',err)
@@ -175,13 +175,13 @@ async function save_unseenChats(username,sender,message){
       ) 
 
       .then(result=>{
-          console.log('save_unseenChatComment : ',result)
+          console.log('saved unseenChatComment ' )
           return result
       })
       .catch(err=>{console.log('error in finding username for reciving msg ',err)
                           return null
       })    
-  console.log('updated value : ',update)
+ // console.log('updated value : ',update)
   return true  
 }
     
@@ -199,7 +199,7 @@ const  get_unseenUserChats =(username)=>
       return null
     }  
     else{      
-    console.log('username matched,unssen chat are ',document)
+    console.log('username matched,unssen chat available ')
           return document.unseenChats
     }
   })
@@ -230,59 +230,3 @@ module.exports={
   delete_unseenUserChats
 }    
 
-
-/*
-
-
-    const save_unseenChats=(username,chatWith,message)=>
-    get_db()
-    .then(db=>db.collection('chatCollection'))
-    .then(collection=>collection.findOneAndUpdate(
-        {
-            $and:[
-                  {
-                    username:username,
-                    chatWith:chatWith
-                  }
-                ]  
-        },
-        {
-            '$push':{
-                  message:message
-            }
-        },
-        { upsert : true }
-      )
-    ) 
-
-    .then(result=>{
-        console.log('save_unseenChatComment : ',result)
-        return result
-    })
-    .catch(err=>{console.log('error in finding username for reciving msg ',err)
-                        return null
-    })    
-
-
-//get one login Id requested by client through username
-const  get_unseenUserChats =(username)=>
-  get_db()
-  .then(db=>db.collection('unseenChatCollection'))
-  .catch(err=>{
-      console.log('error in collection')
-  })
-  .then(collection=>collection.find({username:username}))  
-  .then(cursor=>cursor.toArray())
-  .then(document=>{
-    console.log("documents is : ",document)
-    if(typeof document.id=='undefined'){
-      console.log('no chat for username for chatting showing unssen chat')
-      return null
-    }  
-    else{      
-    console.log('username matched,unssen chat are ',document.documents)
-          return document.documents
-    }
-  })
-
-*/
