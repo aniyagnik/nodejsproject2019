@@ -1,5 +1,6 @@
 const url = require('url');
 const express=require('express')
+const date = require('date-and-time');
 var app = express();
 let path=require('path')
 const hbs=require('hbs')
@@ -136,6 +137,8 @@ app.get('/unseenMessage', function(req, res){
     //reading a message and then sending
     socket.on('message',(msg_taken)=>{
       //console.log('in message index',msg_taken.message)
+      const now = new Date();
+      date.format(now, 'ddd., MMM. DD YYYY'); 
       console.log("message send to : "+msg_taken.selected_user+'by '+msg_taken.user)
       const reciever=users.find(ele=>ele.username===msg_taken.selected_user)
       console.log('reciever is :',reciever)
@@ -145,13 +148,14 @@ app.get('/unseenMessage', function(req, res){
           user:msg_taken.user,
           message:msg_taken.message,
         })
-        add_sendChatComment(msg_taken.user,msg_taken.selected_user,msg_taken.message)
-        .then(val=>add_recievedChatComment(msg_taken.selected_user,msg_taken.user,msg_taken.message))
+       
+        add_sendChatComment(msg_taken.user,msg_taken.selected_user,msg_taken.message,now)
+        .then(val=>add_recievedChatComment(msg_taken.selected_user,msg_taken.user,msg_taken.message,now))
       }
       else{
-        add_sendChatComment(msg_taken.user,msg_taken.selected_user,msg_taken.message)
-        .then(val=>add_recievedChatComment(msg_taken.selected_user,msg_taken.user,msg_taken.message))
-        .then(val=>save_unseenChats(msg_taken.selected_user,msg_taken.user,msg_taken.message))
+        add_sendChatComment(msg_taken.user,msg_taken.selected_user,msg_taken.message,now)
+        .then(val=>add_recievedChatComment(msg_taken.selected_user,msg_taken.user,msg_taken.message,now))
+        .then(val=>save_unseenChats(msg_taken.selected_user,msg_taken.user,msg_taken.message,now))
       }
       
     })
@@ -159,11 +163,13 @@ app.get('/unseenMessage', function(req, res){
     //recieved message
     socket.on('messageRecieved',(msg_taken)=>{
       console.log('reciever and sender is :',msg_taken.reciever,msg_taken.sender)
-      save_unseenChats(msg_taken.reciever,msg_taken.sender,msg_taken.message)
+      const now = new Date();
+      date.format(now, 'ddd., MMM. DD YYYY'); 
+      save_unseenChats(msg_taken.reciever,msg_taken.sender,msg_taken.message,now)
     })
 
     socket.on('deleteUnseen',msg_taken=>{
-      console.log('deleted unseen of : ',msg_taken.sender)
+      console.log('DELETED UNSEEN OF : ',msg_taken.sender)
       delete_unseenUserChats(msg_taken.reciever,msg_taken.sender)
     });
     

@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/aniyagnik/nodejsproject2019#readme",
   "dependencies": {
+    "date-and-time": "^0.9.0",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
     "hbs": "^4.0.4",

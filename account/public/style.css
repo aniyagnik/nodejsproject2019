@@ -206,6 +206,7 @@ body, html {
 a{
   text-decoration: none;
 }
+a.hover{text-decoration: none;}
 .size{
   align-items: center;
   text-align:center;

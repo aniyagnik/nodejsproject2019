@@ -93,11 +93,11 @@ $(document).ready(function(){
 });
     
 
-function deleteUnseen(form){
-    console.log('deleting unssen user chat ',form.senderUser.value)
+function deleteUnseen(user){
+    console.log('deleting unssen user chat ',user)
     socket.emit('deleteUnseen',{
         reciever:my_username,
-        sender:form.senderUser.value
+        sender:user
     })
     return true
 }

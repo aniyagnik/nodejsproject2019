@@ -53,7 +53,7 @@ const  get_userChat =(username,chatWith)=>
     })
     .catch(err=>{console.log("username not found in chatCollection",err)})
 
-const add_sendChatComment=(username,chatWith,message)=>
+const add_sendChatComment=(username,chatWith,message,date)=>
     get_db()
     .then(db=>db.collection('chatCollection'))
     .then(collection=>collection.updateOne(
@@ -68,7 +68,8 @@ const add_sendChatComment=(username,chatWith,message)=>
         {
             '$push':{
                   message:{
-                      sent:message
+                      sent:message,
+                      date:date
                   }
                 }
         },
@@ -83,7 +84,7 @@ const add_sendChatComment=(username,chatWith,message)=>
                         return null
     })    
 
-const add_recievedChatComment=(username,chatWith,message)=>
+const add_recievedChatComment=(username,chatWith,message,date)=>
     get_db()
     .then(db=>db.collection('chatCollection'))
     .then(collection=>collection.findOneAndUpdate(
@@ -98,7 +99,8 @@ const add_recievedChatComment=(username,chatWith,message)=>
         {
             '$push':{
                   message:{
-                      recieve:message
+                      recieve:message,
+                      date:date
                   }
                 }
         },
@@ -115,7 +117,7 @@ const add_recievedChatComment=(username,chatWith,message)=>
     })    
 
 
-async function save_unseenChats(username,sender,message){
+async function save_unseenChats(username,sender,message,date){
   let exists= await get_db()
     .then(db=>db.collection('unseenChatCollection'))
     .then(collection=>collection.findOne({
@@ -137,7 +139,9 @@ async function save_unseenChats(username,sender,message){
                       unseenChats:{
                           sender:sender,
                           unseenMessage:'',
-                          count:0
+                          count:0,
+                          date:date
+
                       }
                     }
             },
@@ -166,7 +170,8 @@ async function save_unseenChats(username,sender,message){
           },
           {
               '$set':{
-                    'unseenChats.$.unseenMessage':message 
+                    'unseenChats.$.unseenMessage':message, 
+                    'unseenChats.$.date':date, 
               }
           },
           {$inc:{'unseenMessages.$.count':1}},
@@ -217,6 +222,7 @@ const delete_unseenUserChats=(username,chatWith)=>
       }
     )
   )
+  .then(ha=>{console.log('user deleted',ha.message.documents)})
   .catch(err=>{console.log('err in deleting unseen chat : ',err)})
   
 

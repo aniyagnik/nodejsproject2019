@@ -31,13 +31,12 @@
                 {{#if unseenChats}}
                 {{#each unseenChats}}
                     <div  id='unseenMsg {{this.sender}}'> 
-                                    <a href='/user/chat/unseenMessage?chatWith={{this.sender}}'  onclick='return deleteUnseen(this);'>
+                                    <a href='/user/chat/unseenMessage?senderUser={{this.sender}}'  onclick='return deleteUnseen("{{this.sender}}");'>
                                         <p style='color:crimson; font-weight:1000;font-size:1.5em;padding:1.8%; background-color:cyan' >{{this.sender}}</p>
                                         <input type='hidden' value='{{this.sender}}' name='senderUser' id='senderUser'>
-                                        <p id='uMsg{{this.sender}}'> {{this.unseenMessage}}   {{this.count}}</p>
+                                        <p id='uMsg{{this.sender}}'> {{this.unseenMessage}}   {{this.count}} <span><small>{{this.date}}</small></span></p>
                                     </a>
-									<br>
-									<hr width="100%">
+									<hr width="100%" style='border:1px solid black'>
                                 </div>
                 {{/each}}
                 {{else}}
@@ -84,16 +83,14 @@
 									<div class="d-flex justify-content-start mb-4">
 										<div class="msg_cotainer">
 											{{this.recieve}}
-											<span class="msg_time"  style='min-width:30vw' >8:40 AM, Today</span>
+											<span class="msg_time"  style='min-width:30vw' >{{this.date}}</span>
 										</div>
 									</div>
 								{{else}}
 									<div class="d-flex justify-content-end mb-4">
 									<div class="msg_cotainer_send" >
 										{{this.sent}}
-									  
-										  <span class=" msg_time_send"  style='min-width:30vw; text-align:right;'>8:55 AM, Today</span>
-									 
+										  <span class=" msg_time_send"  style='min-width:30vw; text-align:right;'>{{this.date}}</span>
 									</div>
 									</div>
 								{{/if}}	

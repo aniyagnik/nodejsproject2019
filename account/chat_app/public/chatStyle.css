@@ -12,7 +12,10 @@ body, html {
   margin-top: auto;
   margin-bottom: auto;
 }
-
+a:hover{
+  text-decoration: none;
+  color:black;
+}
 .dropdown-content {
   display: none;
   position: absolute;
