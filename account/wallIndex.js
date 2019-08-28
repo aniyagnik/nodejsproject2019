@@ -31,7 +31,7 @@ app.get('/',(req,res)=>{
             res.render('wall',{findinguser,userpic,imagesArr,wallpic,userWall})
         })
     }
-    else{res.redirect('/')}
+    else{res.redirect('/access-denied')}
 })
 
 
@@ -52,7 +52,7 @@ app.get('/viewImage',(req,res)=>{
         })
        
     }
-    else{res.redirect('/')}
+    else{res.redirect('/access-denied')}
 })
 
 app.post('/viewImage',(req,res)=>{
@@ -71,7 +71,7 @@ app.post('/viewImage',(req,res)=>{
             res.sendStatus(200)
         })
     }
-    else{res.redirect('/')}  
+    else{res.redirect('/access-denied')}  
 })
 
 

@@ -9,11 +9,14 @@ var io = require('socket.io')(http);
 app.use(express.urlencoded({extended: true}))
 
 
-app.get('/error',(req,res)=>{
-  message="haah ahhahaha ha"
-  res.render('error.hbs',{message})
+app.get('/access-denied',(req,res)=>{
+  res.sendFile(path.join(__dirname,'error pages/403.html'))
 })
 
+
+app.get('/not-found',(req,res)=>{
+  res.sendFile(path.join(__dirname,'error pages/404.html'))
+})
 
 app.use('/user/uploads',express.static(path.join(__dirname,'uploads')))
 

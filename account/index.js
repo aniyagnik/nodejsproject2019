@@ -47,7 +47,7 @@ app.get('/dashboard',(req,res)=>{
         })
     }
     else{
-        res.redirect('/')
+        res.redirect('/access-denied')
     }
    
 })
@@ -66,7 +66,7 @@ app.post('/dashboard/addImage',upload.single('Uimages'),(req,res)=>{
         })
     }
     else{
-        res.redirect('/')
+        res.redirect('/access-denied')
     }
    
 })
@@ -83,7 +83,7 @@ app.post('/dashboard',upload.single('profilePic'),(req,res)=>{
         })
     }
     else{
-        res.redirect('/')
+        res.redirect('/access-denied')
     }
 })
 
@@ -100,7 +100,7 @@ app.post('/dashboard/edit',upload.single('wallPic'),(req,res)=>{
         })
     }
     else{
-        res.redirect('/')
+        res.redirect('/access-denied')
     }
 })
 
@@ -116,7 +116,7 @@ app.post('/dashboard/search',(req,res)=>{
                 res.redirect('/user/wall?findinguser='+req.user.username+'&userpic='+document.image+'&wallpic='+document.wallPic +'&userWall='+req.body.searchUser) 
              }  
              else{
-                res.redirect('/user/dashboard?return=no-such-user') 
+                res.redirect('/not-found') 
              }
        })
        .catch(err=>{
@@ -125,7 +125,7 @@ app.post('/dashboard/search',(req,res)=>{
        })
     }
     else{
-        res.redirect('/')
+        res.redirect('/access-denied')
     }
 })
 
@@ -150,7 +150,7 @@ app.get('/dashboard/search',(req,res)=>{
        })
     }
     else{
-        res.redirect('/')
+        res.redirect('/access-denied')
     }
 })
 
@@ -166,7 +166,7 @@ app.post('/dashboard/deleteImage',(req,res)=>{
             res.redirect('/user/dashboard')})
     }
     else{
-        res.redirect('/')
+        res.redirect('/access-denied')
     }
     
 })
@@ -180,16 +180,16 @@ app.post('/dashboard/changePassword',(req,res)=>{
             change_userPass(req.user.username,req.body.newPass,req.body.oldPass)
             .then(done=>{
                 if(done===false)
-                  res.redirect('/error')
+                  res.redirect('/not-found')
                 res.redirect('/user/dashboard')})
        }
        else{
-           console.log('password not match')
-           res.redirect('/error')
+           console.log("PASSWORDS DON'T MATHCH")
+           res.redirect('/access-denied')
        }
     }
     else{
-        res.redirect('/')
+        res.redirect('/access-denied')
     }
 })
 
@@ -202,7 +202,7 @@ app.get('/logout',(req,res)=>{
         res.redirect('/')
     }
     else{
-        res.redirect('/')
+        res.redirect('/access-denied')
     }
     
 })

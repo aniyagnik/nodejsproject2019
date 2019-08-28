@@ -35,7 +35,7 @@ let users=[]
                   return true
                 }  
                 else{
-                  res.redirect('/user/chat?return=no-such-user') 
+                  res.redirect('/not-found') 
                 }
           })
           .then(hmm=>get_userChat(username,chatWith))  
@@ -61,7 +61,7 @@ let users=[]
     }
     else
     {
-      res.redirect('/')
+      res.redirect('/access-denied')
     }
   });
 
@@ -88,7 +88,7 @@ app.get('/unseenMessage', function(req, res){
               })
             }  
             else{
-              res.redirect('/user/chat?return=no-such-user') 
+              res.redirect('/not-foundr') 
             }
       })
       .catch(err=>{
@@ -98,7 +98,7 @@ app.get('/unseenMessage', function(req, res){
   }
   else
   {
-    res.redirect('/')
+    res.redirect('/access-denied')
   }
 });
   module.exports=function(io){
