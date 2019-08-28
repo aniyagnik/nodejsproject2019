@@ -4,6 +4,10 @@ body, html {
  
 }
 
+#nopadding{
+  padding-right:-15px !important;
+  padding-left:-15px !important;
+}
 .chat {
   margin-top: auto;
   margin-bottom: auto;
@@ -15,8 +19,10 @@ body, html {
   right: 0;
   background-color: #f9f9f9;
   min-width: 160px;
+  width: 40vw;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  padding:2%;
 }
 
 .dropdown-content #unseenMsg {
@@ -274,7 +280,7 @@ body, html {
 
     
 .searchInput{
-  width: 80%;
+  width: 70vw;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -282,8 +288,14 @@ body, html {
   box-sizing: border-box;
 }
 
+a.prof:hover{
+  color:white;
+  text-decoration: none;
+}
+
 .searchBtn{
-  width: 19%;
+  float:right;
+  width: 20vw;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -295,5 +307,8 @@ body, html {
 @media (max-width: 576px) {
   .contacts_card {
     margin-bottom: 15px !important;
+  }
+  .searchBtn{
+    padding:12px 5px;
   }
 }

@@ -23,7 +23,7 @@
 
                 /* Full-width input fields */
         input[type=text] {
-        width: 86%;
+        width: 80vw;
         padding: 12px 20px;
         margin-left: 0.3%;
         margin-top:0.2%;
@@ -33,16 +33,20 @@
         }
 
         #addComment{
-            width:13%;
+            width:13vw;
             margin-left:0.2%;
             padding: 12px;
             background-color: antiquewhite;
         }
         
+        .tagUser{
+            color:blue;
+            text-decoration: none;
+        }
       
         @media screen and (max-width: 600px) {
             #addComment {
-                 width:99%;                
+                 width:99vw;                
             }
             input[type=text] {
                 width: 99%;
@@ -79,7 +83,7 @@
                 <input type="hidden" value='{{userWall}}' id='userWall'>
                 <input type="hidden" value='{{viewinguser}}' id='viewinguser'>
                 <span id='divBtn'>
-                    <button type="button" id='addComment'>Add comment  </button>
+                    <button type="button" style='float:right;margin-right:0.41%' id='addComment'>>></button>
                 </span>
                 
             </form> <br>
@@ -87,7 +91,7 @@
                 {{#each comments}}
                 <li style="font-family:'Segoe UI';font-size:1.5em;font-weight: 700;color:white;">
                    {{#if this.tagged}}
-                    <b>{{this.commentBy}}{{{" "}}}</b> : <a href="/user/dashboard/search?searchUser={{this.tagged}}"> @{{this.tagged}}</a> {{this.comment}}
+                    <b>{{this.commentBy}}{{{" "}}}</b> : <a  class='tagUser' href="/user/dashboard/search?searchUser={{this.tagged}}"> @{{this.tagged}}</a> {{this.comment}}
                    {{else}}
                      <b>{{this.commentBy}}</b> :  
                       {{this.comment}}
@@ -112,15 +116,14 @@ addComment.click(()=>{
       let viewinguser=$('#viewinguser').val()
       let arr=value.split(' ')
       var name=arr[0]
-      console.log('assd',name, arr)
       if(value[0]=='@'){
         name=name.substr(1)
         arr.shift()
         arr.shift()
         value=arr.toString()
         value=value.split(',').join(' ')
-        console.log('ha',name, arr)
-        console.log('ds',viewinguser) 
+        //console.log('ha',name, arr)
+        //console.log('ds',viewinguser) 
         comments.append($(`<li style="font-family:'Segoe UI';font-size:1.5em;font-weight: 700;color:white;"><b>${viewinguser}</b> :<a href="/user/dashboard/search?searchUser=${name}">@${name}</a> ${value}</li>`))
       }
       else{
@@ -144,7 +147,7 @@ addComment.click(()=>{
 
 comments.click((e)=>{
     const index=e.target.innerText.split(' ')[0]
-    console.log(index)
+  //  console.log(index)
     if(index[0]!=='@')
     {
         $('#comment').val(`@${index} : `)

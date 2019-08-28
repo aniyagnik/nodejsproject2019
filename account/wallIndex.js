@@ -8,10 +8,10 @@ const  { get_allComments,insert_comment,delete_comment}=require('../database/img
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
-hbs.registerPartials(path.join(__dirname+'/partials'))
+hbs.registerPartials(path.join(__dirname,'/partials'))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '/views'));
-app.use('/',express.static(path.join(__dirname,'/uploads')))
+app.use('/',express.static(path.join(__dirname,'/public')))
 
 app.get('/',(req,res)=>{
     console.log('in wall get')

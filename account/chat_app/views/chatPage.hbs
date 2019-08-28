@@ -1,66 +1,62 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Chat</title>
-  <link rel="stylesheet" href="chatStyle.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>Chat</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
-	</head>
-	<body  background= '#c23616';>
-		{{>navbar}}
-		<div style='margin:2%'> 
-			hello,{{username}}
-		  <div>
-			 <form action="/user/chat" method="GET">
-			    <input class='searchInput' type="text" name='searchUser' placeholder="search user to chat..">
-			    <button class='searchBtn' type="submit">search</button>		 
-			 </form> 
-			 <input type="hidden" value='{{username}}'id='username'>  
-		  </div>
-		  <div class='dropdown'>
-			<button  class='addbutton' style="width:auto;">recieved messages</button>
-			<div class="dropdown-content" style="left:0;" id='waitingMsg'>
-				{{#if unseenChats}}
-				  {{#each unseenChats}}
-				     <div  id='unseenMsg {{this.sender}}'> 
-                                    <form action='/user/chat/unseenMessage?chatWith=${res_msg.user}' method='GET' onSubmit='return deleteUnseen(this);'>
-                                    <p style="color: chocolate" open=''>
-                                        <p style='color:black; font-style:bold;'>{{this.sender}}</p>
-                                        <input type='hidden' value='${res_msg.user}' name='senderUser' id='senderUser'>
-                                        <p id='uMsg{{this.sender}}'> {{this.unseenMessage}}   {{this.count}}</p>
-                                        <button id='msgLink' type='submit'>chat</button>
-                                    </p>
-                                    </form>
-                                </div>
-				  {{/each}}
-				{{else}}
-				   <div id='unseenMsg'>
-					   <p>No Unseen Message</p>
-				   </div>  
-				{{/if}}
-			</div>
-		  </div>
+     <link rel="stylesheet" href="chatStyle.css"> 
+</head>
+<body>
+    {{>navbar}}
+        
+    <div style='margin:2%'> 
+        hello,{{username}}
+        <div>
+            <form action="/user/chat" method="GET">
+                <input class='searchInput' type="text" name='searchUser' placeholder="search user to chat..">
+                <button class='searchBtn' type="submit">search</button>		 
+            </form> 
+            <input type="hidden" value='{{username}}'id='username'>  
         </div>
-		  	
+        <div class='dropdown'>
+            <button  class='addbutton' style="width:auto;">recieved messages</button>
+            <div class="dropdown-content" style="left:0;" id='waitingMsg'>
+                {{#if unseenChats}}
+                {{#each unseenChats}}
+                    <div  id='unseenMsg {{this.sender}}'> 
+                                    <a href='/user/chat/unseenMessage?chatWith={{this.sender}}'  onclick='return deleteUnseen(this);'>
+                                        <p style='color:crimson; font-weight:1000;font-size:1.5em;padding:1.8%; background-color:cyan' >{{this.sender}}</p>
+                                        <input type='hidden' value='{{this.sender}}' name='senderUser' id='senderUser'>
+                                        <p id='uMsg{{this.sender}}'> {{this.unseenMessage}}   {{this.count}}</p>
+                                    </a>
+									<br>
+									<hr width="100%">
+                                </div>
+                {{/each}}
+                {{else}}
+                <div id='unseenMsg'>
+                    <p>No Unseen Message</p>
+                </div>  
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
+    {{!-- chat front --}}
+    		  	
 			
-       {{#if chatWith}}
+     {{#if chatWith}} 
 		<div class=" h-100">
-			<div class="row justify-content-center h-100" style='margin-left:0px;margin-right:0px;'>
-				
-				<div class="col-md-8 col-xl-6 col-sm-12 chat" style='flex-basis: 100%; max-width: 90%;'>
-					<div class="card">
+			<div class="row justify-content-center h-100" id='nopadding' style='margin-left:0px;margin-right:0px;'>
+				<div class="  col-md-8 col-xl-6 col-sm-12 chat " >
+					<div class="card" id='nopadding'>
 						<div class="card-header msg_head">
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
@@ -76,9 +72,7 @@
 							<span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
 							<div class="action_menu">
 								<ul>
-									<li><i class="fas fa-user-circle"></i> View profile</li>
-									<li><i class="fas fa-users"></i> Add to close friends</li>
-									<li><i class="fas fa-plus"></i> Add to group</li>
+									<li><i class="fas fa-user-circle"></i><a class='prof' href="/user/dashboard/search?searchUser={{chatWith}}">View profile</a></li>
 									<li><i class="fas fa-ban"></i> Block</li>
 								</ul>
 							</div>
@@ -90,14 +84,16 @@
 									<div class="d-flex justify-content-start mb-4">
 										<div class="msg_cotainer">
 											{{this.recieve}}
-											<span class="msg_time">8:40 AM, Today</span>
+											<span class="msg_time"  style='min-width:30vw' >8:40 AM, Today</span>
 										</div>
 									</div>
 								{{else}}
 									<div class="d-flex justify-content-end mb-4">
-									<div class="msg_cotainer_send">
+									<div class="msg_cotainer_send" >
 										{{this.sent}}
-										<span class="msg_time_send">8:55 AM, Today</span>
+									  
+										  <span class=" msg_time_send"  style='min-width:30vw; text-align:right;'>8:55 AM, Today</span>
+									 
 									</div>
 									</div>
 								{{/if}}	
@@ -119,14 +115,12 @@
 				</div>
 			</div>
 		</div>
-		{{else}}
+	{{else}}
 		<div style='text-align:center; margin:20%'>
 			<h1>SELECT USER TO CHAT</h1>
 		</div>
-	   {{/if}}	
-	</body>
-</html>
-<!-- partial -->
-  <script src="socketClient.js"></script>
+	   {{/if}}	 
+
+ <script src="socketClient.js"></script>
 </body>
 </html>

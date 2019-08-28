@@ -37,7 +37,7 @@ socket.on('connected', () => {
         chat_messages.append($(`<div class="d-flex justify-content-end mb-4">
                              <div class="msg_cotainer_send">
                                 ${message}
-                                <span class="msg_time_send">8:55 AM, Today</span>
+                                  <span class=" msg_time_send"  style='min-width:30vw; text-align:right;'>8:55 AM, Today</span>
                              </div>
                            </div>`))
         $('#send_msg').val("")                    
@@ -59,7 +59,7 @@ socket.on('connected', () => {
             chat_messages.append($(`<div class="d-flex justify-content-start mb-4">
                                     <div class="msg_cotainer">
                                         ${res_msg.message}
-                                        <span class="msg_time">8:40 AM, Today</span>
+                                        <span class="msg_time" style='min-width:30vw'>8:40 AM, Today</span>
                                     </div>
                                 </div>`))
         }
@@ -68,14 +68,11 @@ socket.on('connected', () => {
             if(unseenUserChat==null)
             {
                 waitingMsg.append($(`<div  id='unseenMsg' > 
-                                        <form action='/user/chat/unseenMessage?chatWith=${res_msg.user}' method='GET' onSubmit='return deleteUnseen(this);'>
-                                        <p style="color: chocolate" open=''>
+                                        <a herf='/user/chat/unseenMessage?chatWith=${res_msg.user}' method='GET' onSubmit='return deleteUnseen(this);'>
                                             <p style='color:black; font-style:bold;'>${res_msg.user}</p>
                                             <input type='hidden' value='${res_msg.user}' name='senderUser' id='senderUser'>
                                             <p>${res_msg.message}</p>
-                                            <button id='msgLink' type='submit'>chat</button>
-                                        </p>
-                                        </form>
+                                        </fa>
                                     </div>`))
             }
             else{
@@ -97,10 +94,10 @@ $(document).ready(function(){
     
 
 function deleteUnseen(form){
-    console.log('deleting unssen user chat ',form.unseenUser.value)
+    console.log('deleting unssen user chat ',form.senderUser.value)
     socket.emit('deleteUnseen',{
         reciever:my_username,
-        sender:form.unseenUser.value
+        sender:form.senderUser.value
     })
     return true
 }

@@ -118,5 +118,9 @@ a.web:hover{
         display: inline-block;
         border: 1px solid #ccc;
         box-sizing: border-box;
-}
+    }
+
+    .dropdown-contentNav{
+      max-width:35vw
+    }
 }

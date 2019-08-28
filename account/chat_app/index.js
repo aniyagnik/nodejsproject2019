@@ -7,7 +7,6 @@ hbs.registerPartials(path.join(__dirname,'../partials'))
 
 const {check_chatCollection,add_recievedChatComment,add_sendChatComment,get_userChat,save_unseenChats,get_unseenUserChats,delete_unseenUserChats}=require('../../database/chatCollection')
 const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc,change_chatStatus,change_onlineStatus}=require('../../database/IdsCollection')
-app.use(express.static((__dirname)+'/public'))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '/views'));
 let users=[]

@@ -9,8 +9,8 @@
 <!-- partial:index.partial.html -->
 {{>navbar}}
  
-    <div class="bg" style=' background-image: url("./uploads/{{wallpic}}");'>
-        <img  src="./uploads/{{userpic}}" alt="{{userpic}}" id='profilepic'>
+    <div class="bg" style=' background-image: url("../uploads/{{wallpic}}");'>
+        <img  src="../uploads/{{userpic}}" alt="{{userpic}}" id='profilepic'>
     </div>
     <label style='font-size:4em;color:black; font-weight:bold;display:block;text-align:center;'>Wall of {{userWall}}</label>
     <ul class="flex-container">
@@ -18,8 +18,8 @@
         {{#each imagesArr}}
           <li class='flex-item'>
             <a href="/user/wall/viewImage?userWall={{../userWall}}&image={{this.image}}&description={{this.description}}">
-              <div class='size' style='background-image:url("./uploads/{{this.image}}")'>
-                <img src="null.png" alt="" class='size' style="height:100%; width:100%;">
+              <div class='size' style='background-image:url("../uploads/{{this.image}}")'>
+                <img src="../null.png" alt="" class='size' style="height:100%; width:100%;">
               </div>
           </a> 
           </li>
