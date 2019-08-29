@@ -9,6 +9,10 @@ var io = require('socket.io')(http);
 app.use(express.urlencoded({extended: true}))
 
 
+app.use('/access-denied',express.static(path.join(__dirname,'error pages')))
+
+app.use('/not-found',express.static(path.join(__dirname,'error pages')))
+
 app.get('/access-denied',(req,res)=>{
   res.sendFile(path.join(__dirname,'error pages/403.html'))
 })
