@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start":"node index.js"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
     "socket.io": "^2.2.0"
   },
   "engines": {
-    "node": "12.5.0"
+    "node": "12.5.0",
+    "npm":"6.9.0"
   }
 }

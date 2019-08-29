@@ -50,5 +50,5 @@ app.use('/',require('./login-signup'))
 app.use('/user',require('./account'))
 
 // use port 8080 unless there exists a preconfigured port
-var port = process.env.port || 8080;
+var port = process.env.PORT || 8080;
 http.listen(port,()=>{console.log('listening at 8080')})
