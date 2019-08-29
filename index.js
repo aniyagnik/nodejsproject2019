@@ -48,4 +48,7 @@ app.use(passport.session())     //tells express to user sessions with passport
 app.use('/user/chat',require('./account/chat_app')(io))
 app.use('/',require('./login-signup'))
 app.use('/user',require('./account'))
-http.listen(8080,()=>{console.log('listening at 8080')})
+
+// use port 8080 unless there exists a preconfigured port
+var port = process.env.port || 8080;
+http.listen(port,()=>{console.log('listening at 8080')})
