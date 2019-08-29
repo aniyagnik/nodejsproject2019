@@ -1,5 +1,5 @@
 const { MongoClient }=require('mongodb')
-client=new MongoClient('mongodb://localhost:27017/project',{ useNewUrlParser: true })
+client=new MongoClient(process.env.MONGOLAB_URI ||'mongodb://localhost:27017/project',{ useNewUrlParser: true })
 client.connect()
 //accessing database testdb and then sending  collection loginIds
 const get_db=()=>{       
