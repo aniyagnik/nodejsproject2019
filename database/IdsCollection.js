@@ -1,5 +1,5 @@
 const { MongoClient }=require('mongodb')
-client=new MongoClient('mongodb://project:<password>@cluster0-shard-00-00-6zit8.mongodb.net:27017,cluster0-shard-00-01-6zit8.mongodb.net:27017,cluster0-shard-00-02-6zit8.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority' ||'mongodb://localhost:27017/project',{ useNewUrlParser: true })
+client=new MongoClient('mongodb://project:projectQ12@cluster0-shard-00-00-6zit8.mongodb.net:27017,cluster0-shard-00-01-6zit8.mongodb.net:27017,cluster0-shard-00-02-6zit8.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority' ||'mongodb://localhost:27017/project',{ useNewUrlParser: true })
 client.connect()
 //accessing database testdb and then sending  collection loginIds
 const get_db=()=>{       
