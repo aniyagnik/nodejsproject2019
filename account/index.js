@@ -48,7 +48,7 @@ app.get('/dashboard',(req,res)=>{
         })
     }
     else{
-        res.redirect('/access-denied')
+        res.redirect('/')
     }
    
 })
@@ -67,7 +67,7 @@ app.post('/dashboard/addImage',upload.single('Uimages'),(req,res)=>{
         })
     }
     else{
-        res.redirect('/access-denied')
+        res.redirect('/')
     }
    
 })
@@ -84,7 +84,7 @@ app.post('/dashboard',upload.single('profilePic'),(req,res)=>{
         })
     }
     else{
-        res.redirect('/access-denied')
+        res.redirect('/')
     }
 })
 
@@ -101,7 +101,7 @@ app.post('/dashboard/edit',upload.single('wallPic'),(req,res)=>{
         })
     }
     else{
-        res.redirect('/access-denied')
+        res.redirect('/')
     }
 })
 
@@ -126,7 +126,7 @@ app.post('/dashboard/search',(req,res)=>{
        })
     }
     else{
-        res.redirect('/access-denied')
+        res.redirect('/')
     }
 })
 
@@ -151,7 +151,7 @@ app.get('/dashboard/search',(req,res)=>{
        })
     }
     else{
-        res.redirect('/access-denied')
+        res.redirect('/')
     }
 })
 
@@ -186,11 +186,11 @@ app.post('/dashboard/changePassword',(req,res)=>{
        }
        else{
            console.log("PASSWORDS DON'T MATHCH")
-           res.redirect('/access-denied')
+           res.redirect('/')
        }
     }
     else{
-        res.redirect('/access-denied')
+        res.redirect('/')
     }
 })
 
@@ -203,7 +203,7 @@ app.get('/logout',(req,res)=>{
         res.redirect('/')
     }
     else{
-        res.redirect('/access-denied')
+        res.redirect('/')
     }
     
 })

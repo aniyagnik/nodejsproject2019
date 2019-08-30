@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-     <link rel="stylesheet" href="./wall.css">
+  <meta charset="UTF-8">
+  <title>{{userWall}}'s Wall</title>
+  <link rel="stylesheet" href="./wall.css">
 </head>
 <body>
-    {{>navbar}}
+<!-- partial:index.partial.html -->
+{{>navbar}}
+ 
     <div class="bg" style=' background-image: url("../uploads/{{wallpic}}");'>
-        <div id='profilepicbg' style='background-image:url("../uploads/{{userpic}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
-          </div>
+        <img  src="../uploads/{{userpic}}" alt="{{userpic}}" id='profilepic'>
     </div>
-     <label style='font-size:4em;color:black; font-weight:bold;display:block;text-align:center;'>Wall of {{userWall}}</label>
-      <ul class="flex-container">
+    <label style='font-size:4em;color:black; font-weight:bold;display:block;text-align:center;'>Wall of {{userWall}}</label>
+    <ul class="flex-container">
       {{#if imagesArr}}
         {{#each imagesArr}}
           <li class='flex-item'>
@@ -26,6 +25,6 @@
           </li>
         {{/each}}
       {{/if}}    
-      </ul>    
+    </ul>
 </body>
 </html>

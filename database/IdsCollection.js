@@ -29,21 +29,45 @@ const get_allLogins=()=>{
  //inserting in collection loginIds
   async function insert_loginAcc (Id_info){
       let value=1
-    const result= await get_db()
-                        .then(db=>db.collection('loginIds'))
-                        .catch(err=>{
-                            console.log('error in collection 1')
-                            return false    
-                        })
-                        .then(collection=>collection.findOne({username:Id_info.username}))
-                        .catch(err=>{
-                            console.log('error in collection 2')
-                            return false   
-                        })
+    const resultUser= await get_db()
+            .then(db=>db.collection('loginIds'))
+            .catch(err=>{
+                console.log('error in collection 1')
+                return false    
+            })
+            .then(collection=>collection.findOne({username:Id_info.username}))
+            .then(result=>{
+                if(result===null)
+                 {return false}
+                 else{return true}  
+            })
+            .catch(err=>{
+                console.log('error in collection 2')
+                return false   
+            })
+
+    const resultEmail= await get_db()
+            .then(db=>db.collection('loginIds'))
+            .catch(err=>{
+                console.log('error in collection 1')
+                return false    
+            })
+            .then(collection=>collection.findOne({email:Id_info.email}))
+            .then(result=>{
+                if(result===null)
+                 {return false}
+                 else{return true}  
+            })
+            .catch(err=>{
+                console.log('error in collection 2')
+                return false   
+            })
+            
 
       
-    console.log('result :::: ',result )
-    if(!result)
+    console.log('results :::: ')
+    console.log(resultUser,resultEmail )
+    if(!resultUser && !resultEmail)
     {
         value= await get_db()
                 .then(db=>db.collection('userImages'))
@@ -148,41 +172,38 @@ const change_onlineStatus=(username,status)=>
          console.log('error in finding the account')
          return err
      })
-    
 
-
+         
 const change_chatStatus=(username,status)=>
-     get_db()
-     .then(db=>db.collection('loginIds'))
-     .catch(err=>{
-         console.log('error in collection')
-         res.send('error1')    
-     })
-     .then(collection=>{
-     //  console.log(collection)
-         return collection.updateOne(
-             { username:username },
-             {
-             $set: { chat: status },
-             
-             }
-         )
-     })  
-     .then(document=>{
-     if(document==null){
-         console.log('error in finding username ')
-         return null
-     }  
-     else{      
-     console.log('user chat status updated')
-             return document
-     }
-     })
-     .catch(err=>{
-         console.log('error in finding the account')
-         return err
-     })
-    
+    get_db()
+    .then(db=>db.collection('loginIds'))
+    .catch(err=>{
+        console.log('error in collection')
+        res.send('error1')    
+    })
+    .then(collection=>{
+        return collection.updateOne(
+            { username:username },
+            {
+            $set: { chat: status },
+            }
+        )
+    })  
+    .then(document=>{
+    if(document==null){
+        console.log('error in finding username ')
+        return null
+    }  
+    else{      
+    console.log('user online status updated')
+            return document
+    }
+    })
+    .catch(err=>{
+        console.log('error in finding the account')
+    return err
+    })
+
 
 //get one login Id requested by client through username
 const  get_loginAcc =(username)=>

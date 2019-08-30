@@ -19,7 +19,19 @@ body, html {
   align-self: center;
   width:10vw;
   height: 10vw;
-  margin: 1%
+  margin: 1%;
+  overflow:auto;
+}
+
+
+#profilepicbg{
+  border-radius:100%;
+  align-self: center;
+  width:13vw;
+  height:13vw;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .flex-container {
@@ -31,7 +43,7 @@ body, html {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
   justify-content: flex-end;
   flex-direction: row-reverse;
 }
@@ -74,11 +86,10 @@ a{
     
   }
     
-  #profilepic{
+  #profilepicbg{
     border-radius:100%;
     align-self: center;
-    width:27vw;
-    height: 27vw;
-    margin: 2%
+    width:22vw;
+    height: 22vw;
   }
 }

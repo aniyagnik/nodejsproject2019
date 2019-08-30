@@ -16,7 +16,7 @@ let users=[]
     console.log('in chat get') 
     if(req.user)
     {
-      let chatterImg,unseenChats
+      let chatterImg,unseenChats,onlineStatus
       const chatWith=req.query.searchUser
       const {username}=req.user
       const {senderMsg}=req.params
@@ -31,11 +31,12 @@ let users=[]
           .then(document=>{//console.log("user found : ",document)
                 if(document!==null)
                 {
+                  onlineStatus=document.online
                   chatterImg=document.image
                   return true
                 }  
                 else{
-                  res.redirect('/not-found') 
+                  res.redirect('/user/chat') 
                 }
           })
           .then(hmm=>get_userChat(username,chatWith))  
@@ -45,10 +46,10 @@ let users=[]
             {
               let {message}=chat
              // console.log("geting chat for displaying",chatWith,message,chatterImg)
-              res.render('chatPage',{username,chatWith,message,chatterImg,unseenChats})
+              res.render('chatPage',{username,chatWith,message,chatterImg,unseenChats,onlineStatus})
             }
             else{
-              res.render('chatPage',{username,chatWith,chatterImg,unseenChats})
+              res.render('chatPage',{username,chatWith,chatterImg,unseenChats,onlineStatus})
             }
           })  
         }
@@ -61,7 +62,7 @@ let users=[]
     }
     else
     {
-      res.redirect('/access-denied')
+      res.redirect('/')
     }
   });
 
@@ -88,7 +89,7 @@ app.get('/unseenMessage', function(req, res){
               })
             }  
             else{
-              res.redirect('/not-foundr') 
+              res.redirect('/') 
             }
       })
       .catch(err=>{
@@ -98,7 +99,7 @@ app.get('/unseenMessage', function(req, res){
   }
   else
   {
-    res.redirect('/access-denied')
+    res.redirect('/')
   }
 });
   module.exports=function(io){
@@ -122,12 +123,12 @@ app.get('/unseenMessage', function(req, res){
       console.log('user disconnected',socket.id);
       if(users.length!==0)
       {
-        const username=users.reduce(ele=>ele.socketId===socket.id)
+        const username=users.reduce(ele=>ele.socketId===socket.id).username
         users=users.filter(ele=>ele.socketId!==socket.id)
-       // console.log('on removal of one user',users)
+       console.log('REMOVAL OF USER : ',username)
         if(typeof username!=='undefined')
-           console.log('changing chat staus to false') 
-           change_chatStatus(username,false)
+           console.log('changing chat staus to false',username) 
+        change_chatStatus(username,false)
       } 
     });
 
@@ -137,8 +138,11 @@ app.get('/unseenMessage', function(req, res){
     //reading a message and then sending
     socket.on('message',(msg_taken)=>{
       //console.log('in message index',msg_taken.message)
-      const now = new Date();
-      date.format(now, 'ddd., MMM. DD YYYY'); 
+      let now
+      (function getFormattedDate() {
+        let date = new Date();
+        now = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + " " +  date.getHours() + ":" + date.getMinutes();
+      })()
       console.log("message send to : "+msg_taken.selected_user+'by '+msg_taken.user)
       const reciever=users.find(ele=>ele.username===msg_taken.selected_user)
       console.log('reciever is :',reciever)
@@ -163,8 +167,11 @@ app.get('/unseenMessage', function(req, res){
     //recieved message
     socket.on('messageRecieved',(msg_taken)=>{
       console.log('reciever and sender is :',msg_taken.reciever,msg_taken.sender)
-      const now = new Date();
-      date.format(now, 'ddd., MMM. DD YYYY'); 
+      let now
+      (function getFormattedDate() {
+        let date = new Date();
+        now = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + " " +  date.getHours() + ":" + date.getMinutes();
+      })()
       save_unseenChats(msg_taken.reciever,msg_taken.sender,msg_taken.message,now)
     })
 

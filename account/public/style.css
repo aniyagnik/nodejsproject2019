@@ -70,10 +70,15 @@ input[type=text], input[type=file],input[type=password] {
   position: relative;
 }
 
-img.avatar {
+.avatar {
   width: 40vh;
   height:40vh;
   border-radius: 50%;
+  overflow:hidden;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
 }
 
 .containeraddimage {
@@ -279,9 +284,9 @@ a.hover{text-decoration: none;}
     height: 26vw;
   }
    
-img.avatar {
-  width: 25vh;
-  height:25vh;
+.avatar {
+  width: 25vw;
+  height:25vw;
   border-radius: 50%;
 }
   .modal-content-form {

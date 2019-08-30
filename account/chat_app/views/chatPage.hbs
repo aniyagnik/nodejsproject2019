@@ -58,9 +58,12 @@
 					<div class="card" id='nopadding'>
 						<div class="card-header msg_head">
 							<div class="d-flex bd-highlight">
-								<div class="img_cont">
-									<img src="/user/uploads/{{chatterImg}}" alt='pic' class="rounded-circle user_img">
+								<div class="img_cont rounded-circle user_img" style='background-image:url("/user/uploads/{{chatterImg}}")'>
+									{{#if onlineStatus}}
 									<span class="online_icon"></span>
+									{{else}}
+									<span class="offline_icon"></span>
+									{{/if}}
 								</div>
 								<div class="user_info">
 									<span>Chat with {{chatWith}}</span>

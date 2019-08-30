@@ -33,11 +33,16 @@ socket.on('connected', () => {
    msg_btn.click((e)=>{
         e.preventDefault()
         console.log('in message click')
+        let now
+        (function getFormattedDate() {
+          let date = new Date();
+          now = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + " " +  date.getHours() + ":" + date.getMinutes();
+        })()
         const message=send_msg.val() 
         chat_messages.append($(`<div class="d-flex justify-content-end mb-4">
                              <div class="msg_cotainer_send">
                                 ${message}
-                                  <span class=" msg_time_send"  style='min-width:30vw; text-align:right;'>8:55 AM, Today</span>
+                                  <span class=" msg_time_send"  style='min-width:30vw; text-align:right;'>${now}</span>
                              </div>
                            </div>`))
         $('#send_msg').val("")                    
@@ -54,12 +59,17 @@ socket.on('connected', () => {
         console.log('my_username',my_username)
         console.log('printing message you recieved')
         console.log('to me in personal')
+        let now
+        (function getFormattedDate() {
+          let date = new Date();
+          now = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + " " +  date.getHours() + ":" + date.getMinutes();
+        })()
         if(selected_user===res_msg.user)
         {
             chat_messages.append($(`<div class="d-flex justify-content-start mb-4">
                                     <div class="msg_cotainer">
                                         ${res_msg.message}
-                                        <span class="msg_time" style='min-width:30vw'>8:40 AM, Today</span>
+                                        <span class="msg_time" style='min-width:30vw'>${now}</span>
                                     </div>
                                 </div>`))
         }
@@ -76,6 +86,7 @@ socket.on('connected', () => {
                     <div  class='unseenMsg'id='${res_msg.user}'> 
                         <a href='/user/chat/unseenMessage?senderUser=${res_msg.user}'  onclick='return deleteUnseen("${res_msg.user}");'>
                             <p class='chatUserHead' >${res_msg.user}</p>
+                            <p>${now}</p>
                             <input type='hidden' value='${res_msg.user}' name='senderUser' id='senderUser'>
                             <p id='uMsg${res_msg.user}'> ${res_msg.message} <span><small></small></span></p>
                         </a>

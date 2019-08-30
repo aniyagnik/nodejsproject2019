@@ -45,7 +45,7 @@ app.post('/signup',upload.single('image'),(req,res)=>{
       if(addedUser==undefined)
       {
         console.log('adduser is null')
-        res.redirect('/error')
+        res.redirect('/access-denied')
       }
       else{
         console.log('adduser is not null')
