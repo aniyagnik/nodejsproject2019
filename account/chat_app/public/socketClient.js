@@ -64,16 +64,24 @@ socket.on('connected', () => {
                                 </div>`))
         }
         else{
-            let unseenUserChat=$(`#uMsg${res_msg.user}`)
-            if(unseenUserChat==null)
+            let noMsg=$('#noMsg')
+            if(noMsg.length!==0)
             {
-                waitingMsg.append($(`<div  id='unseenMsg' > 
-                                        <a herf='/user/chat/unseenMessage?chatWith=${res_msg.user}' method='GET' onSubmit='return deleteUnseen(this);'>
-                                            <p style='color:black; font-style:bold;'>${res_msg.user}</p>
-                                            <input type='hidden' value='${res_msg.user}' name='senderUser' id='senderUser'>
-                                            <p>${res_msg.message}</p>
-                                        </fa>
-                                    </div>`))
+                noMsg.remove()
+            }
+            let unseenUserChat=$(`#uMsg${res_msg.user}`)
+            if(unseenUserChat.length===0)
+            {
+                waitingMsg.append($(`
+                    <div  class='unseenMsg'id='${res_msg.user}'> 
+                        <a href='/user/chat/unseenMessage?senderUser=${res_msg.user}'  onclick='return deleteUnseen("${res_msg.user}");'>
+                            <p class='chatUserHead' >${res_msg.user}</p>
+                            <input type='hidden' value='${res_msg.user}' name='senderUser' id='senderUser'>
+                            <p id='uMsg${res_msg.user}'> ${res_msg.message} <span><small></small></span></p>
+                        </a>
+                        <hr width="100%" style='border:1px solid black;opacity:0.5'>
+                    </div>`))
+   
             }
             else{
                 unseenUserChat.text(`${res_msg.message}`)

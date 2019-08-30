@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/login',passport.authenticate('local',{
-    failureRedirect:'/error',
+    failureRedirect:'/not-found',
     successRedirect:'/user/dashboard'
 }))
 

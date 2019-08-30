@@ -2,7 +2,7 @@ const { MongoClient }=require('mongodb')
 //const client=new MongoClient('mongodb://localhost:27017')
 //accessing database testdb and then sending  collection loginIds
 const get_db=()=>{       
-        const db=client.db('project')
+        const db=client.db('test')
         return new Promise(function(resolve, reject){
             resolve(db);
         });

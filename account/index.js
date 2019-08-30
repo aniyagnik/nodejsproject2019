@@ -39,6 +39,7 @@ app.get('/dashboard',(req,res)=>{
         .then(result=>{
             return result.images
         })
+        .catch(err=>console.log('error in getting collection images ',err))
         .then(imagesArr=>{   
             const {username}=req.user
             const {image}=req.user

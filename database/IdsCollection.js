@@ -33,12 +33,12 @@ const get_allLogins=()=>{
                         .then(db=>db.collection('loginIds'))
                         .catch(err=>{
                             console.log('error in collection 1')
-                            return null    
+                            return false    
                         })
                         .then(collection=>collection.findOne({username:Id_info.username}))
                         .catch(err=>{
                             console.log('error in collection 2')
-                            return null    
+                            return false   
                         })
 
       
@@ -55,6 +55,7 @@ const get_allLogins=()=>{
                     collection.insertOne(add)
                     return true
                 })
+                .then(ha=>{console.log('images :',ha);return true})
                 .catch(err=>console.log('error in saving in collection images '))
                 get_db()
                 .then(db=>db.collection('unseenChatCollection'))
@@ -63,11 +64,12 @@ const get_allLogins=()=>{
                     add={username:Id_info.username,
                         unseenChats:[]
                     }
-                    collection.insertOne(add)
-                    return true
+                    return collection.insertOne(add)
                 })
                 .catch(err=>console.log('error in adding in collection messages '))                                   
-                .then(ha=>get_db())
+                .then(ha=>{
+                    
+                    return get_db()})
                 .then(db=>db.collection('loginIds'))
                 .then(collection=>collection.insertOne(Id_info))
                 .catch(err=>console.log('error in saving collectio ids 1',err))
@@ -79,7 +81,7 @@ const get_allLogins=()=>{
         console.log('awaits ends')
     } 
     else{                
-        value=null
+        value=false
     }           
     console.log('value of insertion:',value)
     return value

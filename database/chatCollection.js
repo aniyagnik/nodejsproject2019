@@ -3,7 +3,7 @@ const {MongoClient}=require('mongodb')
 //client.connect()
 //accessing database testdb and then sending  collection loginIds
 const get_db=()=>{       
-      const db=client.db('project')
+      const db=client.db('test')
       return new Promise(function(resolve, reject){
           resolve(db);
       });
@@ -212,7 +212,7 @@ const  get_unseenUserChats =(username)=>
 //deleting in collection loginIds
 const delete_unseenUserChats=(username,chatWith)=>
   get_db()
-  .then(db=>db.collection('chatCollectionForUnseen'))
+  .then(db=>db.collection('unseenChatCollection'))
   .then(collection=>collection.updateOne(
       {
         username:username,

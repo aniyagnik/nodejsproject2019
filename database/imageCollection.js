@@ -3,7 +3,7 @@ const { MongoClient }=require('mongodb')
 //client.connect()
 //accessing database testdb and then sending  collection loginIds
 const get_db=()=>{       
-        const db=client.db('project')
+        const db=client.db('test')
         return new Promise(function(resolve, reject){
             resolve(db);
         });
@@ -13,14 +13,13 @@ const get_db=()=>{
 const get_alluserImgs=(username)=>{
     return get_db()
     .then(db=>db.collection('userImages'))
-    .catch(err=>console.log('error in fetching 1'))
+    .catch(err=>console.log('error in fetching 1',err))
     .then(collection=>collection.findOne({username:username}))
-    .catch(err=>console.log('error in fetching 2'))
+    .catch(err=>console.log('error in fetching 2',err))
     .then(cursor=>{
-       // console.log(cursor.toArray())
         return cursor             
     })
-    .catch(err=>console.log('error in fetching '))
+    .catch(err=>console.log('error in fetching ',err))
 
 }
 let updateVal
