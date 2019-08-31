@@ -88,7 +88,8 @@ socket.on('connected', () => {
                         <a href='/user/chat/unseenMessage?senderUser=${res_msg.user}'  onclick='return deleteUnseen("${res_msg.user}");'>
                             <p class='chatUserHead' >${res_msg.user}</p>
                             <input type='hidden' value='${res_msg.user}' name='senderUser' id='senderUser'>
-                            <p id='uMsg${res_msg.user}'> ${res_msg.message} <span><small id='uMsgTime${res_msg.user}'>${now}</small></span></p>
+                            <p id='uMsg${res_msg.user}'> ${res_msg.message} </p>
+                            <div><small id='uMsgTime${res_msg.user}'>${now}</small><div>
                         </a>
                         <hr width="100%" style='border:1px solid black;opacity:0.5'>
                     </div>`))

@@ -34,7 +34,8 @@
 						<a href='/user/chat/unseenMessage?senderUser={{this.sender}}'  onclick='return deleteUnseen("{{this.sender}}");'>
 							<p class='chatUserHead' >{{this.sender}}</p>
 							<input type='hidden' value='{{this.sender}}' name='senderUser' id='senderUser'>
-							<p id='uMsg{{this.sender}}'> {{this.unseenMessage}} <div><small id='uMsgTime{{this.sender}}'>{{this.date}}</small></div></p>
+							<p id='uMsg{{this.sender}}'> {{this.unseenMessage}}<p>
+							<div><small id='uMsgTime{{this.sender}}'>{{this.date}}</small></div>
 						</a>
 						<hr width="100%" style='border:1px solid black;opacity:0.5'>
                     </div>
