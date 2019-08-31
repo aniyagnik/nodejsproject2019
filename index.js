@@ -34,9 +34,9 @@ app.use(function (req,res,next){
   console.log('handling request : ',req.url+" with method "+req.method);
   next();
 })
-
+var secretVal
 app.use(session({
-    secret: 'somethings are hidden for good',
+    secret: secretVal,
     resave:false,
     saveUninitialized:true
   })
