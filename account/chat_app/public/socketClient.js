@@ -80,15 +80,15 @@ socket.on('connected', () => {
                 noMsg.remove()
             }
             let unseenUserChat=$(`#uMsg${res_msg.user}`)
+            let unseenUserChatTime=$(`#uMsgTime${res_msg.user}`)
             if(unseenUserChat.length===0)
             {
                 waitingMsg.append($(`
                     <div  class='unseenMsg'id='${res_msg.user}'> 
                         <a href='/user/chat/unseenMessage?senderUser=${res_msg.user}'  onclick='return deleteUnseen("${res_msg.user}");'>
                             <p class='chatUserHead' >${res_msg.user}</p>
-                            <p>${now}</p>
                             <input type='hidden' value='${res_msg.user}' name='senderUser' id='senderUser'>
-                            <p id='uMsg${res_msg.user}'> ${res_msg.message} <span><small></small></span></p>
+                            <p id='uMsg${res_msg.user}'> ${res_msg.message} <span><small id='uMsgTime${res_msg.user}'>${now}</small></span></p>
                         </a>
                         <hr width="100%" style='border:1px solid black;opacity:0.5'>
                     </div>`))
@@ -96,6 +96,7 @@ socket.on('connected', () => {
             }
             else{
                 unseenUserChat.text(`${res_msg.message}`)
+                unseenUserChatTime.text(`${now}`)
             }                    
             socket.emit("messageRecieved",{
                 reciever:my_username,
@@ -113,10 +114,12 @@ $(document).ready(function(){
     
 
 function deleteUnseen(user){
-    console.log('deleting unssen user chat ',user)
     socket.emit('deleteUnseen',{
         reciever:my_username,
         sender:user
     })
     return true
 }
+
+
+    

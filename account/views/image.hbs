@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>image</title>
+    <title>Image</title>
   
     <style>
        html, body {
@@ -33,7 +33,7 @@
         }
 
         #addComment{
-            width:13vw;
+            width:14.2vw;
             margin-left:0.2%;
             padding: 12px;
             color:white;
@@ -47,10 +47,10 @@
       
         @media screen and (max-width: 600px) {
             #addComment {
-                 width:99vw;                
+                 width:17vw;                
             }
             input[type=text] {
-                width: 99%;
+                width: 80vw;
             }
               #spanBtn{
             text-align: center;
@@ -67,15 +67,16 @@
     
     <img class='show' src="../uploads/{{imageName}}" />
     <div class="show" style=' background-image: url("../uploads/{{imageName}}");'>
-    </div>
+    </div> <br>
    <div style="margin:0.5%">
-        <label style='font-size:1em;color:crimson; font-weight:bold;display:block;'>
-        {{userWall}} 
-        </label>
-        <label style='font-size:1em;color:black;display:block;'>
-            {{description}}
-        </label> <br>
-        <label>COMMENTS :::</label>
+        <label style="font-size:1.6em;color:crimson; font-weight:bold;display:inline-block;font-family:Verdana, Geneva, Tahoma, sans-serif;">
+        {{userWall}} : 
+            <label style="font-size:0.8em;color:black;display:inline-block;font-family:Georgia, 'Times New Roman', Times, serif">
+                {{description}}
+            </label>
+        </label> 
+        <br><br>
+        <label style="display:block;font-size:1.28em;color:black;font-family:Georgia, 'Times New Roman', Times, serif">COMMENTS :::</label>
         <div style='background-color:#ccc '>        
              
             <form action="#" > 

@@ -39,7 +39,14 @@ const  get_userChat =(username,chatWith)=>
     })
     .then(collection=>{
       //  console.log(collection)
-        return collection.findOne({username:username})
+        return collection.findOne(
+          {
+            $and:[{
+              username:username,
+              chatWith:chatWith            
+            }]
+          }
+        )
     })  
     .then(document=>{
       if(document==null){
@@ -48,7 +55,7 @@ const  get_userChat =(username,chatWith)=>
       }  
       else{      
       console.log('username matched, user reciever chat ')
-            return document
+            return document.message
       }
     })
     .catch(err=>{console.log("username not found in chatCollection",err)})
@@ -226,6 +233,23 @@ const delete_unseenUserChats=(username,chatWith)=>
   .catch(err=>{console.log('err in deleting unseen chat : ',err)})
   
 
+//deleting in collection loginIds
+const delete_userChat=(username,chatWith)=>
+  get_db()
+  .then(db=>db.collection('chatCollection'))
+  .then(collection=>collection.deleteOne(
+      {
+        $and:[{
+          username:username,
+          chatWith:chatWith
+        }]
+        
+      }
+    )
+  )
+  .then(ha=>{console.log('chat deleted',ha.result)})
+  .catch(err=>{console.log('err in deleting unseen chat : ',err)})
+  
 module.exports={
   check_chatCollection,
   add_sendChatComment,
@@ -233,6 +257,7 @@ module.exports={
   get_userChat,
   save_unseenChats,
   get_unseenUserChats,
-  delete_unseenUserChats
+  delete_unseenUserChats,
+  delete_userChat
 }    
 

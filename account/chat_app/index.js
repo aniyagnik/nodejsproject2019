@@ -6,7 +6,7 @@ let path=require('path')
 const hbs=require('hbs')
 hbs.registerPartials(path.join(__dirname,'../partials'))
 
-const {check_chatCollection,add_recievedChatComment,add_sendChatComment,get_userChat,save_unseenChats,get_unseenUserChats,delete_unseenUserChats}=require('../../database/chatCollection')
+const {check_chatCollection,add_recievedChatComment,add_sendChatComment,get_userChat,save_unseenChats,get_unseenUserChats,delete_unseenUserChats,delete_userChat}=require('../../database/chatCollection')
 const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc,change_chatStatus,change_onlineStatus}=require('../../database/IdsCollection')
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '/views'));
@@ -40,18 +40,12 @@ let users=[]
                 }
           })
           .then(hmm=>get_userChat(username,chatWith))  
-          .then(chat=>{
-           // console.log('chat is this : ',chat)
-            if(chat!==null)
-            {
-              let {message}=chat
-             // console.log("geting chat for displaying",chatWith,message,chatterImg)
-              res.render('chatPage',{username,chatWith,message,chatterImg,unseenChats,onlineStatus})
-            }
-            else{
-              res.render('chatPage',{username,chatWith,chatterImg,unseenChats,onlineStatus})
-            }
-          })  
+          .then(message=>{
+           console.log('chat is this : ',message)
+           return message
+          })
+          .then(message=> res.render('chatPage',{username,chatWith,message,chatterImg,unseenChats,onlineStatus})) 
+          .catch(err=>console.log('error is ',err)) 
         }
         else{
           change_chatStatus(username,true)
@@ -102,6 +96,22 @@ app.get('/unseenMessage', function(req, res){
     res.redirect('/')
   }
 });
+
+
+app.post('/deleteChat',(req,res)=>{
+  console.log('in get deleting chat')
+  if(req.user){
+    const {username}=req.user
+    const {chatWith}=req.body
+    console.log('req.body',req.body)
+    console.log('user and chat with',chatWith)
+    delete_userChat(username,chatWith)
+    .then(done=>res.redirect(`/user/chat/?searchUser=${chatWith}`))
+  }
+  else{
+    res.redirect('/')
+  }
+})
   module.exports=function(io){
  
      
