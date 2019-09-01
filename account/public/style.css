@@ -178,8 +178,8 @@ body, html {
   display: -webkit-flex;
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-end;
-  flex-direction: row-reverse;
+  justify-content: flex-start;
+  flex-direction: row;
   align-content: center;
 }
 

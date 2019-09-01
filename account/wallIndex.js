@@ -26,7 +26,8 @@ app.get('/',(req,res)=>{
         .then(result=>{
             return result.images
         })
-        .then(imagesArr=>{    
+        .then(arr=>{    
+            const imagesArr=arr.reverse()
             console.log('images acquired : ',imagesArr)
             res.render('wall',{findinguser,userpic,imagesArr,wallpic,userWall})
         })

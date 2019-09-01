@@ -139,7 +139,7 @@
       {{#if username}}
         {{#if imagesArr}}
           {{#each imagesArr}}
-          <li class='flex-item'>
+          <li class='flex-item' style='order:{{@index}}'>
             <a href="./wall/viewImage?userWall={{../username}}&image={{this.image}}&description={{this.description}}">
               <div class='sizeImg' style='background-image:url("./uploads/{{this.image}}")'>
                 <img src="null.png" alt="" class='sizeImg' style="height:100%; width:100%;">

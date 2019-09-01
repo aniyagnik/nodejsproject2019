@@ -49,8 +49,8 @@ body, html {
   display: -webkit-flex;
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-end;
-  flex-direction: row-reverse;
+  justify-content: flex-start;
+  flex-direction: row;
   align-content: center;
 }
 
@@ -74,7 +74,7 @@ body, html {
 .sendMsg {
   background-color: rgb(222, 218, 248);
   color: rgb(0, 0, 0);
-  padding: 10px 10px;
+  border-radius: 10px;
   margin: 8px 0;
   border: 1px solid cyan;
   cursor: pointer;
@@ -110,9 +110,9 @@ a{
 @media screen and (min-device-width:300px)and (max-device-width:500px){
     
   .flex-item {
-    width: 34%;
+    width: 33%;
     height: 25%; 
-    max-width: 33%;
+    max-width: 32.7%;
     max-height: 30%;  
     
   }
@@ -125,9 +125,10 @@ a{
   }
 
   .sendMsg{
-    font-size:0.6em;
+    font-size:1em;
     align-self:center;
-    width:20vw;
+    width:28vw;
+    margin-left: 37%;
   }
 
   .UserName{

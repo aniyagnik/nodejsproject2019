@@ -23,7 +23,7 @@
       <ul class="flex-container">
       {{#if imagesArr}}
         {{#each imagesArr}}
-          <li class='flex-item'>
+          <li class='flex-item' style='order:{{@index}}'>
             <a href="/user/wall/viewImage?userWall={{../userWall}}&image={{this.image}}&description={{this.description}}">
               <div class='size' style='background-image:url("../uploads/{{this.image}}")'>
                 <img src="../null.png" alt="" class='size' style="height:100%; width:100%;">
