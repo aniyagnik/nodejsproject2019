@@ -13,7 +13,13 @@
         <div id='profilepicbg' style='background-image:url("../uploads/{{userpic}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
           </div>
     </div>
-     <label style='font-size:4em;color:black; font-weight:bold;display:block;text-align:center;'>Wall of {{userWall}}</label>
+     <label class='UserName'>Wall of {{userWall}}</label>
+     <div style='justify-content:center'>
+       <form action="/user/chat" method="get">
+          <input type="hidden" name='searchUser' value='{{userWall}}'>
+          <button type="submit" class='sendMsg'>message</button>
+        </form>
+     </div>
       <ul class="flex-container">
       {{#if imagesArr}}
         {{#each imagesArr}}

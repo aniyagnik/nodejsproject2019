@@ -24,7 +24,7 @@ let users=[]
       get_unseenUserChats(username)
       .then(document=>{console.log('undeen chats arae : ',document); unseenChats=document;return true})
       .then(val=>{
-        if(typeof chatWith!=='undefined')
+        if(typeof chatWith!=='undefined' || chatWith===username)
         {
           change_chatStatus(username,true)
           .then(res=>get_loginAcc(chatWith))
@@ -59,43 +59,6 @@ let users=[]
       res.redirect('/')
     }
   });
-
-app.get('/unseenMessage', function(req, res){
-  console.log('in chat get unseen') 
-  if(req.user)
-  {
-    const {username}=req.user
-    const chatWith=req.query.senderUser
-    console.log('user to be find and chat : ',chatWith)
-    get_loginAcc(chatWith)
-      .then(document=>{console.log("user found : ",document)
-            if(document!==null)
-            {
-              delete_unseenUserChats(username,chatWith)
-              .then(hm=>{
-                console.log('in unseen post sending render')
-                res.redirect(url.format({
-                  pathname:"/user/chat",
-                  query: {
-                    searchUser:chatWith
-                  }
-                }))
-              })
-            }  
-            else{
-              res.redirect('/') 
-            }
-      })
-      .catch(err=>{
-          console.log('error occured : ',err)
-          res.redirect('/user/chat')
-      })
-  }
-  else
-  {
-    res.redirect('/')
-  }
-});
 
 
 app.post('/deleteChat',(req,res)=>{

@@ -1,3 +1,11 @@
+$(document).ready(function () {
+    $('html, body').animate({
+        scrollTop: $('#last').offset().top    
+    }, 'slow');
+    $('#chat_messages').animate({
+        scrollTop: $('#last').offset().top    
+    }, 'slow');
+});
 const socket = io();
 console.log('in script js')
 let selected_user=$('#chatUser').val()
@@ -85,7 +93,7 @@ socket.on('connected', () => {
             {
                 waitingMsg.append($(`
                     <div  class='unseenMsg'id='${res_msg.user}'> 
-                        <a href='/user/chat/unseenMessage?senderUser=${res_msg.user}'  onclick='return deleteUnseen("${res_msg.user}");'>
+                        <a href='/user/chat?searchUser=${res_msg.user}'  onclick='return deleteUnseen("${res_msg.user}");'>
                             <p class='chatUserHead' >${res_msg.user}</p>
                             <input type='hidden' value='${res_msg.user}' name='senderUser' id='senderUser'>
                             <p id='uMsg${res_msg.user}'> ${res_msg.message} </p>
