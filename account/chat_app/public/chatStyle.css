@@ -24,6 +24,13 @@ body, html {
   padding-right:-15px !important;
   padding-left:-15px !important;
 }
+
+#notification{
+  display:inline-block;
+  width:fit-content;
+  padding:4px 2px;
+ 
+}
 .chat {
   margin-top: auto;
   margin-bottom: auto;

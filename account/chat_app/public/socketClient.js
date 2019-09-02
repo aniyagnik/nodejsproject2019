@@ -111,7 +111,10 @@ socket.on('connected', () => {
                 reciever:my_username,
                 sender:res_msg.user,
                 message:res_msg.message
-            })                              
+            })  
+            const notification=$("#notification")
+            notification.text('new message sent by '+res_msg.user)    
+            notification.css(' border:2px solid black').css('border-radius: 20px')  
         }                                                                
     })
 
