@@ -5,6 +5,17 @@ const session=require('express-session')
 const passport=require('./login-signup/passport')
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
+const aws = require('aws-sdk');
+
+
+/*S3_BUCKET = process.env.S3_BUCKET || 'anirudhbucketnodejs19';
+aws.config.region = 'ap-south-1';
+AWSAccessKeyId='AKIAJ7IGPAB26GURJG4A';
+AWSSecretKey='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'
+*/
+const S3_BUCKET;
+aws.config.region='ap-south-1'
+app.engine('html', require('ejs').renderFile);
 
 app.use(express.urlencoded({extended: true}))
 
@@ -44,6 +55,35 @@ app.use(session({
 
 app.use(passport.initialize())   //tells express app to use passport
 app.use(passport.session())     //tells express to user sessions with passport
+
+
+app.get('/sign-s3', (req, res) => {
+  console.log('in sign-s3 get')
+ 
+  const fileName = Date.now()+req.query['file-name'];
+  const fileType = req.query['file-type'];
+  console.log('filename is : ',fileName)
+  const s3Params = {
+    Bucket: S3_BUCKET,
+    Key: fileName,
+    Expires: 60,
+    ContentType: fileType,
+    ACL: 'public-read'
+  };
+  const s3 = new aws.S3();
+  s3.getSignedUrl('putObject', s3Params, (err, data) => {
+    if(err){
+      console.log(err);
+      return res.end();
+    }
+    const returnData = {
+      signedRequest: data,
+      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+    };
+    res.write(JSON.stringify(returnData));
+    res.end();
+  });
+});
 
 app.use('/user/chat',require('./account/chat_app')(io))
 app.use('/',require('./login-signup'))

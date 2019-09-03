@@ -3,7 +3,6 @@ const app = express()
 const hbs=require('hbs')
 const path=require('path')
 const multer=require('multer')
-
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
@@ -54,6 +53,7 @@ app.get('/dashboard',(req,res)=>{
    
 })
 
+
 app.post('/dashboard/addImage',upload.single('Uimages'),(req,res)=>{
     console.log('in addImage')   
     if(req.user)
@@ -73,12 +73,12 @@ app.post('/dashboard/addImage',upload.single('Uimages'),(req,res)=>{
    
 })
 
-app.post('/dashboard',upload.single('profilePic'),(req,res)=>{
+app.post('/dashboard',(req,res)=>{
     console.log('in post dashboard')
     if(req.user)
     {
        //console.log('image:',req.file)
-       change_userProfilePic(req.user.username,req.file.filename)
+       change_userProfilePic(req.user.username,req.body.image)
        .then(uImages=>{
          //  console.log('in .then of insert image')
              res.redirect('/user/dashboard')   
@@ -90,7 +90,7 @@ app.post('/dashboard',upload.single('profilePic'),(req,res)=>{
 })
 
 
-app.post('/dashboard/edit',upload.single('wallPic'),(req,res)=>{
+app.post('/dashboard/edit',(req,res)=>{
     console.log('in post dashboard')
     if(req.user)
     {

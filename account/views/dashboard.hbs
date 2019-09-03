@@ -21,7 +21,7 @@
     <br>  
     <div class='row section-top ' style=" margin-left: 0px;">
        <div class='size col-md-3 col-xs-4 col-lg-3 item nopadding'  style="max-width:30%;">
-         <div id='profilepic' style='background-image:url("./uploads/{{image}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
+         <div id='profilepic' style='background-image:url("{{image}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
                 <img src="null.png" alt="" id='profilepic' style="height:100%; width:100%;">
           </div>
        </div>
@@ -53,25 +53,32 @@
     <br>
   
   </div>
+   {{!-- chnage profile pic --}}
+  
+   <div id="changeProfilePic" class="addImgModal">
    
-  <div id="changeProfilePic" class="addImgModal">
-   <form class="modal-content-form animate" action='/user/dashboard' method='POST' id="form" enctype="multipart/form-data"  >
+   <div class="modal-content-form animate"  >
     <div class="imgcontainer">
       <span onclick="document.getElementById('changeProfilePic').style.display='none'" class="close" title="Close Modal">&times;</span>
-       <div class='avatar' style='background-image:url("./uploads/{{image}}");display:inline-block;' >
+      <div class='avatar' style='background-image:url("./uploads/{{image}}");display:inline-block;' >
        </div>
     </div>
     <div class="containeraddimage">
-      <label><b>Select Image</b></label>
-      <input type="file" name='profilePic' id="image" required>
-      <button type="submit" class='addbutton'>Change Profile Pic</button>
+      <label><b>Change profile Pic</b></label>
+      <input type="file" name='profilePic' id="uploadImage" required>
+      <form  action='/user/dashboard' method='POST' id="form" enctype="multipart/form-data">
+         <input type="hidden" id="image"  name='profilePic' value="">
+         <button type="submit" class='addbutton'>Change Image</button>
+      </form>
+      
     </div>
      <div class="container" style="background-color:#f1f1f1">
       <button type="button" onclick="document.getElementById('changeProfilePic').style.display='none'" class="addbutton cancelbtn">Cancel</button>
      </div>
-    </form>
+    </div>
   </div>
 
+  {{!-- change wall background --}}
   <div id="changeProfile" class="addImgModal">
    <form class="modal-content-form animate" action='/user/dashboard/edit' method='POST' id="form" enctype="multipart/form-data"  >
     <div class="imgcontainer">
@@ -90,7 +97,7 @@
     </form>
   </div>
 
-  
+  {{!-- change password --}}
   <div id="changePass" class="addImgModal">
    <form class="modal-content-form animate" action='/user/dashboard/changePassword' method='POST' id="form"   >
     <div class="imgcontainer">
@@ -112,7 +119,8 @@
      </div>
     </form>
    </div>
-
+   
+   {{!-- add image  --}}
    <div id="addimgdiv" class="addImgModal">
       <form class="modal-content-form animate" action='/user/dashboard/addImage' method='POST' id="form" enctype="multipart/form-data"  >
         <div class="imgcontainer">
@@ -174,6 +182,55 @@
     document.getElementById(val).style.display='block'
     return true
   }
+
+  (() => {
+    console.log('in window load for image')
+    document.getElementById("uploadImage").onchange = () => {
+      const files = document.getElementById('uploadImage').files;
+      const file = files[0];
+      if(file == null){
+        return alert('No file selected.');
+      }
+      getSignedRequest(file);
+    };
+  })();
+  
+  function getSignedRequest(file){
+    console.log('in get signed request')
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4){
+        if(xhr.status === 200){
+          const response = JSON.parse(xhr.responseText);
+          uploadFile(file, response.signedRequest, response.url);
+        }
+        else{
+          alert('Could not get signed URL.');
+        }
+      }
+    };
+    xhr.send();
+  }
+
+  function uploadFile(file, signedRequest, url){
+    console.log('in upload file')
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', signedRequest);
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4){
+        if(xhr.status === 200){
+          document.getElementById('image').value = url;
+        }
+        else{
+          alert('Could not upload file.');
+        }
+      }
+    };
+    xhr.send(file);
+  }
+
+
 </script>
 </body>
 </html>
