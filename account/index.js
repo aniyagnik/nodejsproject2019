@@ -43,7 +43,7 @@ app.get('/dashboard',(req,res)=>{
             const {username}=req.user
             const {image}=req.user
             const imagesArr=arr.reverse()
-            console.log('imagesArr : ',imagesArr)
+            //console.log('imagesArr : ',imagesArr)
             res.render('dashboard',{username,image,imagesArr})
         })
     }
