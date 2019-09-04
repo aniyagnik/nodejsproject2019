@@ -199,9 +199,13 @@
     console.log('in get signed request')
     const xhr = new XMLHttpRequest();
     xhr.open('GET', `/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+    console.log('fun 1 ')
     xhr.onreadystatechange = () => {
+      console.log('fun 2 ')
       if(xhr.readyState === 4){
         if(xhr.status === 200){
+          console.log("cxv")
+          console.log('fun : ',xhr.responseText)
           const response = JSON.parse(xhr.responseText);
           uploadFile(file, response.signedRequest, response.url);
         }
@@ -211,6 +215,7 @@
       }
     };
     xhr.send();
+    
   }
 
   function uploadFile(file, signedRequest, url){
