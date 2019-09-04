@@ -18,7 +18,7 @@ app.engine('html', require('ejs').renderFile);
 
 app.use(express.urlencoded({extended: true}))
 
-
+var S3_BUCKET
 app.use('/access-denied',express.static(path.join(__dirname,'error pages')))
 
 app.use('/not-found',express.static(path.join(__dirname,'error pages')))
