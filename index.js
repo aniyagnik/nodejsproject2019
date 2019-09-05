@@ -10,9 +10,9 @@ const aws = require('aws-sdk');
 
 S3_BUCKET = process.env.S3_BUCKET || 'anirudhbucketnodejs19';
 aws.config.region = 'ap-south-1';
-AWSAccessKeyId=AKIAJ7IGPAB26GURJG4A;
+/*AWSAccessKeyId=AKIAJ7IGPAB26GURJG4A;
 AWSSecretKey=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
-
+*/
 aws.config.region='ap-south-1'
 app.engine('html', require('ejs').renderFile);
 
