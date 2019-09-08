@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Image</title>
-  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
     <style>
        html, body {
         height: 100%;
@@ -45,12 +46,16 @@
             text-decoration: none;
         }
       
+      
+       
+       p{
+           margin-block-start:0.3em;
+           margin-block-end: 0.3em;
+       }
         @media screen and (max-width: 600px) {
-            #addComment {
-                 width:17vw;                
-            }
+           
             input[type=text] {
-                width: 80vw;
+                width: 78vw;
             }
               #spanBtn{
             text-align: center;
@@ -73,10 +78,15 @@
         {{userWall}} : 
             <label style="font-size:0.8em;color:black;display:inline-block;font-family:Georgia, 'Times New Roman', Times, serif">
                 {{description}}
-            </label>
+            </label> <br>
+            <div id='likeBtn' {{#if like}}class='done'{{/if}}> 
+                <input type="hidden" value={{like}}>
+                <i id='like'class="fa fa-heart" {{#if like}}style="font-size:30px;color:red;display:inline-block"{{else}}style="font-size:30px;color:red;display:none"{{/if}}></i>
+                <i id='unlike'class="fa fa-heart-o" style="font-size:30px;color:red;display:inline-block"></i>
+            </div>                
         </label> 
         <br><br>
-        <label style="display:block;font-size:1.28em;color:black;font-family:Georgia, 'Times New Roman', Times, serif">COMMENTS :::</label>
+        <label style="display:block;font-size:1.28em;color:black;font-family:Georgia, 'Times New Roman', Times, serif">COMMENTS</label>
         <div style='background-color:#ccc '>        
              
             <form action="#" > 
@@ -85,7 +95,9 @@
                 <input type="hidden" value='{{userWall}}' id='userWall'>
                 <input type="hidden" value='{{viewinguser}}' id='viewinguser'>
                 <span id='divBtn'>
-                    <button type="button" style='float:right;margin-right:0.41%;font-weight:bolder' id='addComment' >>></button>
+                    <button type="button" style='float:right;margin-right:0.41%;font-weight:bolder' id='addComment' >
+                        <i class="fa fa-caret-right" style="color:cyan"></i>
+                    </button>
                 </span>
                 
             </form> <br>
@@ -107,12 +119,19 @@
     
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
-    
+  (function (){
+      if($('#likeVal').val())
+        getElementById('likeVal').style.display='none'
+  })()  
 const addComment=$('#addComment')
 const comments=$('#comments')
 
 addComment.click(()=>{
       let value=$('#comment').val()
+      if(value=='' || typeof value==='undefined'){
+          alert('nothing to comment.')
+          return ;
+      }
       const imageName=$('#imageName').val()   
       const userWall=$('#userWall').val()   
       let viewinguser=$('#viewinguser').val()
@@ -155,6 +174,50 @@ comments.click((e)=>{
         $('#comment').val(`@${index} : `)
     }
 })
+
+
+$("#likeBtn").click(function() {
+  
+  imageName=$('#imageName').val()
+   let name=$('#viewinguser').val()
+   console.log("class is : ",$("#likeBtn").hasClass('done'))
+    if($("#likeBtn").hasClass('done'))
+    {
+        console.log('in if')
+         $.ajax({
+        url: '/user/wall/viewImage/like', 
+        type: 'POST', 
+        contentType: 'application/json', 
+        data: JSON.stringify({
+            unLikedBy:name,
+            imageName:imageName,
+        })}
+        ).then(ok=>{
+            console.log('done unliked')
+            $('#likeBtn').removeClass('done')
+            document.getElementById('unlike').style.display='inline'
+            document.getElementById('like').style.display='none'
+        })
+
+    }
+    else{
+        console.log('in else')
+         $.ajax({
+        url: '/user/wall/viewImage/like', 
+        type: 'POST', 
+        contentType: 'application/json', 
+        data: JSON.stringify({
+            likedBy:name,
+            imageName:imageName,
+        })}
+        ).then(ok=>{console.log('done liked')
+            document.getElementById('unlike').style.display='none'
+            document.getElementById('like').style.display='inline'
+            $('#likeBtn').addClass(' done')
+        })
+    }    
+
+});
 
 </script>   
 </body>

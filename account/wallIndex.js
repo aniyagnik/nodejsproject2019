@@ -5,7 +5,7 @@ const path=require('path')
 
 const  {get_alluserImgs,insert_userImgs,delete_userImg}=require('../database/imageCollection')
 const  { get_allComments,insert_comment,delete_comment}=require('../database/imgCmtCollection')
-
+const {get_imageLikes,add_imageLikes,remove_like}=require('../database/likesCollection')
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 hbs.registerPartials(path.join(__dirname,'/partials'))
@@ -45,11 +45,22 @@ app.get('/viewImage',(req,res)=>{
         const viewinguser=req.user.username
         const {userWall}=req.query
         const {description}=req.query
-       // console.log('values taken :',imageName,viewinguser,userWall,description)    
-        get_allComments(userWall,imageName)
+        var like
+       // console.log('values taken :',imageName,viewinguser,userWall,description) 
+       get_imageLikes(userWall,imageName)
+       .then(res=>{console.log('likes are : ',res);
+            if(res!==null){
+                console.log('liked by user : ',res.likes.find(ele=>ele===viewinguser))   
+                if(res.likes.find(ele=>ele===viewinguser))
+                    {
+                        console.log('in if find')
+                        like="liked"
+                    }
+            }    
+            return get_allComments(userWall,imageName)})
         .then(comments=>{    
-          //  console.log('comments to be written : ',comments)
-            res.render('image',{imageName,viewinguser,userWall,comments,description})
+            console.log('likes is there : ',like)
+            res.render('image',{imageName,viewinguser,userWall,comments,description,like})
         })
        
     }
@@ -71,6 +82,37 @@ app.post('/viewImage',(req,res)=>{
             console.log('comments acquired : ',comments)
             res.sendStatus(200)
         })
+    }
+    else{res.redirect('/access-denied')}  
+})
+
+
+
+app.post('/viewImage/like',(req,res)=>{
+    console.log('in view images likes')
+    if(req.user)
+    {
+        const {imageName}=req.body
+        const {likedBy}=req.body
+        let unlikedBy
+        const {username}=req.user
+        console.log('values taken :',username,imageName,likedBy,unlikedBy)
+        if(likedBy)
+        {
+            console.log('in if server')
+            add_imageLikes(username,imageName,likedBy)
+            .then(likes=>{    
+                res.sendStatus(200)
+            })
+        }  
+        else{
+            const likedBy=req.body.unLikedBy
+            console.log('in else server',likedBy)
+            remove_like(username,imageName,likedBy)
+            .then(likes=>{    
+                res.sendStatus(200)
+            })
+        } 
     }
     else{res.redirect('/access-denied')}  
 })
