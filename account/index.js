@@ -30,7 +30,7 @@ let storage=multer.diskStorage({
 const upload=multer({storage:storage})
 
 app.get('/dashboard',(req,res)=>{
-    console.log('in dashboard',req.user)  
+    console.log('in dashboard')  
     
     if(req.user)
     {

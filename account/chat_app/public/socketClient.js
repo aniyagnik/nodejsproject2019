@@ -1,11 +1,10 @@
-$(document).ready(function () {
-    $('html, body').animate({
-        scrollTop: $('#last').offset().top    
-    }, 'slow');
+function scroll () {
+    console.log('scroll ',$('#last').offset().top)
     $('#chat_messages').animate({
         scrollTop: $('#last').offset().top    
     }, 'slow');
-});
+}
+$(document).ready(scroll());
 const socket = io();
 console.log('in script js')
 let selected_user=$('#chatUser').val()
@@ -40,19 +39,26 @@ socket.on('connected', () => {
    //sending message
    msg_btn.click((e)=>{
         e.preventDefault()
+        const message=send_msg.val() 
+        if(message==="")
+            return;
         console.log('in message click')
         let now
         (function getFormattedDate() {
           let date = new Date();
           now = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + " " +  date.getHours() + ":" + date.getMinutes();
         })()
-        const message=send_msg.val() 
+       
+         $('#last').remove()
         chat_messages.append($(`<div class="d-flex justify-content-end mb-4">
                              <div class="msg_cotainer_send">
                                 ${message}
                                   <span class=" msg_time_send"  style='min-width:30vw; text-align:right;'>${now}</span>
                              </div>
                            </div>`))
+       
+        $('#chat_messages').append($(`<div id='last'></div>`))                   
+        scroll()
         $('#send_msg').val("")                    
         socket.emit('message',{
             selected_user:selected_user,
@@ -74,12 +80,16 @@ socket.on('connected', () => {
         })()
         if(selected_user===res_msg.user)
         {
+            $('#last').remove()
             chat_messages.append($(`<div class="d-flex justify-content-start mb-4">
                                     <div class="msg_cotainer">
                                         ${res_msg.message}
                                         <span class="msg_time" style='min-width:30vw'>${now}</span>
                                     </div>
                                 </div>`))
+           
+            $('#chat_messages').append(`<div id='last'></div>`)                    
+            scroll()
         }
         else{
             let noMsg=$('#noMsg')
