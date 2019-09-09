@@ -45,22 +45,23 @@ app.get('/viewImage',(req,res)=>{
         const viewinguser=req.user.username
         const {userWall}=req.query
         const {description}=req.query
-        var like
+        var like,count
        // console.log('values taken :',imageName,viewinguser,userWall,description) 
        get_imageLikes(userWall,imageName)
        .then(res=>{console.log('likes are : ',res);
             if(res!==null){
-                console.log('liked by user : ',res.likes.find(ele=>ele===viewinguser))   
+                count=res.likes.length
+                console.log('liked by user : ',res.likes.find(ele=>ele===viewinguser,count))   
                 if(res.likes.find(ele=>ele===viewinguser))
                     {
                         console.log('in if find')
-                        like="liked"
+                        like=true
                     }
             }    
             return get_allComments(userWall,imageName)})
         .then(comments=>{    
             console.log('likes is there : ',like)
-            res.render('image',{imageName,viewinguser,userWall,comments,description,like})
+            res.render('image',{imageName,viewinguser,userWall,comments,description,like,count})
         })
        
     }
