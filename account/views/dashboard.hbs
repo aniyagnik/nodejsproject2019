@@ -58,14 +58,14 @@
     <div class="modal-content-form animate"  >
       <div class="imgcontainer">
         <span onclick="document.getElementById('changeProfilePic').style.display='none'" class="close" title="Close Modal">&times;</span>
-        <div class='avatar' style='background-image:url("./uploads/{{image}}");display:inline-block;' >
+        <div class='avatar' style='background-image:url("{{image}}");display:inline-block;' >
         </div>
       </div>
       <div class="containeraddimage">
         <label><b>Change profile Pic</b></label>
         <input type="file" name='profilePic' id="uploadImage" required>
-        <form   method='POST' id="form" enctype="multipart/form-data" onsubmit="return uploadImage()">
-          <input type="hidden" id="image"  name='profilePic' value="">
+        <form   id="form" onsubmit='return uploadPicture(this)'>
+          <input type="hidden" id="profileImage"  name='profilePicture' >
           <button type="submit" class='addbutton'>Change Image</button>
         </form>
       </div>
@@ -85,7 +85,7 @@
     </div>
     <div class="containeraddimage">
       <label><b>Select Wall(visible to viewer)</b></label>
-      <input type="file" name='wallPic' id="image" required>
+      <input type="file" name='wallPic' id="wallimage" required>
       <button type="submit" class='addbutton'>Save Changes</button>
     </div>
      <div class="container" style="background-color:#f1f1f1">
@@ -128,7 +128,7 @@
 
         <div class="containeraddimage">
           <label><b>Select Image</b></label>
-          <input type="file" name='Uimages' id="image" required>
+          <input type="file" name='Uimages' id="addimage" required>
           <label ><b>Description</b></label>
           <input type="text" placeholder="Enter description" name="description" id='description' required>
           <input type="hidden" value='{{username}}' name="username" >
@@ -165,75 +165,7 @@
     </ul>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>    
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
-// Get the modal
-var modal = document.getElementById('addimagediv');
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-  }
-  
-function show(val){
-  console.log('fun hai yaha',val)
-  document.getElementById(val).style.display='block'
-  return true
-}
-
-function uploadImage () {
-    const data = new FormData();
-    console.log('file is ',$("#uploadImage"))
-    console.log('file is ',$("#uploadImage")[0].files[0])
-    
-    data.append( 'profileImage', $("#uploadImage")[0].files[0], $("#uploadImage")[0].files[0].name );
-    // If file selected
-    console.log('data is ',$("#uploadImage")[0].files[0].name)
-    alert("hahhaha")
-    if ( $("#uploadImage")[0].files[0] ) {
-        axios.post( '/upload-image', data, {
-            headers: {
-            'accept': 'application/json',
-            'Accept-Language': 'en-US,en;q=0.8',
-            'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-            }
-          })
-        .then( ( response ) => {
-            if ( 200 === response.status ) {
-                // If file size is larger than expected.
-                if( response.data.error ) {
-                  if ( 'LIMIT_FILE_SIZE' === response.data.error.code ) {
-                      alert( 'Max size: 4MB' );
-                  } 
-                  else {
-                    console.log( "in else for error ",response.data );
-                  // If not the given file type
-                    alert( response.data.error.message);
-                  }
-                } 
-                else {
-                  // Success
-                  let fileName = response.data;
-                  console.log( 'fileName', fileName );
-                  aler( 'File Uploaded');
-                }
-            }
-      })
-      .catch( ( error ) => {
-        // If another error
-       console.log('eror in catch')
-        alert( error.error);});
-      } 
-      else {
-      // if file not selected throw error
-      alert( 'Please upload file' );
-    }
-    return false
-};
-  
-
-</script>
+<script src='dashboardScript.js'></script>
 </body>
 </html>
 

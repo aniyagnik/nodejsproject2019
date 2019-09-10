@@ -11,7 +11,7 @@ passport.serializeUser(function (user, done) {
 })
 
 passport.deserializeUser(function (username, done) {
-    console.log('in deserializeUser',username)
+    //console.log('in deserializeUser',username)
     get_loginAcc(username)
     .then(user=>{
         
@@ -19,7 +19,7 @@ passport.deserializeUser(function (username, done) {
         { 
             console.log('usr NOT found')
             return done(null,false,{message:'no such user'})}
-        else{console.log('usr found')
+        else{//console.log('usr found')
             return done(null,user)}
     })
     .catch(err=>{

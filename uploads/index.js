@@ -15,7 +15,8 @@ const router = express.Router();
 const s3 = new aws.S3({
  accessKeyId: 'AKIAZQPSWXJ4FWIWC3OW',
  secretAccessKey: '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',
- Bucket: 'uploadimagesnode'
+ Bucket: 'uploadimagesnode',
+ region:'ap-south-1'
 });
 /**
  * Single Upload
@@ -23,7 +24,7 @@ const s3 = new aws.S3({
 const profileImgUpload = multer({
  storage: multerS3({
   s3: s3,
-  bucket: 'onclick',
+  bucket: 'uploadimagesnode',
   acl: 'public-read',
   key: function (req, file, cb) {
    cb(null, path.basename( file.originalname, path.extname( file.originalname ) ) + '-' + Date.now() + path.extname( file.originalname ) )
@@ -32,6 +33,7 @@ const profileImgUpload = multer({
  limits:{ fileSize: 4000000 }, // In bytes: 4000000 bytes = 4 MB
  fileFilter: function( req, file, cb ){
   checkFileType( file, cb );
+  console.log('exit checkFileType')
  }
 }).single('profileImage');
 
@@ -64,7 +66,7 @@ router.post( '/', ( req, res ) => {
     console.log('in upload-image get')
     profileImgUpload( req, res, ( error ) => {
         //console.log( 'requestOkokok', req.file );
-        console.log( 'error', error );
+        //console.log( 'error', error );
         if( error ){
         console.log( 'errors', error );
         res.json( { error: error } );
@@ -77,6 +79,7 @@ router.post( '/', ( req, res ) => {
             } 
             else {
                 // If Success
+                console.log('SUCCESS')
                 const imageName = req.file.key;
                 const imageLocation = req.file.location;
             // Save the file name into database into profile model

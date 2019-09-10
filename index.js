@@ -59,5 +59,5 @@ app.use('/user/chat',require('./account/chat_app')(io))
 app.use('/user',require('./account'))
 app.use('/',require('./login-signup'))
 // use port 8080 unless there exists a preconfigured port
-var port = process.env.PORT || 8080;
+var port =  8080;//process.env.PORT ||
 http.listen(port,()=>{console.log('listening at ',port)})
