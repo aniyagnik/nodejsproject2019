@@ -54,7 +54,6 @@ app.use(passport.initialize())   //tells express app to use passport
 app.use(passport.session())     //tells express to user sessions with passport
 
 
-app.use( '/upload-image',require( './uploads') );
 app.use('/user/chat',require('./account/chat_app')(io))
 app.use('/user',require('./account'))
 app.use('/',require('./login-signup'))

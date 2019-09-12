@@ -1,17 +1,17 @@
 function scroll () {
-    console.log('scroll ',$('#last').offset().top)
+    $('html,body').animate({
+        scrollTop: $('html').height()    
+    }, 'slow');
     $('#chat_messages').animate({
-        scrollTop: $('#last').offset().top    
+        scrollTop: document.getElementById('chat_messages').scrollHeight 
     }, 'slow');
 }
 $(document).ready(scroll());
 const socket = io();
-console.log('in script js')
 let selected_user=$('#chatUser').val()
 let my_username=$('#username').val()
 let socketId
 socket.on('connected', () => {
-    console.log("Connected " + socket.id)
 })
   
 
@@ -42,7 +42,6 @@ socket.on('connected', () => {
         const message=send_msg.val() 
         if(message==="")
             return;
-        console.log('in message click')
         let now
         (function getFormattedDate() {
           let date = new Date();
@@ -70,9 +69,6 @@ socket.on('connected', () => {
   
    //printing the message on page 
     socket.on('res_msg',res_msg=>{
-        console.log('my_username',my_username)
-        console.log('printing message you recieved')
-        console.log('to me in personal')
         let now
         (function getFormattedDate() {
           let date = new Date();
@@ -136,6 +132,7 @@ $(document).ready(function(){
     
 
 function deleteUnseen(user){
+    alert('deleting unseen now')
     socket.emit('deleteUnseen',{
         reciever:my_username,
         sender:user

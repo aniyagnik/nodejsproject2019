@@ -9,16 +9,13 @@ window.onclick = function(event) {
   }
   
 function show(val){
-  console.log('fun hai yaha',val)
   document.getElementById(val).style.display='block'
   return true
 }
  
 function uploadPicture (id){
-    console.log('in upload image')
     const file=$(`#${id}`)[0].files[0]
     const type=file.type.split('/')[1]
-    console.log(file)
     if(typeof file==='undefined')
         {
             alert('select a file')

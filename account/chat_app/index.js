@@ -22,7 +22,7 @@ let users=[]
       const {senderMsg}=req.params
       const {sender}=req.params
       get_unseenUserChats(username)
-      .then(document=>{console.log('undeen chats arae : ',document); unseenChats=document;return true})
+      .then(document=>{ unseenChats=document;return true})
       .then(val=>{
         if(typeof chatWith!=='undefined' || chatWith===username)
         {
@@ -41,7 +41,7 @@ let users=[]
           })
           .then(hmm=>get_userChat(username,chatWith))  
           .then(message=>{
-           console.log('chat is this : ',message)
+           //console.log('chat is this : ',message)
            return message
           })
           .then(message=> res.render('chatPage',{username,chatWith,message,chatterImg,unseenChats,onlineStatus})) 
