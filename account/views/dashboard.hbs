@@ -21,7 +21,7 @@
     <br>  
     <div class='row section-top ' style=" margin-left: 0px;">
        <div class='size col-md-3 col-xs-4 col-lg-3 item nopadding'  style="max-width:30%;">
-         <div id='profilepic' style='background-image:url("./uploads/{{image}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
+         <div id='profilepic' style='background-image:url("{{image}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
                 <img src="null.png" alt="" id='profilepic' style="height:100%; width:100%;">
           </div>
        </div>
@@ -63,9 +63,9 @@
       </div>
       <div class="containeraddimage">
         <label><b>Change profile Pic</b></label>
-        <input type="file" name='profilePic' id="uploadImage" required>
-        <form   id="form" onsubmit='return uploadPicture(this)'>
-          <input type="hidden" id="profileImage"  name='profilePicture' >
+        
+        <form  action="/user/dashboard" method='POST' id="form" enctype="multipart/form-data" onsubmit='return uploadPicture("uploadImage")'>
+          <input type="file" name='uploadImage' id="uploadImage" required>
           <button type="submit" class='addbutton'>Change Image</button>
         </form>
       </div>
@@ -77,15 +77,15 @@
 
   {{!-- change wall background --}}
   <div id="changeProfile" class="addImgModal">
-   <form class="modal-content-form animate" action='/user/dashboard/edit' method='POST' id="form" enctype="multipart/form-data"  >
+   <form class="modal-content-form animate" action='/user/dashboard/edit' method='POST' id="form" enctype="multipart/form-data"  onsubmit='return uploadPicture("wallImage")'>
     <div class="imgcontainer">
       <span onclick="document.getElementById('changeProfile').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <div class='avatar' style='background-image:url("./uploads/{{image}}");display:inline-block;' >
+      <div class='avatar' style='background-image:url("{{image}}");display:inline-block;' >
        </div>
     </div>
     <div class="containeraddimage">
       <label><b>Select Wall(visible to viewer)</b></label>
-      <input type="file" name='wallPic' id="wallimage" required>
+      <input type="file" name='wallPic' id="wallImage" required>
       <button type="submit" class='addbutton'>Save Changes</button>
     </div>
      <div class="container" style="background-color:#f1f1f1">
@@ -96,10 +96,10 @@
 
   {{!-- change password --}}
   <div id="changePass" class="addImgModal">
-   <form class="modal-content-form animate" action='/user/dashboard/changePassword' method='POST' id="form"   >
+   <form class="modal-content-form animate" action='/user/dashboard/changePassword' method='POST' id="form"  >
     <div class="imgcontainer">
       <span onclick="document.getElementById('changePass').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <div class='avatar' style='background-image:url("./uploads/{{image}}");display:inline-block;' >
+      <div class='avatar' style='background-image:url("{{image}}");display:inline-block;' >
        </div>
     </div>
     <div class="containeraddimage">
@@ -119,16 +119,16 @@
    
    {{!-- add image  --}}
    <div id="addimgdiv" class="addImgModal">
-      <form class="modal-content-form animate" action='/user/dashboard/addImage' method='POST' id="form" enctype="multipart/form-data"  >
+      <form class="modal-content-form animate" action='/user/dashboard/addImage' method='POST' id="form" enctype="multipart/form-data"  onsubmit='return uploadPicture("uImages")' >
         <div class="imgcontainer">
           <span onclick="document.getElementById('addimgdiv').style.display='none'" class="close" title="Close Modal">&times;</span>
-           <div class='avatar' style='background-image:url("./uploads/{{image}}");display:inline-block;' >
+           <div class='avatar' style='background-image:url("{{image}}");display:inline-block;' >
        </div>
         </div>
 
         <div class="containeraddimage">
           <label><b>Select Image</b></label>
-          <input type="file" name='Uimages' id="addimage" required>
+          <input type="file" name='uImages' id="uImages" required>
           <label ><b>Description</b></label>
           <input type="text" placeholder="Enter description" name="description" id='description' required>
           <input type="hidden" value='{{username}}' name="username" >
@@ -146,7 +146,7 @@
           {{#each imagesArr}}
           <li class='flex-item' style='order:{{@index}}'>
             <a href="./wall/viewImage?userWall={{../username}}&image={{this.image}}&description={{this.description}}">
-              <div class='sizeImg' style='background-image:url("./uploads/{{this.image}}")'>
+              <div class='sizeImg' style='background-image:url("{{this.image}}")'>
                 <img src="null.png" alt="" class='sizeImg' style="height:100%; width:100%;">
               </div>
             </a> 
@@ -155,7 +155,7 @@
                 <p> {{this.description}}</p>
               </details>
               <form action="/user/dashboard/deleteImage" method="POST">
-                <input type="hidden" value='{{this.image}}' name='image'>
+                <input type="hidden" value='{{this.image}}' name='image' >
                 <button type="submit" style='width: 100%;  padding: 1px 2px;  margin: 3px 0;  display: inline-block;  border: 1px solid #ccc;  box-sizing: border-box;'>Delete</button>
               </form>
           </li>          

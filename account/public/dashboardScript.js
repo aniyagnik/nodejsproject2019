@@ -14,68 +14,30 @@ function show(val){
   return true
 }
  
-function uploadPicture (form){
+function uploadPicture (id){
     console.log('in upload image')
-    const data = new FormData();
-    let result=false
-    console.log('file is ',$("#uploadImage")[0].files[0])
-    data.append( 'profileImage', $("#uploadImage")[0].files[0], $("#uploadImage")[0].files[0].name );
-    console.log('form',data)
-    console.log('req form ',form)
-    return false
-    // if ( $("#uploadImage")[0].files[0] ) {
-    //     console.log('IN IF TO UPLOAD FILE')
-    //     // axios.post('/upload-image',data,{ 
-    //     //     headers:{
-    //     //         'accept': 'application/json',
-    //     //         'Accept-Language': 'en-US,en;q=0.8',
-    //     //         'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-    //     //     },
-    //     // })
-    //     $.ajax({
-    //         url: '/upload-image', 
-    //         type: 'POST', 
-    //         processData: false,
-    //         ContentType: `multipart/form-data; boundary=${data._boundary}`,
-    //         data:data
-    //     })
-    //     .catch(err=>{console.log('error in first catch',err)})
-    //     .then( ( response ) => {
-    //         if ( 200 === response.status ) {
-    //             // If file size is larger than expected.
-    //             if( response.data.error ) {
-    //             if ( 'LIMIT_FILE_SIZE' === response.data.error.code ) {
-    //                 alert( 'Max size: 4MB' );
-    //                 return false
-    //             } 
-    //             else {
-    //                 console.log( "in else for error ",response.data );
-    //                 // If not the given file type
-    //                 alert( response.data.error.message);
-    //                 return false
-    //             }
-    //             } 
-    //             else {
-    //                 // Success
-    //                 let fileName = response.data;
-    //                 console.log( 'fileName', fileName.image,fileName.location );
-    //                 $('#profileImage').val(fileName.location)
-    //                 return false
-    //             }
-    //         }
-    //     })
-    //     .catch( ( error ) => {
-    //         // If another error
-    //         console.log('eror in catch',error)
-    //         alert( error);
-    //         return false
-    //     });
-    // }
-    // else {
-    //     // if file not selected throw error
-    //     alert( 'Please upload file' );
-    //     result=false
-    // }
-    //     console.log('in upload images : ',result,$('#profileImage').val())
-    //     return false
+    const file=$(`#${id}`)[0].files[0]
+    const type=file.type.split('/')[1]
+    console.log(file)
+    if(typeof file==='undefined')
+        {
+            alert('select a file')
+            return false
+        }
+    if(file.size>=3000000){
+        alert('please upload image with size less than 3Mb..')
+        return false
+    }
+    switch (type){
+        case 'jpg':
+        case 'jpeg':    
+        case 'png':
+        case 'gif':{
+            alert('uplaoding your image...')
+            return } 
+        default :{
+            alert("upload image only...")
+            return false
+        }   
+    }
 }

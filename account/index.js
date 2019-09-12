@@ -3,6 +3,8 @@ const app = express()
 const hbs=require('hbs')
 const path=require('path')
 const multer=require('multer')
+const aws = require( 'aws-sdk' );
+const multerS3 = require( 'multer-s3' );
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
@@ -16,18 +18,54 @@ app.use('/wall',require('./wallIndex.js'))
 const   {get_alluserImgs,insert_userImgs,delete_userImg}=require('../database/imageCollection')
 const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,change_userPass,delete_loginAcc,change_userProfilePic,change_onlineStatus,change_userWallPic}=require('../database/IdsCollection')
 
-let storage=multer.diskStorage({
-  destination:function(req,res,cb){
-    cb(null,path.join(__dirname,'../uploads/'))
-  },
-  filename:function(req,file,cb){
-    cb(null,Date.now()+file.originalname)
-  }
+/**
+ * PROFILE IMAGE STORING STARTS
+ */
+const s3 = new aws.S3({
+    accessKeyId: 'AKIAZQPSWXJ4FWIWC3OW',
+    secretAccessKey: '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',
+    Bucket: 'uploadimagesnode',
+    region:'ap-south-1'
+});
+/**
+* Single Upload
+*/
+const imgUpload = multer({
+storage: multerS3({
+    s3: s3,
+    bucket: 'uploadimagesnode',
+    acl: 'public-read',
+    key: function (req, file, cb) {
+    cb(null, path.basename( file.originalname, path.extname( file.originalname ) ) + '-' + Date.now() + path.extname( file.originalname ) )
+    }
+}),
+limits:{ fileSize: 3000000 }, // In bytes: 3000000 bytes = 3 MB
+fileFilter: function( req, file, cb ){
+    checkFileType( file, cb );
+    console.log('exit checkFileType')
 }
-)
+})
 
-
-const upload=multer({storage:storage})
+/**
+* Check File Type
+* @param file
+* @param cb
+* @return {*}
+*/
+function checkFileType( file, cb ){
+    console.log('in checkFileType')
+    // Allowed ext
+    const filetypes = /jpeg|jpg|png|gif/;
+    // Check ext
+    const extname = filetypes.test( path.extname( file.originalname ).toLowerCase());
+    // Check mime
+    const mimetype = filetypes.test( file.mimetype );
+    if( mimetype && extname ){
+        return cb( null, true );
+    } else {
+        cb( 'Error: Images Only!' );
+    }
+}
 
 app.get('/dashboard',(req,res)=>{
     console.log('in dashboard')  
@@ -54,13 +92,13 @@ app.get('/dashboard',(req,res)=>{
 })
 
 
-app.post('/dashboard/addImage',upload.single('Uimages'),(req,res)=>{
+app.post('/dashboard/addImage',imgUpload.single('uImages'),(req,res)=>{
     console.log('in addImage')   
     if(req.user)
     {
       // console.log('image:',req.file,req.body.description)
        
-       insert_userImgs(req.body.username,req.file.filename,req.body.description)
+       insert_userImgs(req.body.username,req.file.location,req.body.description)
        .then(uImages=>{
            //console.log('in .then of insert image')
            //console.log("images added : ",uImages)
@@ -73,12 +111,12 @@ app.post('/dashboard/addImage',upload.single('Uimages'),(req,res)=>{
    
 })
 
-app.post('/dashboard',(req,res)=>{
+app.post('/dashboard',imgUpload.single('uploadImage'),(req,res)=>{
     console.log('in post dashboard')
     if(req.user)
     {
        //console.log('image:',req.file)
-       change_userProfilePic(req.user.username,req.body.image)
+       change_userProfilePic(req.user.username,req.file.location)
        .then(uImages=>{
          //  console.log('in .then of insert image')
              res.redirect('/user/dashboard')   
@@ -90,12 +128,12 @@ app.post('/dashboard',(req,res)=>{
 })
 
 
-app.post('/dashboard/edit',(req,res)=>{
+app.post('/dashboard/edit',imgUpload.single('wallPic'),(req,res)=>{
     console.log('in post dashboard')
     if(req.user)
     {
-       console.log('image:',req.file)
-       change_userWallPic(req.user.username,req.file.filename)
+       //console.log('image:',req.file)
+       change_userWallPic(req.user.username,req.file.location)
        .then(uImages=>{
            console.log('in .then of insert image')
              res.redirect('/user/dashboard')   

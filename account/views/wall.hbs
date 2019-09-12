@@ -9,8 +9,8 @@
 </head>
 <body>
     {{>navbar}}
-    <div class="bg" style=' background-image: url("../uploads/{{wallpic}}");'>
-        <div id='profilepicbg' style='background-image:url("../uploads/{{userpic}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
+    <div class="bg" style=' background-image: url("{{wallpic}}");'>
+        <div id='profilepicbg' style='background-image:url("{{userpic}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
           </div>
     </div>
      <label class='UserName'>Wall of {{userWall}}</label>
@@ -25,7 +25,7 @@
         {{#each imagesArr}}
           <li class='flex-item' style='order:{{@index}}'>
             <a href="/user/wall/viewImage?userWall={{../userWall}}&image={{this.image}}&description={{this.description}}">
-              <div class='size' style='background-image:url("../uploads/{{this.image}}")'>
+              <div class='size' style='background-image:url("{{this.image}}")'>
                 <img src="../null.png" alt="" class='size' style="height:100%; width:100%;">
               </div>
           </a> 
