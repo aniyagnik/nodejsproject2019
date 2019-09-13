@@ -19,11 +19,11 @@
     <div style='margin:2%'> 
         hello,{{username}}
         <div>
-            <form action="/user/chat" method="GET">
-                <input class='searchInput' type="text" name='searchUser' placeholder="search user to chat..">
+            <form action="/user/chat" method="GET" onsubmit="return checkUser('{{username}}')">
+                <input class='searchInput' type="text" name='searchUser' id='searchUser' placeholder="search user to chat..">
                 <button class='searchBtn' type="submit">search</button>		 
             </form> 
-            <input type="hidden" value='{{username}}'id='username'>  
+            <input type="hidden" value='{{username}}' id='username'>  
         </div>
 		<div id='notification' ></div>
         <div class='dropdown'>

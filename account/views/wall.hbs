@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{userWall}}'s Wall</title>
      <link rel="stylesheet" href="./wall.css">
+   
 </head>
 <body>
     {{>navbar}}
@@ -15,8 +16,8 @@
     </div>
      <label class='UserName'>Wall of {{userWall}}</label>
      <div style='justify-content:center'>
-       <form action="/user/chat" method="get">
-          <input type="hidden" name='searchUser' value='{{userWall}}'>
+       <form action="/user/chat" method="get" onsubmit="return checkUser('yagnik')">
+          <input type="hidden" name='searchUser' id='searchUser'value='{{userWall}}'>
           <button type="submit" class='sendMsg'>message</button>
         </form>
      </div>
@@ -32,6 +33,16 @@
           </li>
         {{/each}}
       {{/if}}    
-      </ul>    
+      </ul> 
+    <script>
+    function checkUser(user)
+       { if(user===this.searchUser.value)
+        {
+            alert('you want to chat with yourself.😒😒')
+            return false
+        }
+        return true
+    }
+  </script>       
 </body>
 </html>

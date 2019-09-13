@@ -17,6 +17,7 @@ app.get('/',(req,res)=>{
     console.log('in wall get')
     if(req.user)
     {
+        const viewingUser=req.user.username
         const {findinguser}=req.query
         const {userpic}=req.query
         const {userWall}=req.query
@@ -29,7 +30,7 @@ app.get('/',(req,res)=>{
         .then(arr=>{    
             const imagesArr=arr.reverse()
             console.log('images acquired : ',imagesArr)
-            res.render('wall',{findinguser,userpic,imagesArr,wallpic,userWall})
+            res.render('wall',{findinguser,userpic,imagesArr,wallpic,userWall,viewingUser})
         })
     }
     else{res.redirect('/access-denied')}
@@ -48,7 +49,7 @@ app.get('/viewImage',(req,res)=>{
         var like,count
        // console.log('values taken :',imageName,viewinguser,userWall,description) 
        get_imageLikes(userWall,imageName)
-       .then(res=>{console.log('likes are : ',res);
+       .then(res=>{//console.log('likes are : ',res);
             if(res!==null){
                 count=res.likes.length
                 console.log('liked by user : ',res.likes.find(ele=>ele===viewinguser,count))   
@@ -80,7 +81,7 @@ app.post('/viewImage',(req,res)=>{
        // console.log('values taken :',comment,tagged,imageName,commentingUser,username)    
         insert_comment(username,imageName,commentingUser,comment,tagged)
         .then(comments=>{    
-            console.log('comments acquired : ',comments)
+           // console.log('comments acquired : ',comments)
             res.sendStatus(200)
         })
     }

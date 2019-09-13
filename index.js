@@ -17,9 +17,16 @@ app.engine('html', require('ejs').renderFile);
 
 app.use(express.urlencoded({extended: true}))
 
-app.use('/access-denied',express.static(path.join(__dirname,'error pages')))
+app.use('/user/image',express.static(path.join(__dirname,'public')))
+app.use('/user/wall',express.static(path.join(__dirname,'account/public')))
+app.use('/user/chat',express.static(path.join(__dirname,'account/chat_app/public')))
+app.use('/user',express.static(path.join(__dirname,'account/public')))
+app.use('/',express.static(path.join(__dirname,'login-signup/public')))
 
-app.use('/not-found',express.static(path.join(__dirname,'error pages')))
+app.use(function (req,res,next){
+  console.log('handling request : ',req.url+" with method "+req.method);
+  next();
+})
 
 app.get('/access-denied',(req,res)=>{
   res.sendFile(path.join(__dirname,'error pages/403.html'))
@@ -30,19 +37,7 @@ app.get('/not-found',(req,res)=>{
   res.sendFile(path.join(__dirname,'error pages/404.html'))
 })
 
-app.use('/user/uploads',express.static(path.join(__dirname,'uploads')))
-
-app.use('/user/chat',express.static(path.join(__dirname,'account/chat_app/public')))
-
-app.use('/user',express.static(path.join(__dirname,'account/public')))
-
-app.use('/',express.static(path.join(__dirname,'login-signup/public')))
-
-app.use(function (req,res,next){
-  console.log('handling request : ',req.url+" with method "+req.method);
-  next();
-})
-var secretVal="somethings are hidden for good"
+secretVal
 app.use(session({
     secret: secretVal,
     resave:false,

@@ -80,8 +80,7 @@
     <div class="show" style=' background-image: url("{{imageName}}");'>
     </div> <br>
    <div style="margin:0.5%">
-        <label style="font-size:1.6em;color:crimson; font-weight:bold;display:inline-block;font-family:Verdana, Geneva, Tahoma, sans-serif;">
-        {{userWall}} : 
+        <div style="font-size:1.6em;color:crimson; font-weight:bold;display:inline-block;font-family:Verdana, Geneva, Tahoma, sans-serif;">
             <label style="font-size:0.8em;color:black;display:inline-block;font-family:Georgia, 'Times New Roman', Times, serif">
                 {{description}}
             </label> <br>
@@ -91,11 +90,15 @@
                 <i id='unlike'class="fa fa-heart-o" style="font-size:30px;color:black;display:inline-block"></i>
                 <p class='count'>{{count}}</p>
             </div>                
-        </label> 
-        <br><br>
-        <label style="display:block;font-size:1.28em;color:black;font-family:Georgia, 'Times New Roman', Times, serif">COMMENTS</label>
-        <div style='background-color:#ccc '>        
-             
+        </div> 
+        <br>
+        <div style='
+background: #3f4c6b; /* Old browsers */
+background: -moz-linear-gradient(top,  #3f4c6b 0%, #3f4c6b 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  #3f4c6b 0%,#3f4c6b 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  #3f4c6b 0%,#3f4c6b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f4c6b', endColorstr='#3f4c6b',GradientType=0 ); /* IE6-9 */
+'>        
             <form action="#" > 
                 <input type="text" name="comment" id="comment"  placeholder="add comment as {{viewinguser}}..." >
                 <input type="hidden" value='{{imageName}}' id='imageName'>

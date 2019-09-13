@@ -30,13 +30,13 @@ app.post('/login',passport.authenticate('local',{
     successRedirect:'/user/dashboard'
 }))
 
-app.post('/signup',upload.single('image'),(req,res)=>{
+app.post('/signup',(req,res)=>{
     const newAcc={
         email:req.body.email,
         username:req.body.username,
         password:req.body.password,
-        image:req.file.filename,
-        wallPic:null,
+        image:'/user/image/image.jpg',
+        wallPic:'/user/image/wallpic.png',
         online:false,
         chat:false
     }

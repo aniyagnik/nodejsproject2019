@@ -7,6 +7,7 @@ function scroll () {
     }, 'slow');
 }
 $(document).ready(scroll());
+
 const socket = io();
 let selected_user=$('#chatUser').val()
 let my_username=$('#username').val()
@@ -140,5 +141,12 @@ function deleteUnseen(user){
     return true
 }
 
-
+function checkUser(user){
+    if(user===this.searchUser.value)
+    {
+        alert('you want to chat with yourself.😒😒')
+        return false
+    }
+    return true
+}
     
