@@ -21,11 +21,11 @@ const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,change_userPas
 /**
  * PROFILE IMAGE STORING STARTS
  */
-accessKeyId,secretAccessKey,Bucket
+
 const s3 = new aws.S3({
-    accessKeyId: accessKeyId,
-    secretAccessKey: secretAccessKey,
-    Bucket: Bucket,
+    accessKeyId: 'AKIAZQPSWXJ4FWIWC3OW',
+    secretAccessKey: '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',
+    Bucket: 'uploadimagesnode',
     region:'ap-south-1'
 });
 /**
