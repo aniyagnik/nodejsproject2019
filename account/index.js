@@ -21,7 +21,7 @@ const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,change_userPas
 /**
  * PROFILE IMAGE STORING STARTS
  */
-var accessKeyId,secretAccessKey,Bucket
+accessKeyId,secretAccessKey,Bucket
 const s3 = new aws.S3({
     accessKeyId: accessKeyId,
     secretAccessKey: secretAccessKey,

@@ -37,7 +37,7 @@ app.get('/not-found',(req,res)=>{
   res.sendFile(path.join(__dirname,'error pages/404.html'))
 })
 
-var secretVal
+secretVal
 app.use(session({
     secret: secretVal,
     resave:false,
