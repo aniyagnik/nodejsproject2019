@@ -38,7 +38,7 @@ app.get('/not-found',(req,res)=>{
 })
 
 app.use(session({
-    secret: secretVal,
+    secret: "somethings are hidden for good",
     resave:false,
     saveUninitialized:true
   })
