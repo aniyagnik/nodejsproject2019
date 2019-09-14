@@ -49,13 +49,13 @@ let users=[]
             else{ chatterImg=doc.image;console.log('in if of check doc');return true}
           })
 
-         console.log('k is ',k)
+         console.log('k is ',k,unseenChats)
          if(k)
          {
            let f=await  get_userChat(username,chatWith)
           .then(msg=>{message=msg;return true}) 
           .catch(err=>console.log('error is ',err)) 
-          console.log('fi is ',f) 
+          console.log('fi is ',f,message) 
           if(f)
           { res.render('chatPage',{username,chatWith,message,chatterImg,unseenChats,onlineStatus})}
           else{
@@ -125,11 +125,6 @@ app.post('/deleteChat',(req,res)=>{
     //reading a message and then sending
     socket.on('message',(msg_taken)=>{
       //console.log('in message index',msg_taken.message)
-      let now
-      (function getFormattedDate() {
-        let date = new Date();
-        now = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + " " +  date.getHours() + ":" + date.getMinutes();
-      })()
       console.log("message send to : "+msg_taken.selected_user+'by '+msg_taken.user)
       const reciever=users.find(ele=>ele.username===msg_taken.selected_user)
       console.log('reciever is :',reciever)
@@ -140,13 +135,13 @@ app.post('/deleteChat',(req,res)=>{
           message:msg_taken.message,
         })
        
-        add_sendChatComment(msg_taken.user,msg_taken.selected_user,msg_taken.message,now)
-        .then(val=>add_recievedChatComment(msg_taken.selected_user,msg_taken.user,msg_taken.message,now))
+        add_sendChatComment(msg_taken.user,msg_taken.selected_user,msg_taken.message,msg_taken.now)
+        .then(val=>add_recievedChatComment(msg_taken.selected_user,msg_taken.user,msg_taken.message,msg_taken.now))
       }
       else{
-        add_sendChatComment(msg_taken.user,msg_taken.selected_user,msg_taken.message,now)
-        .then(val=>add_recievedChatComment(msg_taken.selected_user,msg_taken.user,msg_taken.message,now))
-        .then(val=>save_unseenChats(msg_taken.selected_user,msg_taken.user,msg_taken.message,now))
+        add_sendChatComment(msg_taken.user,msg_taken.selected_user,msg_taken.message,msg_taken.now)
+        .then(val=>add_recievedChatComment(msg_taken.selected_user,msg_taken.user,msg_taken.message,msg_taken.now))
+        .then(val=>save_unseenChats(msg_taken.selected_user,msg_taken.user,msg_taken.message,msg_taken.now))
       }
       
     })
@@ -159,7 +154,7 @@ app.post('/deleteChat',(req,res)=>{
         let date = new Date();
         now = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + " " +  date.getHours() + ":" + date.getMinutes();
       })()
-      save_unseenChats(msg_taken.reciever,msg_taken.sender,msg_taken.message,now)
+      save_unseenChats(msg_taken.reciever,msg_taken.sender,msg_taken.message,msg_taken.now)
     })
 
     socket.on('deleteUnseen',msg_taken=>{

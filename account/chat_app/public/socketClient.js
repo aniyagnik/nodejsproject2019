@@ -63,7 +63,9 @@ socket.on('connected', () => {
         socket.emit('message',{
             selected_user:selected_user,
             user:my_username,
-            message:message})  
+            message:message,
+            now:now
+        })  
 
    })
    
@@ -117,7 +119,8 @@ socket.on('connected', () => {
             socket.emit("messageRecieved",{
                 reciever:my_username,
                 sender:res_msg.user,
-                message:res_msg.message
+                message:res_msg.message,
+                now:now
             })  
             const notification=$("#notification")
             notification.text('new message sent by '+res_msg.user)    
@@ -133,7 +136,6 @@ $(document).ready(function(){
     
 
 function deleteUnseen(user){
-    alert('deleting unseen now')
     socket.emit('deleteUnseen',{
         reciever:my_username,
         sender:user

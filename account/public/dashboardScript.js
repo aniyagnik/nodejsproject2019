@@ -38,3 +38,11 @@ function uploadPicture (id){
         }   
     }
 }
+
+function ask_confirm(){
+    if ( window.confirm('Are you sure you want to delete this post?')) {
+       return  true
+    } else {
+        return false
+    }
+}

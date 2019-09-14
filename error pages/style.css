@@ -4,7 +4,7 @@ body {
   background: #1b1b1b;
   color: white;
   font-family: "Bungee", cursive;
-  margin-top: 50px;
+  margin-top: 50vw;
   text-align: center;
 }
 a {
@@ -21,14 +21,14 @@ svg {
   fill: #444;
 }
 .eye {
-  cx: calc(115px + 30px * var(--mouse-x));
-  cy: calc(50px + 30px * var(--mouse-y));
+  cx: calc(115vw + 30vw * var(--mouse-x));
+  cy: calc(50vw + 30vw * var(--mouse-y));
 }
 #eye-wrap {
   overflow: hidden;
 }
 .error-text {
-  font-size: 120px;
+  font-size: 120vw;
 }
 .alarm {
   animation: alarmOn 0.5s infinite;
