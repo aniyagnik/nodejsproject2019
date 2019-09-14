@@ -16,42 +16,56 @@ let users=[]
     console.log('in chat get') 
     if(req.user)
     {
-      let chatterImg,unseenChats,onlineStatus
+      let chatterImg,unseenChats,onlineStatus,message
       const chatWith=req.query.searchUser
       const {username}=req.user
       const {senderMsg}=req.params
       const {sender}=req.params
-      get_unseenUserChats(username)
-      .then(document=>{ unseenChats=document;return true})
-      .then(val=>{
-        if(typeof chatWith!=='undefined' || chatWith===username)
-        {
-          change_chatStatus(username,true)
-          .then(res=>get_loginAcc(chatWith))
-          .then(document=>{//console.log("user found : ",document)
-                if(document!==null)
-                {
-                  onlineStatus=document.online
-                  chatterImg=document.image
-                  return true
-                }  
-                else{
-                  res.redirect('/user/chat') 
-                }
+      console.log('values in chat get : ',username,chatWith,senderMsg,sender,typeof chatWith)
+      
+      async function write(){
+        const k = await change_chatStatus(username,true)
+          .then(hi=>get_unseenUserChats(username))
+          .then(document=>{ unseenChats=document;return true})
+          .then(val=>{
+            if(typeof chatWith!=='undefined' && chatWith!==username){
+              console.log('in if of chatwith')
+              return true
+            }else{
+              console.log('in else of chatwith')
+              return false
+            }
           })
-          .then(hmm=>get_userChat(username,chatWith))  
-          .then(message=>{
-           //console.log('chat is this : ',message)
-           return message
+          .then(val=>{
+            if(val)
+            {return get_loginAcc(chatWith)}
+            else{
+              return null
+            }
           })
-          .then(message=> res.render('chatPage',{username,chatWith,message,chatterImg,unseenChats,onlineStatus})) 
+          .then(doc=>{
+            if(doc==null)
+            {console.log('in if of check doc');return false}
+            else{ chatterImg=doc.image;console.log('in if of check doc');return true}
+          })
+
+         console.log('k is ',k)
+         if(k)
+         {
+           let f=await  get_userChat(username,chatWith)
+          .then(msg=>{message=msg;return true}) 
           .catch(err=>console.log('error is ',err)) 
-        }
-        else{
-          change_chatStatus(username,true)
-          .then(as=>res.render('chatPage',{username,unseenChats}))
-        }  
-      })
+          console.log('fi is ',f) 
+          if(f)
+          { res.render('chatPage',{username,chatWith,message,chatterImg,unseenChats,onlineStatus})}
+          else{
+            res.render('chatPage',{username,unseenChats})
+          }
+
+         }
+         else{res.render('chatPage',{username,unseenChats})} 
+      }
+      write()
       
     }
     else

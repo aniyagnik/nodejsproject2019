@@ -136,7 +136,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f4c6b', end
 const addComment=$('#addComment')
 const comments=$('#comments')
 
-addComment.click(()=>{
+addComment.click((event)=>{
+    event.preventDefault()
       let value=$('#comment').val()
       if(value=='' || typeof value==='undefined'){
           alert('nothing to comment.')
@@ -183,8 +184,8 @@ comments.click((e)=>{
 })
 
 
-$("#likeBtn").click(function() {
-  
+$("#likeBtn").click(function(e) {
+  e.preventDefault()
   imageName=$('#imageName').val()
    let name=$('#viewinguser').val()
     if($("#likeBtn").hasClass('done'))

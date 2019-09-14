@@ -81,7 +81,7 @@ app.post('/viewImage',(req,res)=>{
        // console.log('values taken :',comment,tagged,imageName,commentingUser,username)    
         insert_comment(username,imageName,commentingUser,comment,tagged)
         .then(comments=>{    
-           // console.log('comments acquired : ',comments)
+           console.log('comments acquired added: ',comments)
             res.sendStatus(200)
         })
     }

@@ -147,6 +147,11 @@ function checkUser(user){
         alert('you want to chat with yourself.😒😒')
         return false
     }
+    if(""===this.searchUser.value)
+    {
+        alert('enter user to search')
+        return false
+    }
     return true
 }
     
