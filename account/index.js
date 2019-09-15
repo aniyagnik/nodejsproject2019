@@ -17,7 +17,7 @@ app.use('/wall',require('./wallIndex.js'))
 
 const   {get_alluserImgs,insert_userImgs,delete_userImg}=require('../database/imageCollection')
 const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,change_userPass,delete_loginAcc,change_userProfilePic,change_onlineStatus,change_userWallPic}=require('../database/IdsCollection')
-
+const { insert_friendRequest,add_friend,get_friendRequest,get_friends,delete_friendRequest}=require('../database/friendsCollection')
 /**
  * PROFILE IMAGE STORING STARTS
  */
@@ -70,10 +70,17 @@ function checkFileType( file, cb ){
 
 app.get('/dashboard',(req,res)=>{
     console.log('in dashboard')  
-    
     if(req.user)
     {
-        get_alluserImgs(req.user.username)
+        let requests,friendsList,{username}=req.user
+        get_friends(username)
+        .then(friends=>{
+            friendsList=friends
+            return get_friendRequest(username)
+        })
+        .then(doc=>{requests=doc
+            return get_alluserImgs(username)
+        })
         .then(result=>{
             return result.images
         })
@@ -83,7 +90,7 @@ app.get('/dashboard',(req,res)=>{
             const {image}=req.user
             const imagesArr=arr.reverse()
             //console.log('imagesArr : ',imagesArr)
-            res.render('dashboard',{username,image,imagesArr})
+            res.render('dashboard',{username,image,imagesArr,requests,friendsList})
         })
     }
     else{
@@ -230,6 +237,30 @@ app.post('/dashboard/changePassword',(req,res)=>{
        }
     }
     else{
+        res.redirect('/')
+    }
+})
+
+app.get('/dashboard/addFriend',(req,res)=>{
+    console.log('in dashboard friend request post add')
+    if(req.user){
+        const {username}=req.user
+        const requester=req.query.friend
+        console.log('friend req of : ',requester)
+        add_friend(username,requester)
+        .then(doc=>delete_friendRequest(username,requester))
+        .then(ha=>res.redirect('/user/dashboard'))
+    }else{
+        res.redirect('/')
+    }
+})
+
+app.post('/user/dashboard/req/remove',(req,res)=>{
+    console.log('in dashboard friend request remove')
+    if(req.user){
+        reqSender=req.body.viewingUser
+        delete_friendRequest(username,reqSender)
+    }else{
         res.redirect('/')
     }
 })

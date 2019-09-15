@@ -134,7 +134,6 @@ $(document).ready(function(){
     });
 });
     
-
 function deleteUnseen(user){
     socket.emit('deleteUnseen',{
         reciever:my_username,

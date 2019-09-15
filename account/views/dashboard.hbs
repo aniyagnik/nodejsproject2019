@@ -11,6 +11,7 @@
       }
       
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -29,6 +30,18 @@
        </div>
        <div class='col-md-6 col-xs-12 col-lg-6 nopadding item' style='margin-top:1%;margin-buttom:1%text-align:center;'>
          <div class='section-inside'>
+           <div class='dropdown'style="float:right;">
+              <button  class='addbutton' style="width:auto;">friend request</button>
+                <div class="dropdown-content" style="left:0;">
+                    {{#if requests}}
+                       {{#each requests}}
+                           <a href="/user/dashboard/addFriend?friend={{this.reqSender}}">{{this.reqSender}}</a> 
+                        {{/each}}
+                        {{else}}
+                           <a onclick='return show(changeProfilePic.id)' href="#">No request</a> 
+                    {{/if}}    
+                </div>
+            </div> 
            <div class='dropdown'>
              <button  class='addbutton' style="width:auto;">edit Profile</button>
              <div class="dropdown-content" style="left:0;">
@@ -45,12 +58,32 @@
                <button type='submit' class='addbutton' style="width:auto;">chat</button>
              </form>
            </div> 
-          
          </div>
        </div>
     </div>
     <br>
-  
+   {{#if friendsList}}
+      {{#each friendsList}}
+           <div class="col s12 m7">
+            <h2 class="header">{{this.friend}}</h2>
+            <div class="card horizontal">
+              <div class="card-image">
+                <img src="{{this.profilePic}}">
+              </div>
+              <div class="card-stacked">
+                <div class="card-content">
+                  <p>I am a very simple card. I am good at containing small bits of information.</p>
+                </div>
+                <div class="card-action">
+                  <a href="#">This is a link</a>
+                </div>
+              </div>
+            </div>
+          </div>
+      {{/each}}
+      {{else}}
+      <p>sadsafsa</p>
+   {{/if}}
   </div>
    {{!-- change profile pic --}}
    <div id="changeProfilePic" class="addImgModal">

@@ -15,12 +15,18 @@
           </div>
     </div>
      <label class='UserName'>Wall of {{userWall}}</label>
-     <div style='justify-content:center'>
-       <form action="/user/chat" method="get" onsubmit="return checkUser('yagnik')">
-          <input type="hidden" name='searchUser' id='searchUser'value='{{userWall}}'>
-          <button type="submit" class='sendMsg'>message</button>
-        </form>
+     <div class='btn-container'>
+       <div class='btn-item'>
+          <form action="/user/chat" method="get" onsubmit="return checkUser('yagnik')" >
+            <input type="hidden" name='searchUser' id='searchUser'value='{{userWall}}'>
+            <button type="submit" class='sendMsg'>message</button>
+          </form>
+       </div>
+       <div class='btn-item'>
+          <button type="button" class='sendMsg'id='sendReq'>send request</button>
+       </div>
      </div>
+     <input type="hidden" value='{{viewingUser}}' id='viewUser'>
       <ul class="flex-container">
       {{#if imagesArr}}
         {{#each imagesArr}}
@@ -34,7 +40,8 @@
         {{/each}}
       {{/if}}    
       </ul> 
-    <script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>    
+  <script>
     function checkUser(user)
        { if(user===this.searchUser.value)
         {
@@ -43,6 +50,15 @@
         }
         return true
     }
+
+    document.getElementById('sendReq').addEventListener('click',(e)=>{
+      const user=document.getElementById('searchUser').value
+      console.log('fsa',user)
+      window.alert('asf')
+      axios.post('/user/wall/req',{
+        user:user
+      })
+    })
   </script>       
 </body>
 </html>

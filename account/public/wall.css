@@ -71,7 +71,35 @@ body, html {
   
 }
 
+.btn-container {
+  padding: 0;
+  list-style: none;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  flex-direction: row;
+  align-content: center;
+}
+
+.btn-item {
+  background: ghostwhite;
+  padding: 2px;
+  margin:1px;
+  height: 20%;  
+  max-width: 20%;
+  max-height: 20%;  
+  text-align: center;
+  object-fit: cover;
+  align-items: center;
+  
+}
+
 .sendMsg {
+  display: inline-block;
   background-color: rgb(222, 218, 248);
   color: rgb(0, 0, 0);
   border-radius: 10px;
@@ -79,7 +107,7 @@ body, html {
   border: 1px solid cyan;
   cursor: pointer;
   font-size:1em;
-  margin-left: 45%;
+  padding: 3px 10px;
   white-space:normal;
 }
 
