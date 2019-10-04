@@ -25,8 +25,8 @@ body {font-family: Arial, Helvetica, sans-serif;background-color: rgb(251, 253, 
   justify-content: space-evenly;
   width: 100%; /* Full width */
   padding:5px;
-  background-color: rgb(218, 173, 173); /* Fallback color */
-  background-color: rgba(255, 238, 0, 0.233); /* Black w/ opacity */ 
+  background-color: rgb(238, 230, 230); /* Fallback color */
+  background-color: rgba(255, 255, 250, 0.76); /* Black w/ opacity */ 
 }
 /* Full-width input fields */
 input[type=text], input[type=file],input[type=password] {

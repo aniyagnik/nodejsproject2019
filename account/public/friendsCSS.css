@@ -1,0 +1,66 @@
+h3{
+    color:blueviolet;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+
+/* Set a style for all buttons */
+.addbutton {
+    background-color: rgb(72, 45, 230);
+    color: white;
+    padding: 10px 10px;
+    margin: 8px 0;
+    border-radius: 20%;
+    border: 1px dashed cyan;
+    cursor: pointer;
+    width: 100%;
+}
+  
+ .addbutton:hover {
+   background-color: rgb(33, 150, 247)
+}
+  
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+  
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+  
+.dropdown-content a:hover {background-color: #f1f1f1;text-decoration: none;}
+.dropdown:hover .dropdown-content {display: block;}
+
+.friend_info{
+    border-bottom:1px solid black;
+    padding: 0.5%;
+    cursor: pointer;
+}
+
+.friendname{
+    display:inline-block;
+    margin-left:35px;
+    
+}
+  
+.user_img {
+    height: 70px;
+    width: 70px;
+  }
+
+@media screen and (max-width: 600px) {
+    .addbutton {
+        margin: 1px 0;
+        font-size: 1em;
+        padding-top:10px;
+    }  
+}

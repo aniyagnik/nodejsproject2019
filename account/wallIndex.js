@@ -6,7 +6,6 @@ const path=require('path')
 const  {get_alluserImgs,insert_userImgs,delete_userImg}=require('../database/imageCollection')
 const  { get_allComments,insert_comment,delete_comment}=require('../database/imgCmtCollection')
 const {get_imageLikes,add_imageLikes,remove_like}=require('../database/likesCollection')
-const { insert_friendRequest,get_friendRequest,delete_friendRequest}=require('../database/friendsCollection')
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 hbs.registerPartials(path.join(__dirname,'/partials'))
@@ -118,18 +117,6 @@ app.post('/viewImage/like',(req,res)=>{
         } 
     }
     else{res.redirect('/')}  
-})
-
-app.post('/req',(req,res)=>{
-    console.log('in wall friend request')
-    if(req.user){
-        const reqSender=req.user.username
-        const username=req.body.user
-        console.log('values are : ',username,reqSender)
-        insert_friendRequest(username,reqSender)
-    }else{
-        res.redirect('/')
-    }
 })
 
 

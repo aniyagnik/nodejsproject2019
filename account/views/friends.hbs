@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>friends list</title>
+    <link rel="stylesheet" href="friendsCSS.css">
+</head>
+<body>
+     {{>navbar}}
+     <div style="margin:1%"> 
+         <h3>friends</h3>
+        <button  class='addbutton' style="width:auto;">friend request</button>
+                <div class="dropdown-content" style="left:0;">
+                    {{#if requests}}
+                       {{#each requests}}
+                           <a href="/user/dashboard/addFriend?friend={{this.reqSender}}">{{this.reqSender}}</a> 
+                        {{/each}}
+                        {{else}}
+                           <a  href="#">No request</a> 
+                    {{/if}}    
+                </div>
+     </div>
+    <div style='margin:3%'>
+        {{#if friendsList}}
+            {{#each friendsList}}
+              <a href="/user/dashboard/search?searchUser={{this.friend}}" method="get">
+                  <div class='friend_info' >
+                      <div style='display:inline-block'> <img class='user_img' src="{{this.profilePic}}"></div><div class='friendname'><strong>{{this.friend}}</strong> </div>
+                   </div>
+               </a> 
+            {{/each}}
+        {{else}}
+            You have no friends
+        {{/if}}
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+</body>
+</html>
