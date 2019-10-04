@@ -17,6 +17,7 @@ app.engine('html', require('ejs').renderFile);
 
 app.use(express.urlencoded({extended: true}))
 app.use('/error',express.static(path.join(__dirname,'error pages')))
+app.use('/user/friends',express.static(path.join(__dirname,'account/public')))
 app.use('/user/image',express.static(path.join(__dirname,'public')))
 app.use('/user/wall',express.static(path.join(__dirname,'account/public')))
 app.use('/user/chat',express.static(path.join(__dirname,'account/chat_app/public')))

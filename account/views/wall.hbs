@@ -11,7 +11,7 @@
 <body>
     {{>navbar}}
     <div class="bg" style=' background-image: url("{{wallpic}}");'>
-        <div id='profilepicbg' style='background-image:url("{{userpic}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
+        <div id='profilepicbg' onclick='document.getElementById(changeProfile).style.display="block"' style='background-image:url("{{userpic}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
           </div>
     </div>
      <label class='UserName'>Wall of {{userWall}}</label>
@@ -21,10 +21,13 @@
             <input type="hidden" name='searchUser' id='searchUser'value='{{userWall}}'>
             <button type="submit" class='sendMsg'>message</button>
           </form>
-       </div>
-       <div class='btn-item'>
-          <button type="button" class='sendMsg'id='sendReq'>send request</button>
-       </div>
+          {{#if isFriend}}
+              <button type="button" class='sendMsg'id='sendReqRemove'>remove friend</button>
+              <div id='sendReqAdd'></div>
+          {{else}}
+              <button type="button" class='sendMsg'id='sendReqAdd'>send request</button>
+              <div id='sendReqRemove'></div>
+          {{/if}}
      </div>
      <input type="hidden" value='{{viewingUser}}' id='viewUser'>
       <ul class="flex-container">
@@ -40,6 +43,24 @@
         {{/each}}
       {{/if}}    
       </ul> 
+
+       <div id="changeProfile" class="addImgModal">
+      <form class="modal-content-form animate" action='/user/dashboard/edit' method='POST' id="form" enctype="multipart/form-data"  onsubmit='return uploadPicture("wallImage")'>
+        <div class="imgcontainer">
+          <span onclick="document.getElementById('changeProfile').style.display='none'" class="close" title="Close Modal">&times;</span>
+          <div class='avatar' style='background-image:url("{{image}}");display:inline-block;' >
+          </div>
+        </div>
+        <div class="containeraddimage">
+          <label><b>Select Wall(visible to viewer)</b></label>
+          <input type="file" name='wallPic' id="wallImage" required>
+          <button type="submit" class='addbutton'>Save Changes</button>
+        </div>
+        <div class="container" style="background-color:#f1f1f1">
+          <button type="button" onclick="document.getElementById('changeProfile').style.display='none'" class="addbutton cancelbtn">Cancel</button>
+        </div>
+      </form>
+  </div>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>    
   <script>
     function checkUser(user)
@@ -50,14 +71,29 @@
         }
         return true
     }
-
-    document.getElementById('sendReq').addEventListener('click',(e)=>{
+    var modal = document.getElementById('addimagediv');
+    window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+  }
+  
+    document.getElementById('sendReqAdd').addEventListener('click',(e)=>{
       const user=document.getElementById('searchUser').value
       console.log('fsa',user)
-      window.alert('asf')
-      axios.post('/user/friends/friend req',{
+      axios.post('/user/friends/friendReq',{
         user:user
       })
+      .then(as=>alert('friend request sent to '+user))
+    })
+
+    document.getElementById('sendReqRemove').addEventListener('click',(e)=>{
+      const user=document.getElementById('searchUser').value
+      console.log('fsa',user)
+      axios.post('/user/friends/removeFriend',{
+        user:user
+      })
+      .then(as=>alert(user + 'is no longer your friend'))
     })
   </script>       
 </body>

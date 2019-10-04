@@ -22,6 +22,12 @@ app.get('/',(req,res)=>{
         const {userpic}=req.query
         const {userWall}=req.query
         const {wallpic}=req.query
+        const {friends}=req.user
+        let isFriend=false
+        console.log('friends are ',friends)
+        if(friends.find(ele=>ele===userWall)){
+            isFriend=true    
+        }
         //console.log('values taken :',findinguser,userpic,userWall,wallpic)    
         get_alluserImgs(userWall)
         .then(result=>{
@@ -29,8 +35,8 @@ app.get('/',(req,res)=>{
         })
         .then(arr=>{    
             const imagesArr=arr.reverse()
-            console.log('images acquired : ',imagesArr)
-            res.render('wall',{findinguser,userpic,imagesArr,wallpic,userWall,viewingUser})
+            console.log('images acquired : ',imagesArr,isFriend)
+            res.render('wall',{findinguser,userpic,imagesArr,wallpic,userWall,viewingUser,isFriend})
         })
     }
     else{res.redirect('/')}

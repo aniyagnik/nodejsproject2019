@@ -308,7 +308,9 @@ a.hover{text-decoration: none;}
   .addbutton {
     margin: 1px 0;
     font-size: 1em;
-    padding-top:10px;
+    padding-top:3px;
+    padding-bottom:3px;
+    border-radius:0%;
   }
 }
 

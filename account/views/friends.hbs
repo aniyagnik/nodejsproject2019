@@ -10,31 +10,42 @@
 <body>
      {{>navbar}}
      <div style="margin:1%"> 
-         <h3>friends</h3>
-        <button  class='addbutton' style="width:auto;">friend request</button>
-                <div class="dropdown-content" style="left:0;">
-                    {{#if requests}}
-                       {{#each requests}}
-                           <a href="/user/dashboard/addFriend?friend={{this.reqSender}}">{{this.reqSender}}</a> 
-                        {{/each}}
-                        {{else}}
-                           <a  href="#">No request</a> 
-                    {{/if}}    
-                </div>
+         <h3><strong>FRIENDS</strong> </h3>  
+           <div class='dropdown' style='margin:2%'>
+             <button  class='addbutton' style="width:auto;">Friend's Requests</button>
+             <div class="dropdown-content" style="left:0;padding:1%">
+               {{#if requests}}
+                {{#each requests}}
+                    <div style='border: 1px solid black' onclick='javascript:document.location.href="/user/friends/addFriend?friend={{this.reqSender}}"'>
+                       <div class="user_img" style='border: 1px solid black; background-image: url("{{this.profilePic}}");height:50px;width:50px;max-height:50px;max-width:50px;'></div>
+                       <div style='display:inline-block;border: 1px solid black'><a href="#">{{this.reqSender}}</a> </div> 
+                       <span onclick="removeRequest('{{this.reqSender}}')" class="close" title="Close Modal">&times;</span>
+                    </div>
+                    
+                    {{/each}}
+                    {{else}}
+                    <a  href="#">No request</a> 
+                {{/if}} 
+             </div>
+            </div>       
      </div>
     <div style='margin:3%'>
         {{#if friendsList}}
             {{#each friendsList}}
-              <a href="/user/dashboard/search?searchUser={{this.friend}}" method="get">
-                  <div class='friend_info' >
-                      <div style='display:inline-block'> <img class='user_img' src="{{this.profilePic}}"></div><div class='friendname'><strong>{{this.friend}}</strong> </div>
-                   </div>
-               </a> 
+              <div class='friend_info' onclick="javascript:document.location.href='/user/dashboard/search?searchUser={{this.friend}}'" >
+                <div style='display:inline-block'><div class="user_img" style=' background-image: url("{{this.profilePic}}");'></div><div class='friendname'><strong>{{this.friend}}</strong> </div>
+               </div>
             {{/each}}
         {{else}}
             You have no friends
         {{/if}}
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script>
+        function removeRequest (requester){
+            axios.get('/user/friends/removeFriendRequest',{requester:requester})
+            .then(w=>alert('request removed'))
+        }
+    </script>
 </body>
 </html>

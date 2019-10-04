@@ -7,7 +7,7 @@ const hbs=require('hbs')
 hbs.registerPartials(path.join(__dirname,'../partials'))
 
 const {check_chatCollection,add_recievedChatComment,add_sendChatComment,get_userChat,save_unseenChats,get_unseenUserChats,delete_unseenUserChats,delete_userChat}=require('../../database/chatCollection')
-const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,delete_loginAcc,change_chatStatus,change_onlineStatus}=require('../../database/IdsCollection')
+const  {get_loginAcc}=require('../../database/IdsCollection')
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '/views'));
 let users=[]
@@ -24,8 +24,7 @@ let users=[]
       console.log('values in chat get : ',username,chatWith,senderMsg,sender,typeof chatWith)
       
       async function write(){
-        const k = await change_chatStatus(username,true)
-          .then(hi=>get_unseenUserChats(username))
+        const k = await get_unseenUserChats(username)
           .then(document=>{ unseenChats=document;return true})
           .then(val=>{
             if(typeof chatWith!=='undefined' && chatWith!==username){
@@ -115,7 +114,6 @@ app.post('/deleteChat',(req,res)=>{
        console.log('REMOVAL OF USER : ',username)
         if(typeof username!=='undefined')
            console.log('changing chat staus to false',username) 
-        change_chatStatus(username,false)
       } 
     });
 

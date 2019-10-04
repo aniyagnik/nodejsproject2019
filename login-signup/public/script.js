@@ -12,7 +12,11 @@ function checkForm(form)
       form.username.focus();
       return false;
     }
-
+    if(!form.email.value.includes("@nodejs.com")) {
+      alert("Error: email must contain @nodejs.com!");
+      form.email.focus();
+      return false;
+    }
     if(form.password.value != "" && form.password.value == form.Cpassword.value) {
       if(form.password.value.length < 6) {
         alert("Error: Password must contain at least six characters!");

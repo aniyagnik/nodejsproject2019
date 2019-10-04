@@ -1,7 +1,7 @@
 const { MongoClient }=require('mongodb')
 //var mongoUrl=process.env.MONGOLAB_URI
 var mongoUrl="mongodb://project:projectQ12@cluster0-shard-00-00-6zit8.mongodb.net:27017,cluster0-shard-00-01-6zit8.mongodb.net:27017,cluster0-shard-00-02-6zit8.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority"
-client=new MongoClient(mongoUrl ||'mongodb://localhost:27017/project',{ useNewUrlParser: true })
+client=new MongoClient(mongoUrl || 'mongodb://localhost:27017/project',{ useNewUrlParser: true })
 client.connect()
 //accessing database testdb and then sending  collection loginIds
 const get_db=()=>{       
@@ -96,12 +96,36 @@ const get_allLogins=()=>{
                 .then(ha=>{
                     
                     return get_db()})
-                .then(db=>db.collection('loginIds'))
-                .then(collection=>collection.insertOne(Id_info))
-                .catch(err=>console.log('error in saving collectio ids 1',err))
+                .then(db=>db.collection('loginCredentials'))
+                .then(collection=>{
+                    const credentials={
+                        email:Id_info.email,
+                        username:Id_info.username,
+                        password:Id_info.password,
+                    }
+                    return collection.insertOne(credentials)})
+                .catch(err=>console.log('error in saving collection credentials 1',err))
                 .then(doc=>{
                    // console.log('inserted values is :',doc.ops[0])
                     return doc.ops[0]
+                })
+                .then(ha=>{
+                    return get_db()})
+                .then(db=>db.collection('loginIds'))
+                .then(collection=>{
+                    let userDetails={
+                        email:Id_info.email,
+                        username:Id_info.username,
+                        image:'/user/image/image.jpg',
+                        wallPic:'/user/image/wallpic.png',
+                        friends:[],
+                        online:false,
+                    }
+                    return collection.insertOne(userDetails)})
+                .catch(err=>console.log('error in saving collection credentials 1',err))
+                .then(doc=>{
+                    console.log('inserted values is :',doc.ops[0])
+                    return doc
                 })
                 .catch(err=>console.log('error in saving collectio ids 2',err))
         console.log('awaits ends')
@@ -116,7 +140,7 @@ const get_allLogins=()=>{
 //get one login Id requested by client through username
 const  check_loginAcc =(username,password)=>
     get_db()
-    .then(db=>db.collection('loginIds'))
+    .then(db=>db.collection('loginCredentials'))
     .catch(err=>{
         console.log('error in collection')
         return null    
@@ -175,38 +199,7 @@ const change_onlineStatus=(username,status)=>
          return err
      })
 
-         
-const change_chatStatus=(username,status)=>
-    get_db()
-    .then(db=>db.collection('loginIds'))
-    .catch(err=>{
-        console.log('error in collection')
-        res.send('error1')    
-    })
-    .then(collection=>{
-        return collection.updateOne(
-            { username:username },
-            {
-            $set: { chat: status },
-            }
-        )
-    })  
-    .then(document=>{
-    if(document==null){
-        console.log('error in finding username ')
-        return null
-    }  
-    else{      
-    console.log('user online status updated')
-            return document
-    }
-    })
-    .catch(err=>{
-        console.log('error in finding the account')
-    return err
-    })
-
-
+   
 //get one login Id requested by client through username
 const  get_loginAcc =(username)=>
     get_db()
@@ -228,9 +221,10 @@ const  get_loginAcc =(username)=>
             return document
       }
     })
+
 const change_userPass=(username,newPassword,oldPassword)=>
     get_db()
-    .then(db=>db.collection('loginIds'))
+    .then(db=>db.collection('loginCredentials'))
     .catch(err=>{
         console.log('error in collection')
         res.send('error1')    
@@ -349,7 +343,31 @@ const change_userWallPic=(username,filename)=>
     })
    
 
+const edit_friendList=(username,friend)=>
+    get_db()
+    .then(db=>db.collection('loginIds'))
+    .then(collection=>collection.updateOne(
+       { username:username},
+        {
+            "$addToSet":{
+                friends:friend
+            }
+        }
+    ))
+    .catch(err=>console.log("error while editing friends list : ",err))
 
+const delete_loginFriend=(username,requester)=>
+    get_db()
+    .then(db=>db.collection('loginIds'))
+    .then(collection=>collection.updateOne(
+    { username:username},
+        {
+            "$pull":{
+                friends:requester
+            }
+        }
+    ))
+    .catch(err=>console.log("error while editing deletes friend from list list : ",err))
 //deleting in collection loginIds
 const delete_loginAcc=(username)=>
     get_db()
@@ -367,5 +385,6 @@ module.exports={
     change_userProfilePic,
     change_userWallPic,
     change_onlineStatus,
-    change_chatStatus
+    edit_friendList,
+    delete_loginFriend
 }
