@@ -87,7 +87,6 @@
       const user=document.getElementById('wallUser').value
       if(window.confirm('confirm sending  friend request to '+user))
       {
-        alert()
         $('#sendReqAdd').remove()
         $('#sendReqRemove').remove();
         
@@ -96,7 +95,7 @@
         })
         .then(as=>options.append($(`
               <button type="button" class='sendMsg'id='sendaReqRemove'>request sent</button>
-                <div id='sendReaqAdd'></div>
+                <div id='sendReqAdd'></div>
         `)))
         .then(as=>alert('friend request sent to '+user))
       }
