@@ -13,19 +13,28 @@
          <h3><strong>FRIENDS</strong> </h3>  
            <div class='dropdown' style='margin:2%'>
              <button  class='addbutton' style="width:auto;">Friend's Requests</button>
-             <div class="dropdown-content" style="left:0;padding:1%">
+             <div class="dropdown-content" id='drop' style="left:0;padding:1%">
                {{#if requests}}
                 {{#each requests}}
-                   <div id='{{this.reqSender}}'>
-                    <div style='' onclick='javascript:document.location.href="/user/friends/addFriend?friend={{this.reqSender}}"'>
-                       <div class="user_img" style=' background-image: url("{{this.profilePic}}");height:50px;width:50px;max-height:50px;max-width:50px;'></div>
-                       <div style='display:inline-block;'><a href="#">{{this.reqSender}}</a> </div> 
-                       
-                    </div>
-                      <span onclick="removeRequest('{{this.reqSender}}')" class="close" title="Close Modal">&times;</span>
-                    </div>
-                    {{/each}}
-                    {{else}}
+                <a href="#">
+                   <div id='{{this.reqSender}}' style='border-bottom:1px solid black'>
+                    <details style="color: chocolate">
+                       <summary>
+                         <div style='' >
+                            <div class="user_img" style=' background-image: url("{{this.profilePic}}");height:50px;width:50px;max-height:50px;max-width:50px;'></div>
+                            <div style='display:inline-block;'>{{this.reqSender}} </div> 
+                         </div>
+                       </summary>
+                       <p> 
+                         <button onclick='javascript:document.location.href="/user/friends/addFriend?friend={{this.reqSender}}"'>add friend</button>
+                         <button onclick='javascript:document.location.href="/user/dashboard/search?searchUser={{this.reqSender}}"'>view wall</button>  
+                       </p>
+                    </details>
+                    <span onclick="removeRequest('{{this.reqSender}}')" class="close" title="Close Modal">&times;</span>
+                   </div>
+                </a>
+                {{/each}}
+                {{else}}
                     <a  href="#">No request</a> 
                 {{/if}} 
              </div>
@@ -43,9 +52,20 @@
         {{/if}}
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
     <script>
         function removeRequest (requester){
-            document.getElementById('dropdown-content').parentNode.removeChild(requester)
+            const ele=document.getElementById(requester)
+            ele.parentNode.removeChild(ele)
+            function isEmpty( el ){console.log(!$.trim(el.html()))
+                return $.trim(el.html())
+            }
+            if (isEmpty($('#drop'))) {console.log('in if')
+                var aTag = document.createElement('a');
+                aTag.setAttribute('href',"#");
+                aTag.innerText = "no request";
+                div.appendChild(aTag);
+            }
             axios.post('/user/friends/removeFriendRequest',{viewingUser:requester})
             .then(w=>alert('request removed'))
         }

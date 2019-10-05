@@ -24,10 +24,10 @@
           </form>
           <div id='userOptions'>
           {{#if isFriend}}
-              <button type="button" class='sendMsg'id='sendReqRemove'>remove friend</button>
+              <button type="button" class='sendMsg' id='sendReqRemove'>remove friend</button>
               <div id='sendReqAdd'></div>
           {{else}}
-              <button type="button" class='sendMsg'id='sendReqAdd'>send request</button>
+              <button type="button" class='sendMsg' id='sendReqAdd'>send request</button>
               <div id='sendReqRemove'></div>
           {{/if}}
           </div>
@@ -85,9 +85,8 @@
     let options=$("#userOptions")
     document.getElementById('sendReqAdd').addEventListener('click',(e)=>{
       const user=document.getElementById('wallUser').value
-      if(window.confirm('confirm sending  friend request to '+user))
+      if(window.confirm('confirm sending friend request to '+user))
       {
-        alert()
         $('#sendReqAdd').remove()
         $('#sendReqRemove').remove();
         
@@ -95,8 +94,8 @@
           user:user
         })
         .then(as=>options.append($(`
-              <button type="button" class='sendMsg'id='sendaReqRemove'>request sent</button>
-                <div id='sendReaqAdd'></div>
+              <button type="button" class="sendMsg" id="sendRseqRemove">request sent</button>
+                <div id='sendReqAdd'></div>
         `)))
         .then(as=>alert('friend request sent to '+user))
       }
@@ -114,8 +113,8 @@
         user:user
       })
       .then(as=>options.append($(`
-            <button type="button" class='sendMsg'id='sendReqAdd'>send request</button>
-              <div id='sendReqRemove'></div>
+            <button type="button" class="sendMsg" id="sendReqAdd">send request</button>
+              <div id="sendReqRemove"></div>
       `)))
       .then(as=>alert(user + ' is no longer your friend'))
       }
