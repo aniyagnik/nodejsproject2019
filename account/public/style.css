@@ -25,8 +25,8 @@ body {font-family: Arial, Helvetica, sans-serif;background-color: rgb(251, 253, 
   justify-content: space-evenly;
   width: 100%; /* Full width */
   padding:5px;
-  background-color: rgb(238, 230, 230); /* Fallback color */
-  background-color: rgba(255, 255, 250, 0.76); /* Black w/ opacity */ 
+  background-color: rgb(13, 17, 228); /* Fallback color */
+  background-color: rgba(31, 56, 197, 0.76); /* Black w/ opacity */ 
 }
 /* Full-width input fields */
 input[type=text], input[type=file],input[type=password] {
@@ -41,15 +41,25 @@ input[type=text], input[type=file],input[type=password] {
 /* Set a style for all buttons */
 .addbutton {
   background-color: rgb(72, 45, 230);
-  color: white;
+  color: rgb(255, 255, 255);
   padding: 10px 10px;
   margin: 8px 0;
-  border-radius: 20%;
-  border: 1px dashed cyan;
+  border: 1px dashed rgb(233, 240, 240);
   cursor: pointer;
   width: 100%;
 }
 
+.menuBtn{
+  background-color: rgb(250, 250, 253);
+  border: 1px solid rgb(255, 251, 0);
+  color:black;
+  border-radius: 20%;
+
+}
+
+.menuBtn :hover{
+  background-color:rgb(44, 43, 48);
+}
 .addbutton:hover {
   background-color: rgb(33, 150, 247)
 }
@@ -305,12 +315,12 @@ a.hover{text-decoration: none;}
     height:95%;
   }
 
-  .addbutton {
+  .menuBtn {
     margin: 1px 0;
     font-size: 1em;
     padding-top:3px;
     padding-bottom:3px;
-    border-radius:0%;
+    border-radius:10%;
   }
 }
 

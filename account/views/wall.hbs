@@ -14,13 +14,15 @@
         <div id='profilepicbg' onclick='document.getElementById(changeProfile).style.display="block"' style='background-image:url("{{userpic}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
           </div>
     </div>
+    <input type="hidden" id='wallUser' value='{{userWall}}'>
      <label class='UserName'>Wall of {{userWall}}</label>
      <div class='btn-container'>
        <div class='btn-item'>
           <form action="/user/chat" method="get" onsubmit="return checkUser('yagnik')" >
-            <input type="hidden" name='searchUser' id='searchUser'value='{{userWall}}'>
+            <input type="hidden" name='searchUser' id='searchUser' value='{{userWall}}'>
             <button type="submit" class='sendMsg'>message</button>
           </form>
+          <div id='userOptions'>
           {{#if isFriend}}
               <button type="button" class='sendMsg'id='sendReqRemove'>remove friend</button>
               <div id='sendReqAdd'></div>
@@ -28,6 +30,8 @@
               <button type="button" class='sendMsg'id='sendReqAdd'>send request</button>
               <div id='sendReqRemove'></div>
           {{/if}}
+          </div>
+     </div>
      </div>
      <input type="hidden" value='{{viewingUser}}' id='viewUser'>
       <ul class="flex-container">
@@ -61,7 +65,8 @@
         </div>
       </form>
   </div>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>    
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>   
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
   <script>
     function checkUser(user)
        { if(user===this.searchUser.value)
@@ -77,23 +82,43 @@
         modal.style.display = "none";
     }
   }
-  
+    let options=$("#userOptions")
     document.getElementById('sendReqAdd').addEventListener('click',(e)=>{
-      const user=document.getElementById('searchUser').value
-      console.log('fsa',user)
-      axios.post('/user/friends/friendReq',{
-        user:user
-      })
-      .then(as=>alert('friend request sent to '+user))
+      const user=document.getElementById('wallUser').value
+      if(window.confirm('confirm sending  friend request to '+user))
+      {
+        alert()
+        $('#sendReqAdd').remove()
+        $('#sendReqRemove').remove();
+        
+        axios.post('/user/friends/friendReq',{
+          user:user
+        })
+        .then(as=>options.append($(`
+              <button type="button" class='sendMsg'id='sendaReqRemove'>request sent</button>
+                <div id='sendReaqAdd'></div>
+        `)))
+        .then(as=>alert('friend request sent to '+user))
+      }
     })
 
     document.getElementById('sendReqRemove').addEventListener('click',(e)=>{
       const user=document.getElementById('searchUser').value
-      console.log('fsa',user)
+      if(window.confirm('are you sure to remove '+user+ ' as your friend'))
+      {
+        $('#sendReqAdd').remove()
+      $('#sendReqRemove').remove();
+      
+
       axios.post('/user/friends/removeFriend',{
         user:user
       })
-      .then(as=>alert(user + 'is no longer your friend'))
+      .then(as=>options.append($(`
+            <button type="button" class='sendMsg'id='sendReqAdd'>send request</button>
+              <div id='sendReqRemove'></div>
+      `)))
+      .then(as=>alert(user + ' is no longer your friend'))
+      }
     })
   </script>       
 </body>

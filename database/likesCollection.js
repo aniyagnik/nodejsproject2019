@@ -39,7 +39,6 @@ const add_imageLikes=(username,imageName,likedBy)=>
             { 
                 username:username,
                 imageName:imageName 
-            
             },
             { 
                 '$push': { likes:likedBy} 

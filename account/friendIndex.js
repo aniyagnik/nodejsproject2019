@@ -64,13 +64,14 @@ app.post('/removeFriend',(req,res)=>{
     console.log('in friend request post remove')
     if(req.user){
         const {username}=req.user
-        const requester=req.query.user
+        const requester=req.body.user
         console.log('friend req of : ',requester)
         delete_friend(username,requester)
         .then(doc=>delete_friend(requester,username))
         .then(doc=>delete_loginFriend(username,requester))
         .then(doc=>delete_loginFriend(requester,username))
         .then(ha=>res.sendStatus(202))
+        .catch(err=>console.log('error in deleting friend',err))
     }else{
         res.redirect('/')
     }
@@ -80,7 +81,11 @@ app.post('/removeFriendRequest',(req,res)=>{
     console.log('in friend request remove')
     if(req.user){
         reqSender=req.body.viewingUser
+        const {username}=req.user
         delete_friendRequest(username,reqSender)
+        .then(ha=>res.sendStatus(202))
+        .catch(err=>console.log('error in deleting friend request' ,err))
+
     }else{
         res.redirect('/')
     }

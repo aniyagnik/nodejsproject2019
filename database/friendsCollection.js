@@ -126,12 +126,12 @@ const  get_friends =(username)=>
         username:username,
         },
         {
-        $pull: { 'requests': {reqSender:reqSender}}
+        $pull: { 'friends': {friend:reqSender}}
         }
     )
     )
-    .then(ha=>console.log('user deleted',ha.message.documents))
-    .catch(err=>console.log('err in deleting unseen chat : ',err))
+    .then(ha=>console.log('user deleted from frinds',ha.message.documents))
+    .catch(err=>console.log('err in deleting friend : ',err))
  
 module.exports={
     insert_friendRequest,

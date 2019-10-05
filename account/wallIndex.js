@@ -103,7 +103,7 @@ app.post('/viewImage/like',(req,res)=>{
         const {imageName}=req.body
         const {likedBy}=req.body
         let unlikedBy
-        const {username}=req.user
+        const username=req.body.imgUser
         console.log('values taken :',username,imageName,likedBy,unlikedBy)
         if(likedBy)
         {

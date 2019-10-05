@@ -367,6 +367,7 @@ const delete_loginFriend=(username,requester)=>
             }
         }
     ))
+    .then(ha=>console.log('user deleted from friends list',ha.message.documents))
     .catch(err=>console.log("error while editing deletes friend from list list : ",err))
 //deleting in collection loginIds
 const delete_loginAcc=(username)=>

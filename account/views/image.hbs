@@ -187,6 +187,7 @@ comments.click((e)=>{
 $("#likeBtn").click(function(e) {
   e.preventDefault()
   imageName=$('#imageName').val()
+  let username=$('#userWall').val()
    let name=$('#viewinguser').val()
     if($("#likeBtn").hasClass('done'))
     {
@@ -199,6 +200,7 @@ $("#likeBtn").click(function(e) {
         type: 'POST', 
         contentType: 'application/json', 
         data: JSON.stringify({
+            imgUser:username,
             unLikedBy:name,
             imageName:imageName,
         })}
@@ -214,6 +216,7 @@ $("#likeBtn").click(function(e) {
         type: 'POST', 
         contentType: 'application/json', 
         data: JSON.stringify({
+            imgUser:username,
             likedBy:name,
             imageName:imageName,
         })}
