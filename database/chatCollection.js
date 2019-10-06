@@ -258,6 +258,6 @@ module.exports={
   save_unseenChats,
   get_unseenUserChats,
   delete_unseenUserChats,
-  delete_userChat
+  delete_userChat,
 }    
 

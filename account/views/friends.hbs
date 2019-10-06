@@ -43,20 +43,25 @@
      </div>
     <div style='margin:3%'>
         {{#if friendsList}}
-          {{!-- <div style='float:left'>
-            <form action="#" method="post" onsubmit="return checkForMsgInput()" >
-                <button  type="submit">send message</button>  
+          <div style='float:left'>
+            <form action="/user/friends/createGroup" method="post" onsubmit="return checkForGroupInput()" >
+                <button  type="submit">create group</button>
+                <input type="hidden" name="selectedFriend"  value="" id='selectedFriend'>
+                <input type="hidden" name="groupName" id='groupName'value="">
+                <input type="hidden" name="now" id='time'value="">
             </form>
-           </div> --}}
-          <form action="/user/friends/unFriendSelected" onsubmit="return checkForRemoveInput()" method="post">
+           </div>
+          <div style="float:left;margin-left:10vw">
+              <form action="/user/friends/unFriendSelected" onsubmit="return checkForRemoveInput()" method="post">
                 <button  type="submit">remove friends</button>
-                <input type="hidden" name="unFriend" value="" id='unFriend'>
-          </form>        
+                <input type="hidden" name="selectedFriend"  value="" id='unFriend'>
+              </form>        
+          </div> 
           <br> <br>
           {{#each friendsList}}
             <details>
                <summary>
-                <input type="checkbox" form='form1' name="{{this.friend}}" name="{{this.friend}}" value='{{this.friend}}' onclick="edit_unFriend('{{this.friend}}')">
+                <input type="checkbox" form='form1' name="{{this.friend}}" name="{{this.friend}}" value='{{this.friend}}' onclick="edit_hiddenInput('{{this.friend}}')">
                 <div class='friend_info' >
                     <div style='display:inline-block'><div class="user_img" style=' background-image: url("{{this.profilePic}}");'></div><div class='friendname'><strong>{{this.friend}}</strong> </div>
                 </div></div>

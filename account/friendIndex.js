@@ -4,6 +4,7 @@ const hbs=require('hbs')
 const path=require('path')
 const {delete_loginFriend}=require('../database/IdsCollection')
 const {insert_friendRequest,get_friendRequest,delete_friendRequest,add_friend,get_friends,delete_friend}=require('../database/friendsCollection')
+const {create_newGroup}=require("../database/groupCollection")
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 hbs.registerPartials(path.join(__dirname,'/partials'))
@@ -96,11 +97,12 @@ app.post('/unFriendSelected',(req,res)=>{
     if(req.user){
         const {username}=req.user
         console.log('friend req of : ',req.body)
-        console.log('friend : ',typeof req.body,req.body.unFriend)
-        const unFriend=req.body.unFriend.split(" ")
-        console.log('unfriend list',unFriend)
+        console.log('friend : ',typeof req.body,req.body.selectedFriend)
+        const selectedFriend=req.body.selectedFriend.split(" ")
+        const {now}=req.body
+        console.log('unfriend list',selectedFriend)
         async function removeFriends(){
-            const k=await unFriend.forEach((requester)=>{
+            const k=await selectedFriend.forEach((requester)=>{
                     console.log('requester in forEach',requester)
                     delete_friend(username,requester)
                     .then(doc=>delete_friend(requester,username))
@@ -117,5 +119,18 @@ app.post('/unFriendSelected',(req,res)=>{
     }
 })
 
-
+app.post('/createGroup',(req,res)=>{
+    if(req.user){
+        const {username}=req.user
+        const {groupName}=req.body
+        const selectedFriend=req.body.selectedFriend.split(" ")
+        console.log('unfriend list',selectedFriend)
+        // create_newGroup(username,selectedFriends,groupName,now)
+        //     .then(val=>res.redirect('/user/friends'))        
+        //     .catch(err=>console.log('error in sending message friend',err))
+    }
+    else{
+        res.redirect('/')
+    }
+})
 module.exports=app

@@ -14,15 +14,15 @@ function removeRequest (requester){
     .then(w=>alert('request removed'))
 }
 
-function edit_unFriend(checkOf){
+function edit_hiddenInput(checkOf){
     let value=$("#unFriend").val()
     console.log('in edit',value.includes(checkOf))
     if(!value.includes(checkOf)){
         console.log('in if')
-        value+= checkOf+" "
+        value+= (checkOf+" ")
         $("#unFriend").val(value)
     }else{
-        const a=checkOf+" "
+        const a=(checkOf+" ")
         value=value.replace(a,"")
         $("#unFriend").val(value)
     }
@@ -42,14 +42,18 @@ function checkForRemoveInput(){
 }
 
 
-function checkForMsgInput(){
-    console.log($('#form1 input:checkbox'))
-    if($('#form1 input:checkbox:checked').length>0){
-        const message=window.prompt('are you sure you want to remove selected users as your friend..')
+function checkForGroupInput(){
+    if($('#unFriend').val().length>2){
+        const message=window.prompt('enter group name..')
         console.log(message)
+        $("#groupName").val(message)
         if(message!==null){
-            console.log('sending request dor message')         
-            return false
+            console.log('sending request for group')  
+            const date=new Date();
+            const now = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + " " +  date.getHours() + ":" + date.getMinutes();      
+            $("#time").val(now)
+            $("#selectedFriend").val($('#unFriend').val().slice(0,-1))
+            return true
         }
         return false
     }else{
