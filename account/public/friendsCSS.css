@@ -36,8 +36,6 @@ h3{
    color:black;
 }
 
-
-
 .dropdown-content {
     display: none;
     position: absolute;
@@ -62,6 +60,8 @@ h3{
     border-bottom:1px solid black;
     padding: 0.5%;
     cursor: pointer;
+    display:inline-block;
+    min-width:100vw;
 }
 
 .friendname{
@@ -86,4 +86,8 @@ h3{
         font-size: 1em;
         padding-top:4px;
     }  
+    .dropdown:hover .dropdown-content {display: block;max-width:70vw;}   
+}
+@media screen and (max-width:500px){
+  .dropdown:hover .dropdown-content {display: block;max-width:100vw;}
 }

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>friends list</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="friendsCSS.css">
 </head>
 <body>
@@ -42,10 +43,30 @@
      </div>
     <div style='margin:3%'>
         {{#if friendsList}}
-            {{#each friendsList}}
-              <div class='friend_info' onclick="javascript:document.location.href='/user/dashboard/search?searchUser={{this.friend}}'" >
-                <div style='display:inline-block'><div class="user_img" style=' background-image: url("{{this.profilePic}}");'></div><div class='friendname'><strong>{{this.friend}}</strong> </div>
-               </div></div>
+          {{!-- <div style='float:left'>
+            <form action="#" method="post" onsubmit="return checkForMsgInput()" >
+                <button  type="submit">send message</button>  
+            </form>
+           </div> --}}
+          <form action="/user/friends/unFriendSelected" onsubmit="return checkForRemoveInput()" method="post">
+                <button  type="submit">remove friends</button>
+                <input type="hidden" name="unFriend" value="" id='unFriend'>
+          </form>        
+          <br> <br>
+          {{#each friendsList}}
+            <details>
+               <summary>
+                <input type="checkbox" form='form1' name="{{this.friend}}" name="{{this.friend}}" value='{{this.friend}}' onclick="edit_unFriend('{{this.friend}}')">
+                <div class='friend_info' >
+                    <div style='display:inline-block'><div class="user_img" style=' background-image: url("{{this.profilePic}}");'></div><div class='friendname'><strong>{{this.friend}}</strong> </div>
+                </div></div>
+               </summary>
+               <p>
+                   <button onclick='document.location.href="/user/chat?searchUser={{this.friend}}"'>message</button>
+                   <button onclick='document.location.href="/user/dashboard/search?searchUser={{this.friend}}"'>view {{this.friend}}</button>
+                   <button  onclick='document.location.href="/user/friend/settings?friend={{this.friend}}"' class='fa fa-gear'></button>
+               </p>
+               </details>
             {{/each}}
         {{else}}
             You have no friends
@@ -53,22 +74,6 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
-    <script>
-        function removeRequest (requester){
-            const ele=document.getElementById(requester)
-            ele.parentNode.removeChild(ele)
-            function isEmpty( el ){console.log(!$.trim(el.html()))
-                return $.trim(el.html())
-            }
-            if (isEmpty($('#drop'))) {console.log('in if')
-                var aTag = document.createElement('a');
-                aTag.setAttribute('href',"#");
-                aTag.innerText = "no request";
-                div.appendChild(aTag);
-            }
-            axios.post('/user/friends/removeFriendRequest',{viewingUser:requester})
-            .then(w=>alert('request removed'))
-        }
-    </script>
+    <script src='friendScript.js'> </script>
 </body>
 </html>

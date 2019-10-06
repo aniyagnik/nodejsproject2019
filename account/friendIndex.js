@@ -91,5 +91,31 @@ app.post('/removeFriendRequest',(req,res)=>{
     }
 })
 
+app.post('/unFriendSelected',(req,res)=>{
+    console.log('in friend request post selected remove')
+    if(req.user){
+        const {username}=req.user
+        console.log('friend req of : ',req.body)
+        console.log('friend : ',typeof req.body,req.body.unFriend)
+        const unFriend=req.body.unFriend.split(" ")
+        console.log('unfriend list',unFriend)
+        async function removeFriends(){
+            const k=await unFriend.forEach((requester)=>{
+                    console.log('requester in forEach',requester)
+                    delete_friend(username,requester)
+                    .then(doc=>delete_friend(requester,username))
+                    .then(doc=>delete_loginFriend(username,requester))
+                    .then(doc=>delete_loginFriend(requester,username))
+                    .catch(err=>console.log('error in deleting friend',err))
+                })
+
+            res.redirect('/user/friends')    
+        }   
+         removeFriends()  
+    }else{
+        res.redirect('/')
+    }
+})
+
 
 module.exports=app
