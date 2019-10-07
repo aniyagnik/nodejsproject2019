@@ -12,8 +12,8 @@ function checkForm(form)
       form.username.focus();
       return false;
     }
-    if(!form.email.value.includes("@nodejs.com")) {
-      alert("Error: email must contain @nodejs.com!");
+    if(!form.email.value.includes("@gmail.com")) {
+      alert("Error: email must contain @gmail.com!");
       form.email.focus();
       return false;
     }
