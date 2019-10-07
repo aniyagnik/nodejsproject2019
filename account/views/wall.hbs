@@ -15,6 +15,7 @@
           </div>
     </div>
     <input type="hidden" id='wallUser' value='{{userWall}}'>
+    <input type="hidden" id='username' value='{{userWall}}'>
      <label class='UserName'>Wall of {{userWall}}</label>
      <div class='btn-container'>
        <div class='btn-item'>
@@ -67,6 +68,7 @@
   </div>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+  <script src="heartbeat.js"></script>
   <script>
     function checkUser(user)
        { if(user===this.searchUser.value)

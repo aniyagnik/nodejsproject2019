@@ -6,7 +6,7 @@ let path=require('path')
 const hbs=require('hbs')
 hbs.registerPartials(path.join(__dirname,'../partials'))
 
-const {check_chatCollection,add_recievedChatComment,add_sendChatComment,get_userChat,save_unseenChats,get_unseenUserChats,delete_unseenUserChats,delete_userChat}=require('../../database/chatCollection')
+const {add_recievedChatComment,add_sendChatComment,get_userChat,save_unseenChats,get_unseenUserChats,delete_unseenUserChats,delete_userChat}=require('../../database/chatCollection')
 const  {get_loginAcc}=require('../../database/IdsCollection')
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '/views'));
@@ -21,7 +21,7 @@ let users=[]
       const {username}=req.user
       const {senderMsg}=req.params
       const {sender}=req.params
-      console.log('values in chat get : ',username,chatWith,senderMsg,sender,typeof chatWith)
+      console.log('values in chat get : ',username,chatWith,senderMsg,sender)
       
       async function write(){
         const k = await get_unseenUserChats(username)
@@ -45,7 +45,7 @@ let users=[]
           .then(doc=>{
             if(doc==null)
             {console.log('in if of check doc');return false}
-            else{ chatterImg=doc.image;console.log('in if of check doc');return true}
+            else{ chatterImg=doc.image;onlineStatus=doc.online; console.log('in if of check doc');return true}
           })
 
          console.log('k is ',k,unseenChats)
@@ -113,7 +113,7 @@ app.post('/deleteChat',(req,res)=>{
         users=users.filter(ele=>ele.socketId!==socket.id)
        console.log('REMOVAL OF USER : ',username)
         if(typeof username!=='undefined')
-           console.log('changing chat staus to false',username) 
+           console.log('changing  to false',username) 
       } 
     });
 

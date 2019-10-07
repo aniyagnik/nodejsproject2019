@@ -243,7 +243,7 @@ app.get('/logout',(req,res)=>{
     {
         change_onlineStatus(req.user.username,false)
         req.session.destroy()
-        res.redirect('/')
+        res.redirect('/removeSession?user='+req.user.username)
     }
     else{
         res.redirect('/')

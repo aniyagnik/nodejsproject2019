@@ -5,8 +5,8 @@ const session=require('express-session')
 const passport=require('./login-signup/passport')
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
-var nodemailer = require("nodemailer");
 
+const  {change_onlineStatus}=require('./database/IdsCollection')
 
 /*S3_BUCKET = process.env.S3_BUCKET || 'anirudhbucketnodejs19';
 aws.config.region = 'ap-south-1';
@@ -29,75 +29,6 @@ app.use(function (req,res,next){
   next();
 })
 
-
-const {add_newHash,remove_hash,verify_emailId}=require('./database/hashCollection.js')
-/*
-    Here we are configuring our SMTP Server details.
-    STMP is mail server which is responsible for sending and recieving email.
-*/
-var smtpTransport = nodemailer.createTransport({
-    secure:false,
-    service: "Gmail",
-    auth: {
-        user: "aniyagnik1@gmail.com",
-        pass: "@niYagnik#0"
-    },
-    tls:{
-      rejectUnauthorized:false
-    }
-});
-/*------------------SMTP Over-----------------------------*/
-
-/*------------------Routing Started ------------------------*/
-
-app.get('/send',(req,res)=>{
-    console.log('in seding message to account')
-    const rand=Math.floor((Math.random() * 100) + 54);
-    const host=req.get('host');
-    const link="http://"+req.get('host')+"/verify?id="+rand;
-    const mailOptions={
-        to : req.query.to,
-        subject : "Please confirm your Email account",
-        html : "Hello,<br> Please Click on the link to verify your email.<br><a href="+link+">Click here to verify</a>" 
-    }
-    console.log(mailOptions);
-    smtpTransport.sendMail(mailOptions, function(error, response){
-    if(error){
-            console.log("error in mailing : ",error);
-        res.end("error");
-    }else{
-            console.log("Message sent: " + response.message);
-        res.end("sent");
-        }
-    });
-});
-
-app.get('/verify',(req,res)=>{
-    console.log('in account verification')
-    console.log(req.protocol+":/"+req.get('host'));
-    const host=req.get('host');
-    // if((req.protocol+"://"+req.get('host'))==("http://"+host))
-    // {
-    //     console.log("Domain is matched. Information is from Authentic email");
-    //     verify_emailId()
-    //     if(req.query.id==rand)
-    //     {
-    //         console.log("email is verified");
-    //         res.end("<h1>Email is been Successfully verified");
-    //     }
-    //     else
-    //     {
-    //         console.log("email is not verified");
-    //         res.end("<h1>Bad Request</h1>");
-    //     }
-    // }
-    // else
-    // {
-    //     res.end("<h1>Request is from unknown source");
-    // }
-    res.send("202")
-});
-
 app.get('/access-denied',(req,res)=>{
   res.sendFile(path.join(__dirname,'error pages/403.html'))
 })
@@ -107,6 +38,66 @@ app.get('/not-found',(req,res)=>{
   res.sendFile(path.join(__dirname,'error pages/404.html'))
 })
 
+app.get('/removeSession',(req,res)=>{
+  const newAr=ids.filter(ele=>{
+      if(ele.name!==req.query.user){
+          ele={...ele,name:ele.name}
+          return ele
+        }
+  })
+  ids=newAr
+  res.redirect('/')
+})
+
+
+
+let ids=[]
+var rNum=Math.random()/4294967295
+app.get('/heartbeat',(req,res)=>{
+    console.log('in heart beat server')
+    const {name}=req.query
+    const index=ids.findIndex(ele=>ele.name===name)
+    if(index>-1)
+    {
+       ids[index].value=rNum
+    }
+    else{
+        const sessionInfo={
+            name:name,
+            value:rNum
+        }
+        ids.push(sessionInfo)
+    }
+   
+    res.sendStatus(202)
+})
+setInterval(removeOfflined,100000)
+    
+function removeOfflined () {
+    if(typeof ids[0]!=="undefined")
+    {
+        let oldVal=rNum
+        console.log("arrays : ",typeof ids,typeof ids[0])
+        console.log("array to be checked : ",ids)
+        rNum=Math.random()/4294 //967295
+        console.log('old and new : ',oldVal,rNum)
+        const newAr=ids.filter(ele=>{
+            if(ele.value===oldVal){
+                ele={...ele,name:ele.name}
+                return ele
+            }
+            else{
+              change_onlineStatus(ele.name,false)
+             }
+        })
+        ids=newAr
+        console.log('new array : ',ids,typeof ids)
+    }
+    else{
+        return
+    }
+    
+}
 app.use(session({
     secret: "somethings are hidden for good",
     resave:false,

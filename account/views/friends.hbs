@@ -11,6 +11,7 @@
 <body>
      {{>navbar}}
      <div style="margin:1%"> 
+       <input type="hidden" id="username" value="{{username}}">
          <h3><strong>FRIENDS</strong> </h3>  
            <div class='dropdown' style='margin:2%'>
              <button  class='addbutton' style="width:auto;">Friend's Requests</button>
@@ -80,5 +81,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
     <script src='friendScript.js'> </script>
+    <script src="heartbeat.js"></script>
 </body>
 </html>

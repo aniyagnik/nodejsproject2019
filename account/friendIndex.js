@@ -23,7 +23,7 @@ app.get('/',(req,res)=>{
         })
         .then(friends=>{
             friendsList=friends
-            res.render('friends',{requests,friendsList})
+            res.render('friends',{requests,friendsList,username})
         })
     }
     else{
