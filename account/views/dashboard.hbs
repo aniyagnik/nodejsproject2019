@@ -40,7 +40,6 @@
              <div class="dropdown-content" style="left:0;">
               <a onclick='return show(changeProfilePic.id)' href="#changeProfilePic">change profile Pic</a> 
               <a onclick='return show(changeProfile.id)' href="#changeProfile">add wall image</a>
-              <a  onclick='return show(changePass.id)' href='#changePass'>change password</a>
              </div>
             </div>
            <div>
@@ -55,8 +54,8 @@
        </div>
     </div>
     <br>
-      
   </div>
+
    {{!-- change profile pic --}}
    <div id="changeProfilePic" class="addImgModal">
     <div class="modal-content-form animate"  >
@@ -67,7 +66,6 @@
       </div>
       <div class="containeraddimage">
         <label><b>Change profile Pic</b></label>
-        
         <form  action="/user/dashboard" method='POST' id="form" enctype="multipart/form-data" onsubmit='return uploadPicture("uploadImage")'>
           <input type="file" name='uploadImage' id="uploadImage" required>
           <button type="submit" class='addbutton'>Change Image</button>
@@ -98,29 +96,6 @@
     </form>
   </div>
 
-  {{!-- change password --}}
-  <div id="changePass" class="addImgModal">
-   <form class="modal-content-form animate" action='/user/dashboard/changePassword' method='POST' id="form"  >
-    <div class="imgcontainer">
-      <span onclick="document.getElementById('changePass').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <div class='avatar' style='background-image:url("{{image}}");display:inline-block;' >
-       </div>
-    </div>
-    <div class="containeraddimage">
-      <label><b>New Password</b></label>
-      <input type="password" name='newPass' id="newPass" required>
-      <label><b>Confirm New Password</b></label>
-      <input type="password" name='cNewPass' id="cNewPass" required>
-      <label><b>Old Password</b></label>
-      <input type="password" name='oldPass' id="oldPass" required>
-      <button type="submit" class='addbutton'>Change password</button>
-    </div>
-     <div class="container" style="background-color:#f1f1f1">
-      <button type="button" onclick="document.getElementById('changePass').style.display='none'" class="addbutton cancelbtn">Cancel</button>
-     </div>
-    </form>
-   </div>
-   
    {{!-- add image  --}}
    <div id="addimgdiv" class="addImgModal">
       <form class="modal-content-form animate" action='/user/dashboard/addImage' method='POST' id="form" enctype="multipart/form-data"  onsubmit='return uploadPicture("uImages")' >
@@ -129,7 +104,6 @@
            <div class='avatar' style='background-image:url("{{image}}");display:inline-block;' >
        </div>
         </div>
-
         <div class="containeraddimage">
           <label><b>Select Image</b></label>
           <input type="file" name='uImages' id="uImages" required>

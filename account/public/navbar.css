@@ -4,11 +4,12 @@ body{
 }
 .menu{
   display:flex;
+  position: absolute;
   align-items: center;
   text-align:center;
   width: 100%; 
-  padding-top:10px;
-  padding-bottom: 10px;
+  padding-top:5px;
+  padding-bottom: 5px;
   background-color: rgb(0,0,0); /* Fallback color */ 
   justify-content:space-around;
   font-family: 'Courier New', Courier, monospace;
@@ -108,8 +109,8 @@ a.web:hover{
 @media screen and (max-width: 600px) {
     .menu{
         font-size: 0.7em;
-        padding-top:4px;
-        padding-bottom:4px;
+        padding-top:1px;
+        padding-bottom:1px;
     }
     
     input[type=search] {

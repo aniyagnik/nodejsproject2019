@@ -9,13 +9,13 @@
 </head>
 <body>
     {{>navbar}}
-    <div style="">
+    <div style="background-image:url('/user/image/a.jpg');position:absolute">
         <h3 style="text-align: center;color:brown">User <p style="display:inline;color:blue">Settings</p></h3>
         <h1 style="text-align: center;black">{{user.username}}</p></h1>
         <h4 style="text-align: center;color:black">{{user.email}}</h4>
     </div>
     
-    <div style='width:100%;height:15vh;border-bottom:1px solid black'>
+    <div class="menuSet">
         <div class="options" onclick="showAndHide('personal')">personal Info</div>
         <div class="options" onclick="showAndHide('pass')">change password</div>
         <div class="options" onclick="showAndHide('limit')">apply limit lock</div>
@@ -62,17 +62,52 @@
                         <label><b>Confirm New Password</b></label> <br>
                         <input type="password" name='cNewPass' id="cNewPass" required> <br>
                         <label><b>Old Password</b></label> <br>
-                        <input type="password" name='oldPass' id="oldPass" required> <br> 
-                        <button type="submit" class='sButton'>Change password</button> <br>
+                        <input type="password" name='oldPass' id="oldPass" required> <br> <br> 
+                        <div style="text-align: center">
+                            <button type="submit" class='sButton'>Change password</button>
+                        </div>
+                        <br>
                     </form>
                 </div>
             </div>
         </div>
-        <div id="limit" style="display:none">
-                limit useage
+        <div id="limit" style="display:none;margin:1%">
+                <h3>APPLY LIMIT TO USAGE</h3>
+                <details>
+                    <summary>more...</summary>
+                    <p>
+                        <h5>Social networking sites are very addictive and can cause harm to your other important work and it may also affect your health.
+                            So ,now presenting you a bew feature. APP LOCK.
+                            you can apply a lock feature to WeShare.com if you find it difficult to manage you daily work.
+                            decide the time you want to use your account in a day.
+                            If the specified limit exceeds you app will no longer open your account for that day. 
+                        </h5> <h5>
+                            Considering the fact that you may have some important work and you might have excced your day limit 
+                            WeShare.com offers you to restore your account by sending verification mail to your e-mail address.
+                        </h5>
+                    </p>
+                </details>
+                
+                <hr>
+                <div style="border-bottom:1px solid black">
+                    <form action="/user/settings/appLock" method="post">
+                        <label><b>Daily time Usage</b></label> <br>
+                        <input type="text" name='lockTime' id="lockTime" required> 
+                        <select >
+                            <option value="min">minutes</option>
+                            <option value="hours">hours</option>
+                        </select>
+                        <br>
+                        <div style="text-align: center">
+                            <button type="submit" class='sButton'>apply lock</button>
+                        </div>
+                        <br>
+                    </form>
+                </div>
+
                 <hr>
         </div>
-        <div id="email" style="display:none">
+        <div id="email" style="display:none;margin:1%">
               <div>
                 <h3>CHANGE EMAIL</h3>
                 <hr>
@@ -80,9 +115,12 @@
                     <form action="/user/settings/changePassword" method="post">
                         <label><b>New Email Address</b></label> <br>
                         <input type="email" name='newEmail' id="newEmail" required> <br>
-                        <label><b>Password</b></label> <br>
+                        <label><b>Current Password</b></label> <br>
                         <input type="password" name='password' id="password" required> <br>
-                        <button type="submit" class='sButton'>Change Email Id</button> <br>
+                        <div style="text-align: center">
+                            <button type="submit" class='sButton'>Change Email Id</button> <br>
+                        </div>
+                        
                     </form>
                 </div>
             </div>  
@@ -100,6 +138,15 @@
             console.log('sdfsa')
             document.getElementById(element).style.display="block"
         }
+        let lockTime=document.getElementById('lockTime')
+        lockTime.addEventListener('input',()=>{
+            console.log("in functio chage")
+            var isnum=/^d+$/.test(lockTime.value)
+            if(isnum){
+                alert('enter time')
+                lockTime.value=""
+            }
+        })
     </script>
 </body>
 </html>

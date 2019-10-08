@@ -1,18 +1,30 @@
+.menuSet{width:100%;
+    border-bottom:1px solid black;
+    overflow:auto;
+    white-space:nowrap;
+    overflow: -moz-scrollbars-none;
+    
+}
+.menuSet::-webkit-scrollbar{width:0 !important}
+
 .options{
     display:inline-block;
     padding:10px;
     cursor: pointer;
 }
 h5{
-    font-weight: 1000;
-    color:red
+    font-weight: 600 !important;
+}
+
+h3{
+    font-weight: bold !important;
 }
 .options:hover {
     border-bottom:2px solid blue;
     color:blue;
-    transform: color border-bottom 2s;
+    transition:  color border-bottom 2s;
 }
-input[type=email],input[type=password] {
+input[type=time],input[type=email],input[type=password] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -20,12 +32,23 @@ input[type=email],input[type=password] {
     border: 1px solid #ccc;
     box-sizing: border-box;
   }
+
+input[type=text] {
+    width: 80vw;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }  
 .sButton{
     padding:10px;
     background-color: black;
     border-bottom:2px solid blue;
     border-right: 1px solid blue;
     color:white;
+    cursor: pointer;
+    align-self: center;
 }
 
 .sButton:active{
@@ -44,4 +67,12 @@ input[type=email],input[type=password] {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+details summary::-webkit-details-marker{
+    display:none
+}
+
+details summary{
+    cursor: pointer;
 }
