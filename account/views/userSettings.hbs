@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WeShare | settings</title>
+    <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+    {{>navbar}}
+    <div style="">
+        <h3 style="text-align: center;color:brown">User <p style="display:inline;color:blue">Settings</p></h3>
+        <h1 style="text-align: center;black">{{user.username}}</p></h1>
+        <h4 style="text-align: center;color:black">{{user.email}}</h4>
+    </div>
+    
+    <div style='width:100%;height:15vh;border-bottom:1px solid black'>
+        <div class="options" onclick="showAndHide('personal')">personal Info</div>
+        <div class="options" onclick="showAndHide('pass')">change password</div>
+        <div class="options" onclick="showAndHide('limit')">apply limit lock</div>
+        <div class="options" onclick="showAndHide('email')">change email</div>
+    </div>
+    <div style="margin:2%;border:1px dashed black" >
+        <div id="personal" style="display:block;margin:1%">
+            <h3>PROFILE</h3>
+            <hr>
+            <div style="border-bottom:1px solid black;margin:1%">
+                <h5>DATE OF ACCOUNT CREATION</h5>
+                <h4>{{user.creationDate}}</h4>
+            </div>
+            <div style="border-bottom:1px solid black;margin:1%">
+                <h5>USERNAME</h5>
+                <h4>{{user.username}}</h4>
+            </div>
+            <div style="border-bottom:1px solid black;margin:1%">
+                <h5>PHOTO</h5>
+                <div id="image" style='background-image:url("{{user.image}}")'></div>
+                <br>
+            </div>
+            <div style="border-bottom:1px solid black;margin:1%">
+                <h5>PASSWORD</h5>
+                <h4>{{user.password}}</h4>
+            </div>
+            <div style="border-bottom:1px solid black;margin:1%">
+                <h5>TOTAL ONLINE TIME</h5>
+                <h4>{{user.totalTime}}</h4>
+            </div>
+            <div style="border-bottom:1px solid black;margin:1%">
+                <h5>TIME SPENT TODAY</h5>
+                <h4 ID="setTime"></h4>
+            </div>
+        </div>
+        <div id="pass" style="display:none;margin:1%">
+            <div>
+                <h3>CHANGE PASSWORD</h3>
+                <hr>
+                <div style="border-bottom:1px solid black">
+                    <form action="/user/settings/changePassword" method="post">
+                        <label><b>New Password</b></label> <br>
+                        <input type="password" name='newPass' id="newPass" required> <br>
+                        <label><b>Confirm New Password</b></label> <br>
+                        <input type="password" name='cNewPass' id="cNewPass" required> <br>
+                        <label><b>Old Password</b></label> <br>
+                        <input type="password" name='oldPass' id="oldPass" required> <br> 
+                        <button type="submit" class='sButton'>Change password</button> <br>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="limit" style="display:none">
+                limit useage
+                <hr>
+        </div>
+        <div id="email" style="display:none">
+              <div>
+                <h3>CHANGE EMAIL</h3>
+                <hr>
+                <div style="border-bottom:1px solid black;margin:1%">
+                    <form action="/user/settings/changePassword" method="post">
+                        <label><b>New Email Address</b></label> <br>
+                        <input type="email" name='newEmail' id="newEmail" required> <br>
+                        <label><b>Password</b></label> <br>
+                        <input type="password" name='password' id="password" required> <br>
+                        <button type="submit" class='sButton'>Change Email Id</button> <br>
+                    </form>
+                </div>
+            </div>  
+        </div>
+    </div>
+    <script>
+        function showAndHide(element){
+            console.log("in function")
+            let ar=["personal","pass","limit","email"]
+             k=document.getElementById(element)
+             ar=ar.filter(ele=>ele!==element)
+            ar.forEach(ele=>{
+                document.getElementById(ele).style.display="none"
+            })
+            console.log('sdfsa')
+            document.getElementById(element).style.display="block"
+        }
+    </script>
+</body>
+</html>

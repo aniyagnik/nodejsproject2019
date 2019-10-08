@@ -15,6 +15,7 @@ app.set('views', path.join(__dirname, '/views'));
 app.use('/',express.static(path.join(__dirname,'/uploads')))
 app.use('/wall',require('./wallIndex.js'))
 app.use('/friends',require('./friendIndex.js'))
+app.use('/setting',require('./settingIndex.js'))
 
 const   {get_alluserImgs,insert_userImgs,delete_userImg}=require('../database/imageCollection')
 const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,change_userPass,delete_loginAcc,change_userProfilePic,change_onlineStatus,change_userWallPic}=require('../database/IdsCollection')
