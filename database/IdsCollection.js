@@ -120,6 +120,10 @@ const get_allLogins=()=>{
                         wallPic:'/user/image/wallpic.png',
                         friends:[],
                         online:false,
+                        createdOn:Id_info.createdOn,
+                        totalTime:0,
+                        maxLimit:86402000,
+                        todayTime:0,
                     }
                     return collection.insertOne(userDetails)})
                 .catch(err=>console.log('error in saving collection credentials 1',err))
@@ -199,6 +203,39 @@ const change_onlineStatus=(username,status)=>
          return err
      })
 
+ 
+const change_onlineTime=(username,time)=>
+     get_db()
+     .then(db=>db.collection('loginIds'))
+     .catch(err=>{
+         console.log('error in collection')
+         res.send('error1')    
+     })
+     .then(collection=>{
+         return collection.updateOne(
+             { username:username },
+             {
+             $inc: { 
+                 totalTime:time,
+                 todayTime:time   
+                },
+             }
+         )
+     })  
+     .then(document=>{
+     if(document==null){
+         console.log('error in finding username ')
+         return null
+     }  
+     else{      
+     console.log('user time updated')
+             return document
+     }
+     })
+     .catch(err=>{
+         console.log('error in finding the account')
+         return err
+     })
    
 //get one login Id requested by client through username
 const  get_loginAcc =(username)=>
@@ -387,5 +424,6 @@ module.exports={
     change_userWallPic,
     change_onlineStatus,
     edit_friendList,
-    delete_loginFriend
+    delete_loginFriend,
+    change_onlineTime
 }

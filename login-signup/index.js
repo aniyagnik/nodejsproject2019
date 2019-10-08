@@ -35,6 +35,7 @@ app.post('/signup',(req,res)=>{
         email:req.body.email,
         username:req.body.username,
         password:req.body.password,
+        createdOn:req.body.date,
     }
     async function add(){
       const addedUser=await insert_loginAcc(newAcc)

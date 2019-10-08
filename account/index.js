@@ -18,7 +18,7 @@ app.use('/friends',require('./friendIndex.js'))
 app.use('/settings',require('./settingIndex.js'))
 
 const   {get_alluserImgs,insert_userImgs,delete_userImg}=require('../database/imageCollection')
-const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,change_userPass,delete_loginAcc,change_userProfilePic,change_onlineStatus,change_userWallPic}=require('../database/IdsCollection')
+const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,change_userPass,delete_loginAcc,change_userProfilePic,change_onlineStatus,change_userWallPic,change_onlineTime}=require('../database/IdsCollection')
 const { insert_friendRequest,add_friend,get_friendRequest,get_friends,delete_friendRequest}=require('../database/friendsCollection')
 /**
  * PROFILE IMAGE STORING STARTS
@@ -71,7 +71,7 @@ function checkFileType( file, cb ){
 }
 
 app.get('/dashboard',(req,res)=>{
-    console.log('in dashboard')  
+    console.log('in dashboard',req.user)  
     if(req.user)
     {
         let requests,{username}=req.user
@@ -242,7 +242,10 @@ app.get('/logout',(req,res)=>{
     console.log('in logout')
     if(req.user)
     {
-        change_onlineStatus(req.user.username,false)
+        const {time}=req.query
+        const {username}=req.user
+        change_onlineStatus(username,false)
+        .then(as=>change_onlineTime(username,time))
         req.session.destroy()
         res.redirect('/removeSession?user='+req.user.username)
     }
