@@ -141,6 +141,35 @@ const get_allLogins=()=>{
     return value
 }    
 
+const set_appLock=(username,limit)=>
+    get_db()
+    .then(db=>db.collection('loginIds'))
+    .catch(err=>{
+        console.log('error in collection')
+        res.send('error1')    
+    })
+    .then(collection=>collection.updateOne(
+            { username:username },
+            {
+            $set: { "maxLimit": limit },
+            
+            }
+    ))  
+    .then(document=>{
+    if(document==null){
+        console.log('error in finding username ')
+        return null
+    }  
+    else{      
+    console.log('username matched')
+            return document
+    }
+    })
+    .catch(err=>{
+        console.log('error in finding the account')
+        return err
+    })
+  
 //get one login Id requested by client through username
 const  check_loginAcc =(username,password)=>
     get_db()
@@ -425,5 +454,6 @@ module.exports={
     change_onlineStatus,
     edit_friendList,
     delete_loginFriend,
-    change_onlineTime
+    change_onlineTime,
+    set_appLock
 }

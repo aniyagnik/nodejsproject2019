@@ -9,9 +9,10 @@
 </head>
 <body>
     {{>navbar}}
-    <div style="background-image:url('/user/image/a.jpg');position:absolute">
+    <div style="background-image:url('/user/image/a.jpg');">
         <h3 style="text-align: center;color:brown">User <p style="display:inline;color:blue">Settings</p></h3>
         <h1 style="text-align: center;black">{{user.username}}</p></h1>
+        <input type="hidden" id="username" value="{{user.username}}">
         <h4 style="text-align: center;color:black">{{user.email}}</h4>
     </div>
     
@@ -93,8 +94,8 @@
                     <form action="/user/settings/appLock" method="post">
                         <label><b>Daily time Usage</b></label> <br>
                         <input type="text" name='lockTime' id="lockTime" required> 
-                        <select >
-                            <option value="min">minutes</option>
+                        <select name="format">
+                            <option value="min" selected="selected">minutes</option>
                             <option value="hours">hours</option>
                         </select>
                         <br>
