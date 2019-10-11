@@ -46,8 +46,8 @@ app.post('/signup',(req,res)=>{
       }
       else{
         console.log('adduser is not null')
-        //res.redirect('/send?to='+req.body.email)
-        res.redirect('/')
+        res.redirect('/mail/send?to='+req.body.email)
+        //res.redirect('/')
       }
      }
      add()

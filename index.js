@@ -3,8 +3,14 @@ const app = express()
 const path=require('path')
 const session=require('express-session')
 const passport=require('./login-signup/passport')
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+var https = require('https');
+var fs    = require('fs');
+var httpsOptions =  {
+  key: fs.readFileSync("keys/privatekey.pem"),
+  cert: fs.readFileSync("keys/certificate.pem")
+ }
+var server = https.createServer(httpsOptions,app);
+var io = require('socket.io')(https);
 
 const  {change_onlineStatus}=require('./database/IdsCollection')
 
@@ -111,7 +117,7 @@ app.use(passport.session())     //tells express to user sessions with passport
 
 app.use('/user/chat',require('./account/chat_app')(io))
 app.use('/user',require('./account'))
-
+app.use('/mail',require('./login-signup/emailVerify'))
 app.use('/',require('./login-signup'))
 var port =  process.env.PORT ||8080;
-http.listen(port,()=>{console.log('listening at ',port)})
+server.listen(port,()=>{console.log('listening at ',port)})
