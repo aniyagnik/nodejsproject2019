@@ -44,10 +44,10 @@ app.get('/send',(req,res)=>{
     smtpTransport.sendMail(mailOptions, function(error, response){
     if(error){
             console.log("error in mailing : ",error);
-            res.end("error");
+            res.redirect("/failedInSending");
     }else{
             console.log("Message sent: " + response.message);
-            res.end("sent");
+            res.redirect("/emailSent");
         }
     });
 });
@@ -64,12 +64,11 @@ app.get('/verify',(req,res)=>{
             if(val)
             {
                 console.log("email is verified");
-                res.end("<h1>Email is been Successfully verified</h1>");
+                res.redirect('/')
             }
             else
             {
-                console.log("email is not verified");
-                res.end("<h1>Bad Request</h1>");
+                res.redirect('/verificationFail');
             }
         })
     }

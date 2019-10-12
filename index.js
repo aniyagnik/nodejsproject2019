@@ -44,6 +44,19 @@ app.get('/not-found',(req,res)=>{
   res.sendFile(path.join(__dirname,'error pages/404.html'))
 })
 
+app.get('/verificationFail',(req,res)=>{
+  res.sendFile(path.join(__dirname,'public/verificationFail.html'))
+})
+
+
+app.get('/emailSent',(req,res)=>{
+  res.sendFile(path.join(__dirname,'public/emailSent.html'))
+})
+
+
+app.get('/failedInSending',(req,res)=>{
+  res.sendFile(path.join(__dirname,'public/failedInSending.html'))
+})
 app.get('/removeSession',(req,res)=>{
   const newAr=ids.filter(ele=>{
       if(ele.name!==req.query.user){
