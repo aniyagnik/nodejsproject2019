@@ -1,44 +1,33 @@
-
-$.ajax({
-    type: "GET",
-    url: "/user/getUserTime",
-})
-.then((data) =>{
-    localStorage.setItem('todayTime',data.todayTime);
-    localStorage.setItem('maxLimit',data.maxLimit);
-})
-
 var timer;
 var timerStart;
-var todayTime = gettodayTime();
-var maxLimit=getmaxLimit()
+var timeSpentOnSite = getTimeSpentOnSite();
+var totalTime=getTotalOnlineTime()
 
-
-function getmaxLimit(){
-    maxLimit = parseInt(localStorage.getItem('maxLimit'));
-    maxLimit = isNaN(maxLimit) ? 86402000 : maxLimit;
-    return maxLimit;
+function getTotalOnlineTime(){
+    totalTime = parseInt(localStorage.getItem('totalTime'));
+    totalTime = isNaN(totalTime) ? 86402000 : totalTime;
+    return totalTime;
 }
 
-function gettodayTime(){
-    todayTime = parseInt(localStorage.getItem('todayTime'));
-    todayTime = isNaN(todayTime) ? 0 : todayTime;
-    return todayTime;
+function getTimeSpentOnSite(){
+    timeSpentOnSite = parseInt(localStorage.getItem('timeSpentOnSite'));
+    timeSpentOnSite = isNaN(timeSpentOnSite) ? 0 : timeSpentOnSite;
+    return timeSpentOnSite;
 }
 
 function startCounting(){
     timerStart = Date.now();
     timer = setInterval(function(){
-        if(todayTime>maxLimit)
+        if(timeSpentOnSite>totalTime)
         {
-            const t=todayTime
-            location.href="/user/logout?time="+todayTime
+            const t=timeSpentOnSite
+            location.href="/user/logout?time="+timeSpentOnSite
             return }
-        todayTime = gettodayTime()+(Date.now()-timerStart);
-        localStorage.setItem('todayTime',todayTime);
+        timeSpentOnSite = getTimeSpentOnSite()+(Date.now()-timerStart);
+        localStorage.setItem('timeSpentOnSite',timeSpentOnSite);
         timerStart = parseInt(Date.now());
         // Convert to seconds
-        //document.getElementById('timeSpent').innerText= (parseInt(todayTime/1000));
+        //document.getElementById('timeSpent').innerText= (parseInt(timeSpentOnSite/1000));
         
     },1000);
 }

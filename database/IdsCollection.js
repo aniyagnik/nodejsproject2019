@@ -157,11 +157,11 @@ const set_appLock=(username,limit)=>
     ))  
     .then(document=>{
     if(document==null){
-        console.log('error in finding username ')
+        console.log('error in finding username  to set max limit')
         return null
     }  
     else{      
-    console.log('username matched')
+    console.log('username matched. max limit set')
             return document
     }
     })
@@ -245,15 +245,15 @@ const change_onlineTime=(username,time)=>
              { username:username },
              {
              $inc: { 
-                 totalTime:time,
-                 todayTime:time   
+                 totalTime:parseInt(time),
+                 todayTime:parseInt(time)   
                 },
              }
          )
      })  
      .then(document=>{
      if(document==null){
-         console.log('error in finding username ')
+         console.log('error in finding username to update online time')
          return null
      }  
      else{      
@@ -261,10 +261,7 @@ const change_onlineTime=(username,time)=>
              return document
      }
      })
-     .catch(err=>{
-         console.log('error in finding the account')
-         return err
-     })
+     .catch(err=>console.log('error in finding the account for time update',err))
    
 //get one login Id requested by client through username
 const  get_loginAcc =(username)=>
@@ -452,7 +449,7 @@ const get_todayTime=(name)=>
     .catch(err=>console.log('error in getting today time : ',err))
 
 
-    const get_totalTime=(name)=>
+const get_totalTime=(name)=>
     get_db()
     .then(db=>db.collection('loginIds'))
     .then(collection=>collection.findOne({username:name}))
@@ -461,6 +458,21 @@ const get_todayTime=(name)=>
         return user.totalTime
     })
     .catch(err=>console.log('error in getting total time : ',err))    
+
+const get_userTime=(name)=>
+    get_db()
+    .then(db=>db.collection('loginIds'))
+    .then(collection=>collection.findOne({username:name}))
+    .then(user=>{
+        console.log("max time  limit for user is available")
+        const doc={
+            todayTime:user.todayTime,
+            maxLimit:user.maxLimit
+        }
+        return doc
+    })
+    .catch(err=>console.log('error in getting user time : ',err))        
+
 module.exports={
     get_allLogins,
     check_loginAcc,
@@ -476,5 +488,6 @@ module.exports={
     change_onlineTime,
     set_appLock,
     get_todayTime,
-    get_totalTime
+    get_totalTime,
+    get_userTime
 }

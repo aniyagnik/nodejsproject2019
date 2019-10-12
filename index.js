@@ -12,7 +12,7 @@ var httpsOptions =  {
 var server = https.createServer(httpsOptions,app);
 var io = require('socket.io')(server);
 
-const  {change_onlineStatus,get_todayTime}=require('./database/IdsCollection')
+const  {change_onlineStatus,get_todayTime,change_onlineTime}=require('./database/IdsCollection')
 
 /*S3_BUCKET = process.env.S3_BUCKET || 'anirudhbucketnodejs19';
 aws.config.region = 'ap-south-1';
@@ -73,7 +73,7 @@ app.get('/heartbeat',(req,res)=>{
         const sessionInfo={
           name:name,
           value:rNum,
-          todayTime:time
+          loginTime:time
       }
       ids.push(sessionInfo)
       })
@@ -97,8 +97,11 @@ function removeOfflined () {
                 return ele
             }
             else{
+              const d=new Date()
               change_onlineStatus(ele.name,false)
-              .then(as=>change_onlineTime(ele.name,ele.time))
+              .then(as=>{
+                const time=d-ele.loginTime
+                change_onlineTime(ele.name,time)})
              }
         })
         ids=newAr

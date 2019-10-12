@@ -18,7 +18,7 @@ app.use('/friends',require('./friendIndex.js'))
 app.use('/settings',require('./settingIndex.js'))
 
 const   {get_alluserImgs,insert_userImgs,delete_userImg}=require('../database/imageCollection')
-const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,change_userPass,delete_loginAcc,change_userProfilePic,change_onlineStatus,change_userWallPic,change_onlineTime}=require('../database/IdsCollection')
+const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,change_userPass,get_userTime,delete_loginAcc,change_userProfilePic,change_onlineStatus,change_userWallPic,change_onlineTime}=require('../database/IdsCollection')
 const { insert_friendRequest,add_friend,get_friendRequest,get_friends,delete_friendRequest}=require('../database/friendsCollection')
 /**
  * PROFILE IMAGE STORING STARTS
@@ -71,7 +71,7 @@ function checkFileType( file, cb ){
 }
 
 app.get('/dashboard',(req,res)=>{
-    console.log('in dashboard',req.user)  
+    console.log('in dashboard')  
     if(req.user)
     {
         let requests,{username}=req.user
@@ -94,7 +94,16 @@ app.get('/dashboard',(req,res)=>{
    
 })
 
-
+app.get('/getUserTime',(req,res)=>{
+    if(req.user){
+        
+        get_userTime(req.user.username)
+        .then(limit=>res.send(limit))
+    }
+    else{
+        res.redirect("/")
+    }
+})
 app.post('/dashboard/addImage',imgUpload.single('uImages'),(req,res)=>{
     console.log('in addImage')   
     if(req.user)

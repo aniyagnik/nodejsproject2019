@@ -32,18 +32,18 @@ app.post('/appLock',(req,res)=>{
     if(req.user)
     {
         let limit
-        const {format}=req.body
         const {lockTime}=req.body
-        if(format==="min")
-        {
-            limit=lockTime*60
+        const {username}=req.user
+        console.log("lockTime value is ",lockTime,typeof lockTime)
+        let ar=lockTime.split(':')
+        if(ar.length>1){
+            limit=ar[0]*60*60+ar[1]*60
+        }else{
+            limit=ar[0]*60
         }
-        else{
-            limit=lockTime*60*60
-        }
-        set_appLock(username,limit)
+        limit=limit*1000
+         set_appLock(username,limit)
         .then('/user/settings')
-
     }
     else{
         res.redirect('/')
