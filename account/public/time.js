@@ -1,16 +1,24 @@
 
+
+ $('#logout').click(e=>{
+     const val=parseInt(localStorage.getItem('sessionTime'));
+     alert("time spent is "+val)
+     location.href="/user/logout?time="+val
+ })
+
 $.ajax({
     type: "GET",
     url: "/user/getUserTime",
 })
 .then((data) =>{
+    window.localStorage.clear()
     localStorage.setItem('todayTime',data.todayTime);
     localStorage.setItem('maxLimit',data.maxLimit);
 })
 
 var timer;
 var timerStart;
-var todayTime = gettodayTime();
+var sessionTime = getsessionTime();
 var maxLimit=getmaxLimit()
 
 
@@ -20,25 +28,25 @@ function getmaxLimit(){
     return maxLimit;
 }
 
-function gettodayTime(){
-    todayTime = parseInt(localStorage.getItem('todayTime'));
-    todayTime = isNaN(todayTime) ? 0 : todayTime;
-    return todayTime;
+function getsessionTime(){
+    sessionTime = parseInt(localStorage.getItem('sessionTime'));
+    sessionTime = isNaN(sessionTime) ? 0 : sessionTime;
+    return sessionTime;
 }
 
 function startCounting(){
     timerStart = Date.now();
     timer = setInterval(function(){
-        if(todayTime>maxLimit)
+        if(sessionTime>maxLimit)
         {
-            const t=todayTime
-            location.href="/user/logout?time="+todayTime
+            window.localStorage.clear()            
+            location.href="/user/logout?time="+sessionTime
             return }
-        todayTime = gettodayTime()+(Date.now()-timerStart);
-        localStorage.setItem('todayTime',todayTime);
+        sessionTime = getsessionTime()+(Date.now()-timerStart);
+        localStorage.setItem('sessionTime',sessionTime);
         timerStart = parseInt(Date.now());
         // Convert to seconds
-        //document.getElementById('timeSpent').innerText= (parseInt(todayTime/1000));
+        //document.getElementById('timeSpent').innerText= (parseInt(sessionTime/1000));
         
     },1000);
 }

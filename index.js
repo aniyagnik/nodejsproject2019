@@ -100,7 +100,8 @@ function removeOfflined () {
               const d=new Date()
               change_onlineStatus(ele.name,false)
               .then(as=>{
-                const time=d-ele.loginTime
+                let time=d-ele.loginTime
+                console.log("we are logging out with time : ",time,typeof time)
                 change_onlineTime(ele.name,time)})
              }
         })

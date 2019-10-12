@@ -245,8 +245,8 @@ const change_onlineTime=(username,time)=>
              { username:username },
              {
              $inc: { 
-                 totalTime:parseInt(time),
-                 todayTime:parseInt(time)   
+                 totalTime:time,
+                 todayTime:time   
                 },
              }
          )

@@ -75,6 +75,7 @@ app.get('/dashboard',(req,res)=>{
     if(req.user)
     {
         let requests,{username}=req.user
+        console.log('check typeof ',typeof req.user.totalTime,typeof req.user.todayTime)
         get_alluserImgs(username)
         .then(result=>{
             return result.images
@@ -251,7 +252,9 @@ app.get('/logout',(req,res)=>{
     console.log('in logout')
     if(req.user)
     {
-        const {time}=req.query
+        let {time}=req.query
+        time=parseInt(time)
+        console.log("we are logging out with time : ",time,typeof time)
         const {username}=req.user
         change_onlineStatus(username,false)
         .then(as=>change_onlineTime(username,time))

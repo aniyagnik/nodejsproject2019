@@ -148,7 +148,6 @@
         let val=document.getElementById("createdOn")
         var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
         d.setUTCSeconds(val.innerText);
-        alert(d)
         val.innerText=d
         setInterval(
             function (){
