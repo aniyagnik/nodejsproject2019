@@ -146,25 +146,50 @@
             }
         })
         let val=document.getElementById("createdOn")
+        let today
         var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
         d.setUTCSeconds(val.innerText);
         val.innerText=d
+        $.ajax({
+            type: "GET",
+            url: "/user/todayTime",
+        })
+        .then((data) =>{
+            total=Math.floor(data/1000)
+        })
         setInterval(
             function (){
-                const time=Math.floor(localStorage.timeSpentOnSite/1000)
-                let qoutient=Math.floor(time/60)
-                const remainder=time%60
+                const timeToday=Math.floor(localStorage.todayTime/1000+localStorage.sessionTime/1000)
+                let qoutientToday=Math.floor(time/60)
+                const remainderToday=time%60
+                total+=time
+                let qoutientTotal=Math.floor(total/60)
+                const remainderTotal=total%60
                 if(time>3600){
                     const hrs=Math.floor(time/(60*60))
                     qoutient=qoutient-hrs*60
-                    document.getElementById("setTodayTime").innerText=hrs+" hrs : "+qoutient+" min : "+remainder+" sec"
-                    document.getElementById("setTotalTime").innerText=hrs+" hrs : "+qoutient+" min : "+remainder+" sec"    
+                    document.getElementById("setTodayTime").innerText=hrs+" hrs : "+qoutientToday+" min : "+remainderToday+" sec"
                 }
                 else{
-                    document.getElementById("setTodayTime").innerText=qoutient+" min : "+remainder+" sec"
-                    document.getElementById("setTotalTime").innerText=qoutient+" min : "+remainder+" sec"
+                    document.getElementById("setTodayTime").innerText=qoutientToday+" min : "+remainderToday+" sec"
                 }
                 
+                if(total>86400){
+                    const days=Math.floor(time/(60*60*60))
+                    const hrs=Math.floor(time/(60*60))
+                    qoutient=qoutient-hrs*60
+                    document.getElementById("setTotalTime").innerText=days+" days : "+hrs+" hrs : "+qoutientTotal+" min : "+remainderTotal+" sec"    
+                }
+                else{
+                    if(total>3600){
+                        const hrs=Math.floor(time/(60*60))
+                        qoutient=qoutient-hrs*60
+                        document.getElementById("setTotalTime").innerText=hrs+" hrs : "+qoutientTotal+" min : "+remainderTotal+" sec"    
+                    }
+                    else{
+                        document.getElementById("setTotalTime").innerText=qoutientTotal+" min : "+remainderTotal+" sec"
+                    }
+                }
             },1000)
     </script>
 </body>

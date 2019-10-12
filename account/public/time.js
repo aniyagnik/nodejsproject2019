@@ -11,7 +11,6 @@ $.ajax({
     url: "/user/getUserTime",
 })
 .then((data) =>{
-    window.localStorage.clear()
     localStorage.setItem('todayTime',data.todayTime);
     localStorage.setItem('maxLimit',data.maxLimit);
 })
