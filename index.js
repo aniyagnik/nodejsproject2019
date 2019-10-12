@@ -10,7 +10,7 @@ var httpsOptions =  {
   cert: fs.readFileSync("keys/certificate.pem")
  }
 var server = https.createServer(httpsOptions,app);
-var io = require('socket.io')(https);
+var io = require('socket.io')(server);
 
 const  {change_onlineStatus}=require('./database/IdsCollection')
 
