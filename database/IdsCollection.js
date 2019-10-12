@@ -448,17 +448,6 @@ const get_todayTime=(name)=>
     })
     .catch(err=>console.log('error in getting today time : ',err))
 
-
-const get_totalTime=(name)=>
-    get_db()
-    .then(db=>db.collection('loginIds'))
-    .then(collection=>collection.findOne({username:name}))
-    .then(user=>{
-        console.log("total time of user is : ",user.totalTime)
-        return user.totalTime
-    })
-    .catch(err=>console.log('error in getting total time : ',err))    
-
 const get_userTime=(name)=>
     get_db()
     .then(db=>db.collection('loginIds'))
@@ -470,6 +459,17 @@ const get_userTime=(name)=>
             maxLimit:user.maxLimit
         }
         return doc
+    })
+    .catch(err=>console.log('error in getting user time : ',err))        
+
+
+const get_userTotalTime=(name)=>
+    get_db()
+    .then(db=>db.collection('loginIds'))
+    .then(collection=>collection.findOne({username:name}))
+    .then(user=>{
+        console.log("total time  limit for user is available",user.totalTime,typeof user.totalTime)
+            return {totalTime:user.totalTime}
     })
     .catch(err=>console.log('error in getting user time : ',err))        
 
@@ -488,6 +488,6 @@ module.exports={
     change_onlineTime,
     set_appLock,
     get_todayTime,
-    get_totalTime,
+    get_userTotalTime,
     get_userTime
 }

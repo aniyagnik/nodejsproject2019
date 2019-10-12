@@ -1,3 +1,9 @@
+.back{
+    overflow:hidden;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .menuSet{width:100%;
     border-bottom:1px solid black;
     overflow:auto;

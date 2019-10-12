@@ -27,6 +27,7 @@ app.use('/user/friends',express.static(path.join(__dirname,'account/public')))
 app.use('/user/image',express.static(path.join(__dirname,'public')))
 app.use('/user/wall',express.static(path.join(__dirname,'account/public')))
 app.use('/user/chat',express.static(path.join(__dirname,'account/chat_app/public')))
+app.use('/user/settings',express.static(path.join(__dirname,'account/public')))
 app.use('/user',express.static(path.join(__dirname,'account/public')))
 app.use('/',express.static(path.join(__dirname,'login-signup/public')))
 
