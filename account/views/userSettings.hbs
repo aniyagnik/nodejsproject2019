@@ -28,7 +28,7 @@
             <hr>
             <div style="border-bottom:1px solid black;margin:1%">
                 <h5>DATE OF ACCOUNT CREATION</h5>
-                <h4>{{user.creationDate}}</h4>
+                <h4 id="createdOn">{{user.createdOn}}</h4>
             </div>
             <div style="border-bottom:1px solid black;margin:1%">
                 <h5>USERNAME</h5>
@@ -45,11 +45,11 @@
             </div>
             <div style="border-bottom:1px solid black;margin:1%">
                 <h5>TOTAL ONLINE TIME</h5>
-                <h4>{{user.totalTime}}</h4>
+                <h4 id="setTotalTime">{{user.totalTime}}</h4>
             </div>
             <div style="border-bottom:1px solid black;margin:1%">
                 <h5>TIME SPENT TODAY</h5>
-                <h4 ID="setTime"></h4>
+                <h4 id="setTodayTime">{{user.todayTime}}</h4>
             </div>
         </div>
         <div id="pass" style="display:none;margin:1%">
@@ -93,11 +93,7 @@
                 <div style="border-bottom:1px solid black">
                     <form action="/user/settings/appLock" method="post">
                         <label><b>Daily time Usage</b></label> <br>
-                        <input type="text" name='lockTime' id="lockTime" required> 
-                        <select name="format">
-                            <option value="min" selected="selected">minutes</option>
-                            <option value="hours">hours</option>
-                        </select>
+                        <input type="time" name='lockTime' id="lockTime" required> 
                         <br>
                         <div style="text-align: center">
                             <button type="submit" class='sButton'>apply lock</button>
@@ -131,14 +127,12 @@
     <script src="time.js"></script>
     <script>
         function showAndHide(element){
-            console.log("in function")
             let ar=["personal","pass","limit","email"]
              k=document.getElementById(element)
              ar=ar.filter(ele=>ele!==element)
             ar.forEach(ele=>{
                 document.getElementById(ele).style.display="none"
             })
-            console.log('sdfsa')
             document.getElementById(element).style.display="block"
         }
         let lockTime=document.getElementById('lockTime')
@@ -150,6 +144,28 @@
                 lockTime.value=""
             }
         })
+        let val=document.getElementById("createdOn")
+        var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+        d.setUTCSeconds(val.innerText);
+        alert(d)
+        val.innerText=d
+        setInterval(
+            function (){
+                const time=Math.floor(localStorage.timeSpentOnSite/1000)
+                let qoutient=Math.floor(time/60)
+                const remainder=time%60
+                if(time>3600){
+                    const hrs=Math.floor(time/(60*60))
+                    qoutient=qoutient-hrs*60
+                    document.getElementById("setTodayTime").innerText=hrs+" hrs : "+qoutient+" min : "+remainder+" sec"
+                    document.getElementById("setTotalTime").innerText=hrs+" hrs : "+qoutient+" min : "+remainder+" sec"    
+                }
+                else{
+                    document.getElementById("setTodayTime").innerText=qoutient+" min : "+remainder+" sec"
+                    document.getElementById("setTotalTime").innerText=qoutient+" min : "+remainder+" sec"
+                }
+                
+            },1000)
     </script>
 </body>
 </html>

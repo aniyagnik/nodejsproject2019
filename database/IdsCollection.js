@@ -441,7 +441,26 @@ const delete_loginAcc=(username)=>
     .then(db=>db.collection('loginIds'))
     .then(collection=>collection.deleteOne({username: new mongodb.ObjectID(username)}))
 
+const get_todayTime=(name)=>
+    get_db()
+    .then(db=>db.collection('loginIds'))
+    .then(collection=>collection.findOne({username:name}))
+    .then(user=>{
+        console.log("today time of user is : ",user.todayTime)
+        return user.todayTime
+    })
+    .catch(err=>console.log('error in getting today time : ',err))
 
+
+    const get_totalTime=(name)=>
+    get_db()
+    .then(db=>db.collection('loginIds'))
+    .then(collection=>collection.findOne({username:name}))
+    .then(user=>{
+        console.log("total time of user is : ",user.totalTime)
+        return user.totalTime
+    })
+    .catch(err=>console.log('error in getting total time : ',err))    
 module.exports={
     get_allLogins,
     check_loginAcc,
@@ -455,5 +474,7 @@ module.exports={
     edit_friendList,
     delete_loginFriend,
     change_onlineTime,
-    set_appLock
+    set_appLock,
+    get_todayTime,
+    get_totalTime
 }

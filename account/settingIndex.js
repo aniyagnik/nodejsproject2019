@@ -17,7 +17,7 @@ app.get('/',(req,res)=>{
     if(req.user)
     {
         let {user}=req
-        user={...user,password:"*********"}
+        user={...user,password:"*********" }
         console.log("user is : ",user)
         res.render('userSettings',{user})    
     }
