@@ -3,7 +3,6 @@
  $('#logout').click(e=>{
      const val=parseInt(localStorage.getItem('sessionTime'));
      window.localStorage.clear()
-     alert("time spent is "+val)
      location.href="/user/logout?time="+val
  })
 

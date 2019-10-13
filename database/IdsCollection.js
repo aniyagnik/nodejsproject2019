@@ -491,3 +491,20 @@ module.exports={
     get_userTotalTime,
     get_userTime
 }
+
+var now = new Date();
+var millisTill12 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 24, 0, 0, 0) - now;
+if (millisTill12 < 0) {
+     millisTill12 += 86400000; // it's after 12am
+}
+setInterval(function (){
+    get_db()
+    .then(db=>db.collection('loginIds'))
+    .then(collection=>collection.updateMany({},
+        {
+            $set:{
+                todayTime:0
+            }
+        }))
+    millisTill12=86400000    
+},millisTill12)

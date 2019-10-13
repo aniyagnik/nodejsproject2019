@@ -1,35 +1,53 @@
+
+
+ $('#logout').click(e=>{
+    const val=parseInt(localStorage.getItem('sessionTime'));
+    window.localStorage.clear()
+    location.href="/user/logout?time="+val
+})
+
+$.ajax({
+   type: "GET",
+   url: "/user/getUserTime",
+})
+.then((data) =>{
+   localStorage.setItem('todayTime',data.todayTime);
+   localStorage.setItem('maxLimit',data.maxLimit);
+})
+
 var timer;
 var timerStart;
-var timeSpentOnSite = getTimeSpentOnSite();
-var totalTime=getTotalOnlineTime()
+var sessionTime = getsessionTime();
+var maxLimit=getmaxLimit()
 
-function getTotalOnlineTime(){
-    totalTime = parseInt(localStorage.getItem('totalTime'));
-    totalTime = isNaN(totalTime) ? 86402000 : totalTime;
-    return totalTime;
+
+function getmaxLimit(){
+   maxLimit = parseInt(localStorage.getItem('maxLimit'));
+   maxLimit = isNaN(maxLimit) ? 86402000 : maxLimit;
+   return maxLimit;
 }
 
-function getTimeSpentOnSite(){
-    timeSpentOnSite = parseInt(localStorage.getItem('timeSpentOnSite'));
-    timeSpentOnSite = isNaN(timeSpentOnSite) ? 0 : timeSpentOnSite;
-    return timeSpentOnSite;
+function getsessionTime(){
+   sessionTime = parseInt(localStorage.getItem('sessionTime'));
+   sessionTime = isNaN(sessionTime) ? 0 : sessionTime;
+   return sessionTime;
 }
 
 function startCounting(){
-    timerStart = Date.now();
-    timer = setInterval(function(){
-        if(timeSpentOnSite>totalTime)
-        {
-            const t=timeSpentOnSite
-            location.href="/user/logout?time="+timeSpentOnSite
-            return }
-        timeSpentOnSite = getTimeSpentOnSite()+(Date.now()-timerStart);
-        localStorage.setItem('timeSpentOnSite',timeSpentOnSite);
-        timerStart = parseInt(Date.now());
-        // Convert to seconds
-        //document.getElementById('timeSpent').innerText= (parseInt(timeSpentOnSite/1000));
-        
-    },1000);
+   timerStart = Date.now();
+   timer = setInterval(function(){
+       if(sessionTime>maxLimit)
+       {
+           window.localStorage.clear()            
+           location.href="/user/logout?time="+sessionTime
+           return }
+       sessionTime = getsessionTime()+(Date.now()-timerStart);
+       localStorage.setItem('sessionTime',sessionTime);
+       timerStart = parseInt(Date.now());
+       // Convert to seconds
+       //document.getElementById('timeSpent').innerText= (parseInt(sessionTime/1000));
+       
+   },1000);
 }
 startCounting();
 
@@ -37,27 +55,27 @@ var stopCountingWhenWindowIsInactive = true;
 
 if( stopCountingWhenWindowIsInactive ){
 
-    if( typeof document.hidden !== "undefined" ){
-        var hidden = "hidden", 
-        visibilityChange = "visibilitychange", 
-        visibilityState = "visibilityState";
-    }else if ( typeof document.msHidden !== "undefined" ){
-        var hidden = "msHidden", 
-        visibilityChange = "msvisibilitychange", 
-        visibilityState = "msVisibilityState";
-    }
-    var documentIsHidden = document[hidden];
+   if( typeof document.hidden !== "undefined" ){
+       var hidden = "hidden", 
+       visibilityChange = "visibilitychange", 
+       visibilityState = "visibilityState";
+   }else if ( typeof document.msHidden !== "undefined" ){
+       var hidden = "msHidden", 
+       visibilityChange = "msvisibilitychange", 
+       visibilityState = "msVisibilityState";
+   }
+   var documentIsHidden = document[hidden];
 
-    document.addEventListener(visibilityChange, function() {
-        if(documentIsHidden != document[hidden]) {
-            if( document[hidden] ){
-                // Window is inactive
-                clearInterval(timer);
-            }else{
-                // Window is active
-                startCounting();
-            }
-            documentIsHidden = document[hidden];
-        }
-    });
+   document.addEventListener(visibilityChange, function() {
+       if(documentIsHidden != document[hidden]) {
+           if( document[hidden] ){
+               // Window is inactive
+               clearInterval(timer);
+           }else{
+               // Window is active
+               startCounting();
+           }
+           documentIsHidden = document[hidden];
+       }
+   });
 }
