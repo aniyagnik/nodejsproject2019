@@ -36,11 +36,13 @@ function getsessionTime(){
 function startCounting(){
     timerStart = Date.now();
     timer = setInterval(function(){
-        if(sessionTime>maxLimit)
-        {
+        if(sessionTime>maxLimit){
+            window.localStorage.clear()
+            window.localStorage.clear()
             window.localStorage.clear()            
             location.href="/user/logout?time="+sessionTime
-            return }
+            return 
+        }
         sessionTime = getsessionTime()+(Date.now()-timerStart);
         localStorage.setItem('sessionTime',sessionTime);
         timerStart = parseInt(Date.now());

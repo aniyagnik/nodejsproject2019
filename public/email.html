@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>WeShare | Email send</title>
+    <title>WeShare | Email Address</title>
 </head>
 <style>
 body{
@@ -71,6 +71,15 @@ h2,h3{
     100% { color: blue; }
 }
 
+/* Full-width input fields */
+input[type=text], input[type=password],input[type=file],input[type=email] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
 .wrapper{
     background-color: gray;
     opacity: 0.7;
@@ -111,10 +120,13 @@ button:hover{
             <p >We<span style="color:crimson">Share</span>.com</p>
         </div>
         <div > <br><br><br><br> <br>
-            <h3>Verification Email has been sent to your Registered email address.</h3>
-            <h2>go to your Registered email address to verify your account</h2>
+            <h3>account recovery</h3>
+            <h2>Enter your registered email address to recover your account.</h2>
             <div>
-                <button onclick="location.href='/'">login</a>
+                <form action="/user/recovery/accountDetails" method="POST">
+                    <input type="email" name="email" placeholder="enter your registered email address">
+                    <button >submit</button>
+                </form>
             </div>
         </div>
     </div>

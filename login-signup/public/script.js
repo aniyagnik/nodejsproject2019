@@ -55,9 +55,7 @@ function checkForm(form)
     alert("You entered a valid password");
     const t=parseInt(Date.now())
     document.getElementById('date').value=t
-    if(window.confirm("value of date "+document.getElementById('date').value))
-        return true;
-    return false  
+    return true;
 }
 
 

@@ -29,7 +29,7 @@ const get_allLogins=()=>{
 }
 
  //inserting in collection loginIds
-  async function insert_loginAcc (Id_info){
+async function insert_loginAcc (Id_info){
       let value=1
     const resultUser= await get_db()
             .then(db=>db.collection('loginIds'))
@@ -94,22 +94,6 @@ const get_allLogins=()=>{
                 })
                 .catch(err=>console.log('error in adding in collection messages '))                                   
                 .then(ha=>{
-                    
-                    return get_db()})
-                .then(db=>db.collection('loginCredentials'))
-                .then(collection=>{
-                    const credentials={
-                        email:Id_info.email,
-                        username:Id_info.username,
-                        password:Id_info.password,
-                    }
-                    return collection.insertOne(credentials)})
-                .catch(err=>console.log('error in saving collection credentials 1',err))
-                .then(doc=>{
-                   // console.log('inserted values is :',doc.ops[0])
-                    return doc.ops[0]
-                })
-                .then(ha=>{
                     return get_db()})
                 .then(db=>db.collection('loginIds'))
                 .then(collection=>{
@@ -124,6 +108,7 @@ const get_allLogins=()=>{
                         totalTime:0,
                         maxLimit:86402000,
                         todayTime:0,
+                        active:false
                     }
                     return collection.insertOne(userDetails)})
                 .catch(err=>console.log('error in saving collection credentials 1',err))
@@ -170,10 +155,42 @@ const set_appLock=(username,limit)=>
         return err
     })
   
-//get one login Id requested by client through username
+
+   
+const change_activeStatus=(username,status)=>
+    get_db()
+    .then(db=>db.collection('loginIds'))
+    .catch(err=>{
+        console.log('error in collection')
+        res.send('error1')    
+    })
+    .then(collection=>{
+        return collection.updateOne(
+            { username:username },
+            {
+            $set: { active: status },
+            }
+        )
+    })  
+    .then(document=>{
+    if(document==null){
+        console.log('error in finding username ')
+        return null
+    }  
+    else{      
+    console.log('user active status updated')
+            return document
+    }
+    })
+    .catch(err=>{
+        console.log('error in finding the account')
+        return err
+    })
+
+    //get one login Id requested by client through username
 const  check_loginAcc =(username,password)=>
     get_db()
-    .then(db=>db.collection('loginCredentials'))
+    .then(db=>db.collection('loginIds'))
     .catch(err=>{
         console.log('error in collection')
         return null    
@@ -193,7 +210,11 @@ const  check_loginAcc =(username,password)=>
       if(document.password===password)
         {
             console.log('pASSWORD MATHCED')
-            return document
+            if(document.maxLimit<document.todayTime || document.active===false){
+                return false
+            }else{
+                return document
+            }
         }
         else{
             console.log('error in password')
@@ -287,7 +308,7 @@ const  get_loginAcc =(username)=>
 
 const change_userPass=(username,newPassword,oldPassword)=>
     get_db()
-    .then(db=>db.collection('loginCredentials'))
+    .then(db=>db.collection('loginIds'))
     .catch(err=>{
         console.log('error in collection')
         res.send('error1')    
@@ -483,6 +504,7 @@ module.exports={
     change_userProfilePic,
     change_userWallPic,
     change_onlineStatus,
+    change_activeStatus,
     edit_friendList,
     delete_loginFriend,
     change_onlineTime,

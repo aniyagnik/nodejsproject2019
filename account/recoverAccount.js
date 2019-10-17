@@ -1,14 +1,18 @@
-var express=require('express');
+const express = require('express')
+const app = express()
+const hbs=require('hbs')
 var nodemailer = require("nodemailer");
+const path=require('path')
 const crypto = require('crypto');
 
-var app=express();
+app.use(express.urlencoded({extended: true}))
+app.use(express.json())
+hbs.registerPartials(path.join(__dirname,'/partials'))
+app.set('view engine', 'hbs')
+app.set('views', path.join(__dirname, '/views'));
 
 const {add_newHash,verify_emailId}=require('../database/hashCollection.js')
-/*
-    Here we are configuring our SMTP Server details.
-    STMP is mail server which is responsible for sending and recieving email.
-*/
+
 var smtpTransport = nodemailer.createTransport({
     secure:false,
     service: "Gmail",
@@ -21,17 +25,19 @@ var smtpTransport = nodemailer.createTransport({
     },
     ssl:true
 });
-/*------------------SMTP Over-----------------------------*/
 
-/*------------------Routing Started ------------------------*/
+app.get("/",(req,res)=>{
+    console.log('in recovery get')
+    res.sendFile(path.join(__dirname,'../public/email.html'))
+})
 
-app.get('/send',(req,res)=>{
-    console.log('in seding message to account')
-    //const key = crypto.randomBytes(20).toString('hex');
+app.post('/accountDetails',(req,res)=>{
+    console.log('in recover Account')
+    let {email}=req.body
     var mykey = crypto.createCipher('aes-128-cbc', 'mypassword');
-    const email=req.query.to
     var hash = mykey.update(email, 'utf8', 'hex')
     hash += mykey.final('hex');
+    console.log('values ',email,hash)
     const link=`https://${req.get('host')}/mail/verify?id=${hash}`;
     const mailOptions={
         to : email,
@@ -48,10 +54,10 @@ app.get('/send',(req,res)=>{
             res.redirect("/emailSent");
         }
     });
-});
+})
 
 app.get('/verify',(req,res)=>{
-    console.log('in account verification')
+    console.log('in account recovery')
     const hash=req.query.id
     if(req.protocol==="https")
     {
@@ -73,8 +79,9 @@ app.get('/verify',(req,res)=>{
     {
         res.end("<h1>Request is from unknown source");
     }
-    res.sendStatus(202)
 });
+
+
 
 
 module.exports=app
