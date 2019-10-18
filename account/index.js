@@ -238,27 +238,6 @@ app.post('/dashboard/deleteImage',(req,res)=>{
     
 })
 
-app.post('/dashboard/changePassword',(req,res)=>{
-    console.log('in post change PASS')
-    if(req.user)
-    {
-       if(req.body.newPass===req.body.cNewPass)
-       {
-            change_userPass(req.user.username,req.body.newPass,req.body.oldPass)
-            .then(done=>{
-                if(done===false)
-                  res.redirect('/not-found')
-                res.redirect('/user/dashboard')})
-       }
-       else{
-           console.log("PASSWORDS DON'T MATHCH")
-           res.redirect('/')
-       }
-    }
-    else{
-        res.redirect('/')
-    }
-})
 
 
 
