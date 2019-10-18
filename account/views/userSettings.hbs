@@ -112,7 +112,6 @@
                 <h3>CHANGE EMAIL</h3>
                 <hr>
                 <div style="border-bottom:1px solid black;margin:1%">
-                    <form action="#" method="post">
                         <label><b>New Email Address</b></label> <br>
                         <input type="email" name='newEmail' id="newEmail" required> <br>
                         <label><b>Current Password</b></label> <br>
@@ -202,9 +201,8 @@
                     }
                 })
                 .then(msg=>{
-                    console.log("dgxcgh",msg)
                     alert(msg.message)
-                    location.href="/"
+                    location.href='/user/logout'
                 })
             }
         }       
@@ -221,7 +219,6 @@
                 })
                 .then(msg=>{
                     alert(msg.message)
-                    location.href="/"
                 })
             }
         }       

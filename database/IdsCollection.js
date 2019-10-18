@@ -223,7 +223,30 @@ const  check_loginAcc =(username,password)=>
         }
       }
     })
-    
+
+const  check_userEmail =(email)=>
+    get_db()
+    .then(db=>db.collection('loginIds'))
+    .catch(err=>{
+        console.log('error in collection')
+        return null    
+    })
+    .then(collection=>{
+       // console.log(collection)
+        return collection.findOne({email:email})
+    })  
+    .then(document=>{
+      if(document==null){
+        console.log('could not find email ')
+        return false
+      }  
+      else{      
+        console.log('email matched')
+        return true
+      }
+    })
+    .catch(err=>{console.log("error in finding email : ",err);return false})
+        
 const change_onlineStatus=(username,status)=>
      get_db()
      .then(db=>db.collection('loginIds'))
@@ -394,7 +417,7 @@ const change_userProfilePic=(username,filename)=>
     })
 
 
-    const change_userEmail=(username,newEmail)=>
+const change_userEmail=(username,newEmail)=>
     get_db()
     .then(db=>db.collection('loginIds'))
     .catch(err=>{
@@ -417,7 +440,7 @@ const change_userProfilePic=(username,filename)=>
         return null
     }  
     else{      
-    console.log('username matched')
+    console.log('username matched'.document)
             return document
     }
     })
@@ -539,6 +562,7 @@ const get_userTotalTime=(name)=>
     .catch(err=>console.log('error in getting user time : ',err))        
 
 module.exports={
+    check_userEmail,
     change_userEmail,
     get_allLogins,
     check_loginAcc,

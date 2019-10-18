@@ -2,8 +2,7 @@ const express = require('express')
 const app = express()
 const hbs=require('hbs')
 const path=require('path')
-const {insert_friendRequest,get_friendRequest,delete_friendRequest,add_friend,get_friends,delete_friend}=require('../database/friendsCollection')
-const {change_userEmail}=require('../database/IdsCollection')
+const {change_userEmail,check_loginAcc,check_userEmail,change_activeStatus}=require('../database/IdsCollection')
 const {set_appLock}=require('../database/IdsCollection')
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
@@ -58,23 +57,57 @@ app.post('/changeEmail',(req,res)=>{
         const {username}=req.user
         const {password}=req.body
         const {newEmail}=req.body 
-        check_loginAcc(username,password)
-        .then(user=>{
-            if(user==null){
-                return res.send({message:"password don't match"})
+        async function k(){
+        let a,b,c,message    
+            a= await check_loginAcc(username,password)
+                    .then(as=>{
+                        if(as==null){
+                            message="password don't match"
+                            console.log(message)
+                            return false
+                        }
+                        else{
+                            console.log("right pass")
+                            return true
+                        }
+                    })
+            if(a){
+                b=await check_userEmail(newEmail)
+                    .then(val=>{
+                        if(val){
+                            message="email already exists"
+                            console.log(message)
+                            return false
+                        }
+                        else{console.log("email is no")
+                            return true 
+                        }
+                    })
+                if(b){
+                    c=await change_userEmail(username,newEmail)
+                        .then(doc=>{
+                            if(doc){
+                                console.log('user email changes ',doc.result)
+                                res.redirect('/mail/send?to='+newEmail)
+                                return true
+                            }
+                            else{message="error ";return false}
+                        })
+                        .then(asd=>{
+                            if(asd){
+                                return change_activeStatus(email,false)
+                            }
+
+                        })
+                        .catch(err=>{
+                            console.log('error in changing the account in',err)
+                            message="unindentified error"
+                        })
+                }    
             }
-            else{
-                return change_userEmail(username,newEmail)
-            }
-        })
-        .then(doc=>{
-            console.log('user email changes ',as)
-            res.redirect('/mail/send?to='+newEmail)
-        })
-        .catch(err=>{
-            console.log('error in changing the account in',err)
-            return res.send({message:"unindentified error"})
-        })
+            return res.send({message:message})
+        }
+        k()
     }
     else{
         res.redirect('/')
