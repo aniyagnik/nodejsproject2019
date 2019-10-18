@@ -3,6 +3,7 @@ const app = express()
 const hbs=require('hbs')
 const path=require('path')
 const {insert_friendRequest,get_friendRequest,delete_friendRequest,add_friend,get_friends,delete_friend}=require('../database/friendsCollection')
+const {change_userEmail}=require('../database/IdsCollection')
 const {set_appLock}=require('../database/IdsCollection')
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
@@ -50,5 +51,33 @@ app.post('/appLock',(req,res)=>{
     
 })
 
-
+app.post('/changeEmail',(req,res)=>{
+    console.log('in post change email')
+    if(req.user)
+    {
+        const {username}=req.user
+        const {password}=req.body
+        const {newEmail}=req.body 
+        check_loginAcc(username,password)
+        .then(user=>{
+            if(user==null){
+                return res.send({message:"password don't match"})
+            }
+            else{
+                return change_userEmail(username,newEmail)
+            }
+        })
+        .then(doc=>{
+            console.log('user email changes ',as)
+            res.redirect('/mail/send?to='+newEmail)
+        })
+        .catch(err=>{
+            console.log('error in changing the account in',err)
+            return res.send({message:"unindentified error"})
+        })
+    }
+    else{
+        res.redirect('/')
+    }
+})
 module.exports=app

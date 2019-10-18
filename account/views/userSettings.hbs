@@ -112,13 +112,13 @@
                 <h3>CHANGE EMAIL</h3>
                 <hr>
                 <div style="border-bottom:1px solid black;margin:1%">
-                    <form action="/user/settings/changePassword" method="post">
+                    <form action="#" method="post">
                         <label><b>New Email Address</b></label> <br>
                         <input type="email" name='newEmail' id="newEmail" required> <br>
                         <label><b>Current Password</b></label> <br>
                         <input type="password" name='password' id="password" required> <br> <br>
                         <div style="text-align: center">
-                            <button type="submit" class='sButton'>Change Email Id</button> <br> <br>
+                            <button type="button" class='sButton' onclick="changeEmail()">Change Email Id</button> <br> <br>
                         </div>
                         
                     </form>
@@ -207,7 +207,25 @@
                     location.href="/"
                 })
             }
-        }            
+        }       
+
+       function changeEmail(){
+            if(confirm("are you sure you want to change email address of this account...")){
+                $.ajax({
+                    type:"POST",
+                    url:'/user/settings/changeEmail',
+                    data:{
+                        password:$("#password").val(),
+                        newEmail:$("#newEmail").val()
+                    }
+                })
+                .then(msg=>{
+                    alert(msg.message)
+                    location.href="/"
+                })
+            }
+        }       
+ 
     </script>
 </body>
 </html>

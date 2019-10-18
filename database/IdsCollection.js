@@ -394,6 +394,39 @@ const change_userProfilePic=(username,filename)=>
     })
 
 
+    const change_userEmail=(username,newEmail)=>
+    get_db()
+    .then(db=>db.collection('loginIds'))
+    .catch(err=>{
+        console.log('error in collection')
+        res.send('error1')    
+    })
+    .then(collection=>{
+    //  console.log(collection)
+        return collection.updateOne(
+            { username:username },
+            {
+            $set: { "email": newEmail },
+            
+            }
+        )
+    })  
+    .then(document=>{
+    if(document==null){
+        console.log('error in finding username ')
+        return null
+    }  
+    else{      
+    console.log('username matched')
+            return document
+    }
+    })
+    .catch(err=>{
+        console.log('error in finding the account')
+        return err
+    })
+
+
 
 const change_userWallPic=(username,filename)=>
     get_db()
@@ -506,6 +539,7 @@ const get_userTotalTime=(name)=>
     .catch(err=>console.log('error in getting user time : ',err))        
 
 module.exports={
+    change_userEmail,
     get_allLogins,
     check_loginAcc,
     get_loginAcc,
