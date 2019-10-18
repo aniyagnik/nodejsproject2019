@@ -17,10 +17,23 @@ h3{
   color: red;
   cursor: pointer;
 }
-
+.sbtn{
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  padding: 4px 4px;
+  border: 1px solid rgb(0, 0, 0);
+}
+.sbtn:hover{
+  background-color: crimson;
+  color: rgb(255, 255, 255);
+  padding: 4px 4px;
+  border: 1px solid rgb(0, 0, 0);
+  box-shadow: 1px 1px 1px 1px,2px 2px 2px 2px rgb(158, 54, 50);
+}
 /* Set a style for all buttons */
 .addbutton {
     background-color: rgb(63, 59, 85);
+    box-shadow: 1px 1px 1px 1px,2px 2px 2px 2px rgb(158, 54, 50);
     color: white;
     padding: 10px 10px;
     margin: 8px 0;
@@ -36,6 +49,28 @@ h3{
    color:black;
 }
 
+
+#rbutton {
+  background-color: rgb(213, 209, 238);
+  color: rgb(20, 20, 20);
+  padding: 10px 10px;
+  box-shadow: 1px 1px 1px 1px,2px 2px 2px 2px rgb(158, 54, 50);
+  margin: 8px 0;
+  border-radius: 10%;
+  border: 1px solid rgb(255, 44, 7);
+  cursor: pointer;
+  width: 100%;
+  display:inline-block;
+}
+
+#rbutton:hover {
+ background-color: rgb(19, 105, 190);
+ color: antiquewhite;
+ border: 1px solid crimson;
+}
+details summary::-webkit-details-marker {
+  display:none;
+}
 .dropdown-content {
     display: none;
     position: absolute;
@@ -57,7 +92,6 @@ h3{
   .dropdown:hover .dropdown-content {display: block;max-width:40vw;}
 
 .friend_info{
-    border-bottom:1px solid black;
     padding: 0.5%;
     cursor: pointer;
     display:inline-block;

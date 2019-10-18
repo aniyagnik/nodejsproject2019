@@ -29,8 +29,8 @@
                          </div>
                        </summary>
                        <p> 
-                         <button onclick='javascript:document.location.href="/user/friends/addFriend?friend={{this.reqSender}}"'>add friend</button>
-                         <button onclick='javascript:document.location.href="/user/dashboard/search?searchUser={{this.reqSender}}"'>view wall</button>  
+                         <button class="sbtn" onclick='javascript:document.location.href="/user/friends/addFriend?friend={{this.reqSender}}"'>add friend</button>
+                         <button  class="sbtn" onclick='javascript:document.location.href="/user/dashboard/search?searchUser={{this.reqSender}}"'>view wall</button>  
                        </p>
                     </details>
                     <span onclick="removeRequest('{{this.reqSender}}')" class="close" title="Close Modal">&times;</span>
@@ -45,23 +45,15 @@
      </div>
     <div style='margin:3%'>
         {{#if friendsList}}
-          <div style='float:left'>
-            <form action="/user/friends/createGroup" method="post" onsubmit="return checkForGroupInput()" >
-                <button  type="submit">create group</button>
-                <input type="hidden" name="selectedFriend"  value="" id='selectedFriend'>
-                <input type="hidden" name="groupName" id='groupName'value="">
-                <input type="hidden" name="now" id='time'value="">
-            </form>
-           </div>
-          <div style="float:left;margin-left:10vw">
+          <div style="float:left;">
               <form action="/user/friends/unFriendSelected" onsubmit="return checkForRemoveInput()" method="post">
-                <button  type="submit">remove friends</button>
-                <input type="hidden" name="selectedFriend"  value="" id='unFriend'>
+                <button id='rbutton'>remove friends</button>
+                <input type="hidden" style="display:block" name="selectedFriend"  value="" id='unFriend'>
               </form>        
           </div> 
-          <br> <br>
+          <br> <br> <br>
           {{#each friendsList}}
-            <details>
+            <details style=" border-bottom:1px solid black">
                <summary>
                 <input type="checkbox" form='form1' name="{{this.friend}}" name="{{this.friend}}" value='{{this.friend}}' onclick="edit_hiddenInput('{{this.friend}}')">
                 <div class='friend_info' >
@@ -69,9 +61,8 @@
                 </div></div>
                </summary>
                <p>
-                   <button onclick='document.location.href="/user/chat?searchUser={{this.friend}}"'>message</button>
-                   <button onclick='document.location.href="/user/dashboard/search?searchUser={{this.friend}}"'>view {{this.friend}}</button>
-                   <button  onclick='document.location.href="/user/friend/settings?friend={{this.friend}}"' class='fa fa-gear'></button>
+                   <button class="sbtn" onclick='document.location.href="/user/chat?searchUser={{this.friend}}"'>message</button>
+                   <button class="sbtn" onclick='document.location.href="/user/dashboard/search?searchUser={{this.friend}}"'>view {{this.friend}}</button>
                </p>
                </details>
             {{/each}}

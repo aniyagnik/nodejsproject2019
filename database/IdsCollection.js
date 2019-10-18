@@ -462,7 +462,7 @@ const delete_loginAcc=(username)=>
     .then(collection=>collection.remove({username:username}))
     .then(ha=>{
         console.log('user deleted',ha.message.documents); 
-        return true
+        return ha.message.documents
     })
     .catch(err=>{
         console.log('error in deleting account',err)

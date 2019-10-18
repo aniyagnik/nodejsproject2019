@@ -166,7 +166,9 @@ body, html {
   background-repeat: no-repeat;
   background-size: cover;
 }
-
+details summary::-webkit-details-marker {
+  display:none;
+}
 
 #profilepic{
   border-radius:100%;

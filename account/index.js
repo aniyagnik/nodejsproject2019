@@ -280,10 +280,12 @@ app.get('/logout',(req,res)=>{
     }  
 })
 
-app.get('/deleteAccount',(req,res)=>{
+app.post('/deleteAccount',(req,res)=>{
+    console.log("in delete account")
     if(req.user){
         const {password}=req.body
         const {username}=req.user
+        console.log("values : ",password)
         check_loginAcc(username,password)
         .then(user=>{
             if(user==null)

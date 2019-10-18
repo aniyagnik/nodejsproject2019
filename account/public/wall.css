@@ -167,7 +167,7 @@ body, html {
 .sendMsg {
   background-color: black;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 25px;
+  font-size: 1em;
   color: aqua;
   box-shadow: 1px 1px 1px 1px,2px 2px 2px 2px rgb(158, 54, 50);
   padding-left:40px;
@@ -243,7 +243,7 @@ a{
     margin: 2px 0;
     border: 1px solid cyan;
     cursor: pointer;
-    padding: 3px 10px;
+    padding: 3px 1px;
     white-space:normal;
   }
 
