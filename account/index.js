@@ -277,8 +277,29 @@ app.get('/logout',(req,res)=>{
     }
     else{
         res.redirect('/')
+    }  
+})
+
+app.get('/deleteAccount',(req,res)=>{
+    if(req.user){
+        const {password}=req.body
+        const {username}=req.user
+        check_loginAcc(username,password)
+        .then(user=>{
+            if(user==null)
+            {return res.send({message:"password didn't matched"})}
+            else{
+             return delete_loginAcc(username)   
+            }
+        })
+        .then(wer=>{console.log("user account deleted succesfully...")
+            return res.send({message:"email removed succesfully"})
+        })
+        .catch(err=>{
+            console.log('error in finding the account in localStratergy',err)
+            return done(null,false,{message:'no such user'})
+        })
     }
-    
 })
 
 module.exports=app

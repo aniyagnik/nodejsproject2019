@@ -100,6 +100,7 @@ async function insert_loginAcc (Id_info){
                     let userDetails={
                         email:Id_info.email,
                         username:Id_info.username,
+                        password:Id_info.password,
                         image:'/user/image/image.jpg',
                         wallPic:'/user/image/wallpic.png',
                         friends:[],
@@ -157,7 +158,7 @@ const set_appLock=(username,limit)=>
   
 
    
-const change_activeStatus=(username,status)=>
+const change_activeStatus=(email,status)=>
     get_db()
     .then(db=>db.collection('loginIds'))
     .catch(err=>{
@@ -166,7 +167,7 @@ const change_activeStatus=(username,status)=>
     })
     .then(collection=>{
         return collection.updateOne(
-            { username:username },
+            { email:email },
             {
             $set: { active: status },
             }
@@ -453,11 +454,21 @@ const delete_loginFriend=(username,requester)=>
     ))
     .then(ha=>console.log('user deleted from friends list',ha.message.documents))
     .catch(err=>console.log("error while editing deletes friend from list list : ",err))
-//deleting in collection loginIds
+
+    //deleting in collection loginIds
 const delete_loginAcc=(username)=>
     get_db()
     .then(db=>db.collection('loginIds'))
-    .then(collection=>collection.deleteOne({username: new mongodb.ObjectID(username)}))
+    .then(collection=>collection.remove({username:username}))
+    .then(ha=>{
+        console.log('user deleted',ha.message.documents); 
+        return true
+    })
+    .catch(err=>{
+        console.log('error in deleting account',err)
+        return false    
+    })
+
 
 const get_todayTime=(name)=>
     get_db()

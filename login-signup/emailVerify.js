@@ -73,7 +73,6 @@ app.get('/verify',(req,res)=>{
     {
         res.end("<h1>Request is from unknown source");
     }
-    res.sendStatus(202)
 });
 
 

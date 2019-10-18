@@ -18,7 +18,6 @@ app.get('/',(req,res)=>{
     {
         let {user}=req
         user={...user,password:"*********" }
-        console.log("user is : ",user)
         res.render('userSettings',{user})    
     }
     else{

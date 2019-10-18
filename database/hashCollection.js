@@ -1,4 +1,5 @@
 const {MongoClient}=require('mongodb')
+const crypto = require('crypto');
 //const client=new MongoClient('mongodb://localhost:27017')
 //client.connect()
 //accessing database testdb and then sending  collection loginIds
@@ -56,7 +57,12 @@ const  verify_emailId =(hash)=>
         console.log('user deleted',ha.message.documents); 
         return true
     })
-    .then(as=>change_activeStatus)
+    .then(as=>{
+        var mykey = crypto.createDecipher('aes-128-cbc', 'mypassword');
+        let email = mykey.update(hash, 'hex', 'utf8')
+        email += mykey.final('utf8');
+        console.log("eamil to be made active : ",email)
+        return change_activeStatus(email,true)})
     .then(ha=>{
         console.log('active status changed'); 
         return true

@@ -52,6 +52,10 @@
                 <h5>TIME SPENT TODAY</h5>
                 <h4 id="setTodayTime">{{user.todayTime}}</h4>
             </div>
+            <div style="border:1px solid rgb(247, 27, 27);margin:1%;box-shadow: 2px 2px 2px 2px rgb(158, 54, 50);">
+                <h5>DELETE ACCOUNT</h5>
+                <button class="sButton" onclick="deleteAccount()">delete account</button> <br> <br>
+            </div>
         </div>
         <div id="pass" style="display:none;margin:1%">
             <div>
@@ -95,15 +99,13 @@
                     <form action="/user/settings/appLock" method="post">
                         <label><b>Daily time Usage</b></label> <br>
                         <input type="time" name='lockTime' id="lockTime" required> 
-                        <br>
+                        <br> <br>
                         <div style="text-align: center">
                             <button type="submit" class='sButton'>apply lock</button>
                         </div>
                         <br>
                     </form>
                 </div>
-
-                <hr>
         </div>
         <div id="email" style="display:none;margin:1%">
               <div>
@@ -114,9 +116,9 @@
                         <label><b>New Email Address</b></label> <br>
                         <input type="email" name='newEmail' id="newEmail" required> <br>
                         <label><b>Current Password</b></label> <br>
-                        <input type="password" name='password' id="password" required> <br>
+                        <input type="password" name='password' id="password" required> <br> <br>
                         <div style="text-align: center">
-                            <button type="submit" class='sButton'>Change Email Id</button> <br>
+                            <button type="submit" class='sButton'>Change Email Id</button> <br> <br>
                         </div>
                         
                     </form>
@@ -188,6 +190,23 @@
                 {document.getElementById("setTotalTime").innerText=daysT+" days : "+hoursT+" hrs : "+minutesT+" min : "+secondsT+" sec"}
                 else{document.getElementById("setTotalTime").innerText=hoursT+" hrs : "+minutesT+" min : "+secondsT+" sec"}
             },1000)
+
+        function deleteAccount(){
+            if(confirm("are you sure you want to delete this account. acccount cannot be recovered later...")){
+                let pass=prompt("enter your password for verification..")
+                $.ajax({
+                    type:"POST",
+                    url:'/user/deleteAccount',
+                    data:{
+                        password:pass
+                    }
+                })
+                .then(msg=>{
+                    alert(msg.message)
+                    location.href="/"
+                })
+            }
+        }            
     </script>
 </body>
 </html>

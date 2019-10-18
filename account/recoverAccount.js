@@ -10,7 +10,7 @@ app.use(express.json())
 hbs.registerPartials(path.join(__dirname,'/partials'))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '/views'));
-
+const {change_activeStatus}=require('../database/IdsCollection.js')
 const {add_newHash,verify_emailId}=require('../database/hashCollection.js')
 
 var smtpTransport = nodemailer.createTransport({
@@ -59,8 +59,10 @@ app.post('/accountDetails',(req,res)=>{
 app.get('/verify',(req,res)=>{
     console.log('in account recovery')
     const hash=req.query.id
+    console.log("email from where hash has come : ",email)
     if(req.protocol==="https")
     {
+        
         console.log("value in verify : ",hash)
         verify_emailId(hash)
         .then(val=>{

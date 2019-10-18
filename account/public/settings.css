@@ -30,6 +30,31 @@ h3{
     color:blue;
     transition:  color border-bottom 2s;
 }
+
+
+#deleteBtn{
+    background-color: black;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 25px;
+    color: aqua;
+    box-shadow: 1px 1px 1px 1px,2px 2px 2px 2px rgb(158, 54, 50);
+    padding-left:40px;
+    padding-right:40px;
+    padding-top:10px;
+    padding-bottom:10px;
+    border:none;
+    border-radius: 0px
+}
+#deleteBtn:hover{
+    background-color: aliceblue;
+    color:rgb(69, 0, 230);
+    opacity:0.5;
+    transition:all 0.8s;
+}
+#deleteBtn:active:after{
+    opacity:1;
+    
+}
 input[type=time],input[type=email],input[type=password] {
     width: 100%;
     padding: 12px 20px;
