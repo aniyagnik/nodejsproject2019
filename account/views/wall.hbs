@@ -21,14 +21,14 @@
        <div class='btn-item'>
           <form action="/user/chat" method="get" onsubmit="return checkUser('yagnik')" >
             <input type="hidden" name='searchUser' id='searchUser' value='{{userWall}}'>
-            <button type="submit" class='sendMsg'>message</button>
+            <button type="submit" class='sendMsg'>message</button> <br> <br>
           </form>
           <div id='userOptions'>
           {{#if isFriend}}
-              <button type="button" class='sendMsg' id='sendReqRemove'>remove friend</button>
+              <button type="button" class='sendMsg' id='sendReqRemove'>remove friend</button> 
               <div id='sendReqAdd'></div>
           {{else}}
-              <button type="button" class='sendMsg' id='sendReqAdd'>send request</button>
+              <button type="button" class='sendMsg' id='sendReqAdd'>send request</button> 
               <div id='sendReqRemove'></div>
           {{/if}}
           </div>
