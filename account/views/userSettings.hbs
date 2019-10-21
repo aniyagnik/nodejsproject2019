@@ -17,11 +17,12 @@
         <h4 style="text-align: center;color:black">{{user.email}}</h4>
     </div>
     
-    <div class="menuSet">
-        <div class="options" onclick="showAndHide('personal')">personal Info</div>
+    <div class="menuSet" id="menu">
+        <div class="options active" onclick="showAndHide('personal')">personal Info</div>
         <div class="options" onclick="showAndHide('pass')">change password</div>
         <div class="options" onclick="showAndHide('limit')">apply limit lock</div>
         <div class="options" onclick="showAndHide('email')">change email</div>
+        <div class="options" onclick="showAndHide('contact')">contact us</div>
     </div>
     <div style="margin:2%;border:1px dashed black" >
         <div id="personal" style="display:block;margin:1%">
@@ -95,12 +96,12 @@
                 </details>
                 
                 <hr>
-                <div style="border-bottom:1px solid black">
+                <div style="border-bottom:1px solid black;text-align:center">
                     <form action="/user/settings/appLock" method="post">
                         <label><b>Daily time Usage</b></label> <br>
                         <input type="time" name='lockTime' id="lockTime" required> 
-                        <br> <br>
-                        <div style="text-align: center">
+                        
+                        <div style="text-align: center;display: inline-block;">
                             <button type="submit" class='sButton'>apply lock</button>
                         </div>
                         <br>
@@ -124,12 +125,31 @@
                 </div>
             </div>  
         </div>
+         <div id="contact" style="display:none;margin:1%">
+              <div>
+                <h3>CONTACT US</h3>
+                <hr>
+                <div style="border-bottom:1px solid black;margin:1%">
+                        <h5>mail us at : WeShare.Query@gmail.com</h5>
+                        <label><b>Subject</b></label> <br>
+                        <input type="email" name='subject' id="subject" required> <br>
+                        <label><b>Body</b></label> <br>
+                        <textarea name="body" id="body" style="width: 100%;height: 30vh;" placeholder="enter your query here..."></textarea>
+                        <div style="text-align: center">
+                            <button type="button" class='sButton' onclick="sendQuery()">submit</button> <br> <br>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>  
+        </div>
     </div>
     <script src="heartbeat.js"></script>
     <script src="time.js"></script>
     <script>
+       
         function showAndHide(element){
-            let ar=["personal","pass","limit","email"]
+            let ar=["personal","pass","limit","email","contact"]
              k=document.getElementById(element)
              ar=ar.filter(ele=>ele!==element)
             ar.forEach(ele=>{
@@ -222,7 +242,22 @@
                 })
             }
         }       
- 
+
+         function sendQuery(){
+            if(confirm("send email?")){
+                $.ajax({
+                    type:"POST",
+                    url:'/user/settings/query',
+                    data:{
+                        subject:$("#subject").val(),
+                        body:$("#body").val()
+                    }
+                })
+                .then(msg=>{
+                    alert(message)
+                })
+            }
+        }  
     </script>
 </body>
 </html>

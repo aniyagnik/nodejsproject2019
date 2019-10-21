@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const hbs=require('hbs')
 const path=require('path')
+var nodemailer = require("nodemailer");
 const {change_userEmail,check_loginAcc,check_userEmail,change_activeStatus}=require('../database/IdsCollection')
 const {set_appLock}=require('../database/IdsCollection')
 app.use(express.urlencoded({extended: true}))
@@ -11,6 +12,18 @@ app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '/views'));
 app.use('/',express.static(path.join(__dirname,'/public')))
 
+const smtpTransport = nodemailer.createTransport({
+    secure:false,
+    service: "Gmail",
+    auth: {
+        user: "aniyagnik1@gmail.com",
+        pass: "aniyagnik#Qsh"
+    },
+    tls:{
+    rejectUnauthorized:false
+    },
+    ssl:true
+});
 
 app.get('/',(req,res)=>{
     console.log('in settings')
@@ -130,6 +143,36 @@ app.post('/changePassword',(req,res)=>{
            console.log("PASSWORDS DON'T MATHCH")
            res.redirect('/')
        }
+    }
+    else{
+        res.redirect('/')
+    }
+})
+
+
+app.post('/query',(req,res)=>{
+    console.log('in sending mail for query')
+    if(req.user)
+    {
+        const {username}=req.user
+        const {body}=req.body
+        const  {subject}=req.body
+        subject=`${username}<br>${subject}`
+        const mailOptions={
+            to : "webshare.query@gmail.com",
+            subject : subject,
+            html : body
+        }
+        smtpTransport.sendMail(mailOptions, function(error, response){
+        if(error){
+                console.log("error in mailing : ",error);
+                res.send("error while sending mail. try again");
+        }else{
+                console.log("Message sent ");
+                res.send("email sent successfully");
+            }
+        });
+
     }
     else{
         res.redirect('/')
