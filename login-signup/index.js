@@ -2,20 +2,8 @@ const express = require('express')
 const app = express.Router()
 const path=require('path')
 const passport=require('./passport')
-const multer=require('multer')
 
-let storage=multer.diskStorage({
-  destination:function(req,res,cb){
-    cb(null,path.join(__dirname,'..\\uploads\\'))
-  },
-  filename:function(req,file,cb){
-    cb(null,Date.now()+file.originalname)
-  }
-}
-)
-
-const upload=multer({storage:storage})
-const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,update_loginAcc,delete_loginAcc}=require('../database/IdsCollection')
+const  {create_newUnactiveLoginAcc}=require('../database/newLoginsCollection')
 app.use(express.urlencoded({extended: true}))
 app.use(express.static(path.join(__dirname,'./public')))
 app.use('/user',require('../account'))
@@ -38,7 +26,7 @@ app.post('/signup',(req,res)=>{
         createdOn:req.body.date,
     }
     async function add(){
-      const addedUser=await insert_loginAcc(newAcc)
+      const addedUser=await create_newUnactiveLoginAcc(newAcc)
       if(addedUser==undefined)
       {
         console.log('adduser is null')

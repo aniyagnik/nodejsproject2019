@@ -4,7 +4,9 @@ const crypto = require('crypto');
 
 var app=express();
 
+const {insert_loginAcc}=require('../database/IdsCollection.js')
 const {add_newHash,verify_emailId}=require('../database/hashCollection.js')
+const {get_newUnactiveAccount,remove_newAccount}=require('../database/newLoginsCollection')
 /*
     Here we are configuring our SMTP Server details.
     STMP is mail server which is responsible for sending and recieving email.
@@ -38,13 +40,13 @@ app.get('/send',(req,res)=>{
         subject : "Please confirm your Email account",
         html : `<br> Please Click on the link to verify your email.<br><a href=${link}>Click here to verify</a>` 
     }
-    add_newHash(hash)
+    add_newHash(email)
     smtpTransport.sendMail(mailOptions, function(error, response){
     if(error){
             console.log("error in mailing : ",error);
             res.redirect("/failedInSending");
     }else{
-            console.log("Message sent: " + response.message);
+            console.log("Message sent ");
             res.redirect("/emailSent");
         }
     });
@@ -53,15 +55,44 @@ app.get('/send',(req,res)=>{
 app.get('/verify',(req,res)=>{
     console.log('in account verification')
     const hash=req.query.id
+    var mykey = crypto.createDecipher('aes-128-cbc', 'mypassword');
+    let email = mykey.update(hash, 'hex', 'utf8')
+    email += mykey.final('utf8');
+    console.log("email to be made active : ",email)
     if(req.protocol==="https")
     {
         console.log("value in verify : ",hash)
-        verify_emailId(hash)
+        verify_emailId(email)
         .then(val=>{
             console.log("value for verification situation ",val)
             if(val){
-                console.log("email is verified");
-               return res.redirect('/')
+                async function addAccount(){
+                    let k=await get_newUnactiveAccount(email)
+                        .then(doc=>{
+                            if(doc){
+                                console.log("account exists in unactive accounts")
+                                remove_newAccount(email)
+                                return insert_loginAcc(doc)
+                            }
+                            else{
+                                console.log("account does not exist in unactive accounts")
+                                return 
+                            }
+                        })
+                        .then(addedUser=>{
+                            if(typeof addedUser!=='undefined')
+                            {
+                                console.log('adduser is not null')
+                                res.redirect('/')
+                            }
+                            else{
+                                console.log('adduser is null')
+                                res.redirect('/access-denied')
+                            }
+                        })
+                        .catch(err=>{console.log("error has occured while adding user ",err);res.redirect('/access-denied')})
+                }
+                addAccount()
             }
             else{
                 return res.redirect('/verificationFail');

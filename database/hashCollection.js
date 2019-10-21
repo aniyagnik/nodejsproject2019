@@ -12,15 +12,15 @@ const get_db=()=>{
       });
 }
 
-const add_newHash=(hash)=>
+const add_newHash=(email)=>
     get_db()
     .then(db=>db.collection("hashCollection"))
     .then(collection=>{
         const doc={
-            hash:hash
+            hash:email
         }
-        collection.insertOne(doc)})
-    .then(val=>console.log('inserted hash : ',val))
+        return collection.insertOne(doc)})
+    .then(val=>console.log('inserted hash : ',val.result))
     .catch(err=>console.log("error in saving hash ",err))
 
 // const remove_hash=(hash)=>
@@ -33,17 +33,17 @@ const add_newHash=(hash)=>
 //     })
 //     .catch(err=>{console.log('err in deleting unseen chat : ',err)})
 
-const  verify_emailId =(hash)=>
+const  verify_emailId =(email)=>
     get_db()
     .then(db=>db.collection('hashCollection'))
     .catch(err=>{
         console.log('error in collection')
         return false    
     })
-    .then(collection=>collection.findOne({hash:hash}))  
+    .then(collection=>collection.findOne({hash:email}))  
     .then(document=>{
       if(document==null){
-        console.log('error in finding userEmail ')
+        console.log('error in finding userEmail',document)
         return false
       }  
       else{      
@@ -52,17 +52,12 @@ const  verify_emailId =(hash)=>
       }
     })
     .then(db=>db.collection('hashCollection'))
-    .then(collection=>collection.remove({hash:hash}))
+    .then(collection=>collection.remove({hash:email}))
     .then(ha=>{
-        console.log('user deleted',ha.message.documents); 
-        return true
+        console.log('user hash deleted',ha.message.documents); 
+        return get_db()
     })
-    .then(as=>{
-        var mykey = crypto.createDecipher('aes-128-cbc', 'mypassword');
-        let email = mykey.update(hash, 'hex', 'utf8')
-        email += mykey.final('utf8');
-        console.log("eamil to be made active : ",email)
-        return change_activeStatus(email,true)})
+    .then(as=>change_activeStatus(email,true))
     .then(ha=>{
         console.log('active status changed'); 
         return true

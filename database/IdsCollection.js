@@ -109,7 +109,7 @@ async function insert_loginAcc (Id_info){
                         totalTime:0,
                         maxLimit:86402000,
                         todayTime:0,
-                        active:false
+                        active:true
                     }
                     return collection.insertOne(userDetails)})
                 .catch(err=>console.log('error in saving collection credentials 1',err))
@@ -588,8 +588,8 @@ var millisTill12 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 24
 if (millisTill12 < 0) {
      millisTill12 += 86400000; // it's after 12am
 }
-setInterval(function (){
-    get_db()
+setInterval(async function (){
+    let k=await get_db()
     .then(db=>db.collection('loginIds'))
     .then(collection=>collection.updateMany({},
         {
@@ -598,4 +598,8 @@ setInterval(function (){
             }
         }))
     millisTill12=86400000    
+    
+    let s=await get_db()
+    .then(db=>db.collection('newLoginCollection'))
+    .then(collection=>collection.drop())
 },millisTill12)
