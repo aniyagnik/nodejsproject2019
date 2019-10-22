@@ -38,7 +38,18 @@ app.get('/send',(req,res)=>{
     const mailOptions={
         to : email,
         subject : "Please confirm your Email account",
-        html : `<br> Please Click on the link to verify your email.<br><a href=${link}>Click here to verify</a>` 
+        html : `
+WESHARE.COM
+<br><br>
+Welcome to WeShare.com,
+<br><br>
+Thank you for creating an account on weshare.
+<br> 
+Please Click on the link to verify your email.<a href=${link}>Click here to verify</a>.
+<br><br><br>
+Sincerely,
+<br>
+The WeShare Team `
     }
     add_newHash(email)
     smtpTransport.sendMail(mailOptions, function(error, response){

@@ -81,15 +81,13 @@ app.post('/signup',(req,res)=>{
         password:req.body.password,
         createdOn:req.body.date,
     }
-    console.log("body ",req.body)
-    console.log("dfczvx ",req.body.email)
-    console.log("dfczvx ",newAcc)
     const form={...newAcc,Cpassword:req.body.Cpassword}
     const val=checkForm(form)
     if(val){
       async function add(){
         const addedUser=await create_newUnactiveLoginAcc(newAcc)
-        if(addedUser==undefined)
+        console.log("added user is : ",addedUser)
+        if(!addedUser)
         {
           console.log('adduser is null')
           res.send("username or email already exist")

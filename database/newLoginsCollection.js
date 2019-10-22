@@ -73,7 +73,7 @@ const get_db=()=>{
                   }
                   return collection.insertOne(userDetails)})
               .catch(err=>console.log('error in saving collection credentials 1',err))
-              .then(doc=>doc.ops[0])
+              .then(doc=>true)
               .catch(err=>console.log('error in saving collectio ids 2',err))
       console.log('awaits ends')
   } 
