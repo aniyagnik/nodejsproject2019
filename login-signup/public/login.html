@@ -35,30 +35,36 @@
 
         <div id="id02" class="modal">
         
-        <form class="modal-content animate" action='/signup' method='POST' id="form" onsubmit="return checkForm(this);">
+        <div class="modal-content animate" >
 
             <div class="container">
             <label ><b>Email</b></label>
-            <input type="email" name="email" id="email" placeholder="Enter Email ex. example@xyz.com" required>   
+            <input type="email" name="email" id="emailSign" placeholder="Enter Email ex. example@xyz.com" required>   
             <label><b>Username</b></label>
-            <input type="text" name="username" id="username" placeholder="Enter Username" required>
-            <label ><b>Password</b></label>
-            <input type="password" name="password" id="password" placeholder="Enter Password" required>
+            <input type="text" name="username" id="usernameSign" placeholder="Enter Username" required>
+            <label ><b>Password</b><br>
+                    1. atleast one lower and uppercase character <br>
+                    2. password should not be username <br>
+                    3. atleast more than 7 characters
+            </label>
+            <input type="password" name="password" id="passwordSign" placeholder="Enter Password " required>
             <input type="hidden" name="date" id="date" value="">
             <label ><b>Confirm Password</b></label>
-            <input type="password" name="Cpassword" id="Cpassword" placeholder="Enter Password" required>
-            <button type="submit">Signup</button>
+            <input type="password" name="Cpassword" id="CpasswordSign" placeholder="Enter Password" required>
+            <button type="submit" onclick="signupUser()">Signup</button>
             </div>
 
             <div class="container" style="background-color:#f1f1f1">
             <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
             </div>
-        </form>
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
     <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
      <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="script.js"></script> 
 </body>
 </html>

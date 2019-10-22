@@ -12,8 +12,8 @@ function checkForm(form)
       form.username.focus();
       return false;
     }
-    if(!form.email.value.includes("@gmail.com")) {
-      alert("Error: email must contain @gmail.com!");
+    if(!form.email.value.includes("@")) {
+      alert("Error: email is not right format !");
       form.email.focus();
       return false;
     }
@@ -58,7 +58,35 @@ function checkForm(form)
     return true;
 }
 
-
+function signupUser(){
+  const Cpassword = document.getElementById('CpasswordSign')
+  const password = document.getElementById('passwordSign')
+  const email = document.getElementById('emailSign')
+  const username = document.getElementById('usernameSign')
+  const form={
+    Cpassword:Cpassword,
+    password:password,
+    email:email,
+    username:username
+  }
+  if(checkForm(form)){ 
+    document.getElementById('date').value
+    document.getElementById('id02').style.display='none'
+    $.ajax({
+      url: '/signup', 
+      type: 'POST', 
+      contentType: 'application/json', 
+      data: JSON.stringify({
+        Cpassword:Cpassword.value,
+        password:password.value,
+        email:email.value,
+        username:username.value,
+        date:date.value
+      })}
+      )
+    .then(msg=>alert(msg))
+  }
+}
   
 // Get the modal
 var modal1 = document.getElementById('id01');

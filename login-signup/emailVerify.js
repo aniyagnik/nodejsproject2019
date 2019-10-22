@@ -44,10 +44,10 @@ app.get('/send',(req,res)=>{
     smtpTransport.sendMail(mailOptions, function(error, response){
     if(error){
             console.log("error in mailing : ",error);
-            res.redirect("/failedInSending");
+            res.send("failed in sending verification mail to provided email address. try again.")
     }else{
             console.log("Message sent ");
-            res.redirect("/emailSent");
+            res.send("a mail was send to your email address for verifiaction. Verify it to proceed.")
         }
     });
 });
