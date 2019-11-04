@@ -34,7 +34,7 @@ app.get('/send',(req,res)=>{
     const email=req.query.to
     var hash = mykey.update(email, 'utf8', 'hex')
     hash += mykey.final('hex');
-    const link=`https://${req.get('host')}/mail/verify?id=${hash}`;
+    const link=`http://${req.get('host')}/mail/verify?id=${hash}`;
     const mailOptions={
         to : email,
         subject : "Please confirm your Email account",
@@ -70,7 +70,7 @@ app.get('/verify',(req,res)=>{
     let email = mykey.update(hash, 'hex', 'utf8')
     email += mykey.final('utf8');
     console.log("email to be made active : ",email)
-    if(req.protocol==="https")
+    if(req.protocol==="http")
     {
         console.log("value in verify : ",hash)
         verify_emailId(email)

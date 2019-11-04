@@ -3,13 +3,13 @@ const app = express()
 const path=require('path')
 const session=require('express-session')
 const passport=require('./login-signup/passport')
-var https = require('https');
+var http = require('http');
 var fs    = require('fs');
-var httpsOptions =  {
+var httpOptions =  {
   key: fs.readFileSync("keys/privatekey.pem"),
   cert: fs.readFileSync("keys/certificate.pem")
  }
-var server = https.createServer(httpsOptions,app);
+var server = http.createServer(app);
 var io = require('socket.io')(server);
 
 const  {change_onlineStatus,get_todayTime,change_onlineTime}=require('./database/IdsCollection')
