@@ -94,7 +94,8 @@ app.post('/signup',(req,res)=>{
         }
         else{
           console.log('adduser is not null')
-          res.redirect('/mail/send?to='+req.body.email)
+          res.send('account created proceed to login...')
+          //res.redirect('/mail/send?to='+req.body.email)
         }
        }
        add()

@@ -6,10 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WeShare | {{userWall}}'s Wall</title>
      <link rel="stylesheet" href="./wall.css">
+     <script src="removeloading.js"></script>
+    <link rel="stylesheet" href="loading.css">
    
 </head>
 <body>
     {{>navbar}}
+    <span class="loader" id='load_screen'><span class="loader-inner"></span></span>
     <div class="bg" style=' background-image: url("{{wallpic}}");'>
         <div id='profilepicbg' onclick='document.getElementById(changeProfile).style.display="block"' style='background-image:url("{{userpic}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
           </div>

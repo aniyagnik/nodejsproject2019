@@ -7,9 +7,12 @@
     <title>WeShare | Settings</title>
     <link rel="stylesheet" href="settings.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="removeloading.js"></script>
+    <link rel="stylesheet" href="loading.css">
 </head>
 <body>
     {{>navbar}}
+    <span class="loader" id='load_screen'><span class="loader-inner"></span></span>
     <div class="back" style="background-image:url('/user/image/a.jpg');">
         <h3 style="text-align: center;color:brown">User <p style="display:inline;color:blue">Settings</p></h3>
         <h1 style="text-align: center;black">{{user.username}}</p></h1>
