@@ -26,26 +26,28 @@
              <div class="dropdown-content" id='drop' style="left:0;padding:1%">
                {{#if requests}}
                 {{#each requests}}
-                <a href="#">
-                   <div id='{{this.reqSender}}' style='border-bottom:1px solid black'>
-                    <details style="color: chocolate">
-                       <summary>
-                         <div style='' >
-                            <div class="user_img" style=' background-image: url("{{this.profilePic}}");height:50px;width:50px;max-height:50px;max-width:50px;'></div>
-                            <div style='display:inline-block;'>{{this.reqSender}} </div> 
-                         </div>
-                       </summary>
-                       <p> 
-                         <button class="sbtn" onclick='javascript:document.location.href="/user/friends/addFriend?friend={{this.reqSender}}"'>add friend</button>
-                         <button  class="sbtn" onclick='javascript:document.location.href="/user/dashboard/search?searchUser={{this.reqSender}}"'>view wall</button>  
-                       </p>
-                    </details>
-                    <span onclick="removeRequest('{{this.reqSender}}')" class="close" title="Close Modal">&times;</span>
-                   </div>
-                </a>
+                <div style="position: relative;" id='{{this.reqSender}}'>
+                  <a href="#">
+                    <div  style='border-bottom:1px solid black'>
+                      <details style="color: chocolate">
+                        <summary>
+                          <div style='' >
+                              <div class="user_img" style=' background-image: url("{{this.profilePic}}");height:50px;width:50px;max-height:50px;max-width:50px;'></div>
+                              <div style='display:inline-block;'>{{this.reqSender}} </div> 
+                          </div>
+                        </summary>
+                        <p> 
+                          <button class="sbtn" onclick='javascript:document.location.href="/user/friends/addFriend?friend={{this.reqSender}}"'>add friend</button>
+                          <button  class="sbtn" onclick='javascript:document.location.href="/user/dashboard/search?searchUser={{this.reqSender}}"'>view wall</button>  
+                        </p>
+                      </details>
+                        <span onclick="removeRequest('{{this.reqSender}}')" class="close" title="remove request">&times;</span>
+                    </div>
+                  </a>  
+                </div>
                 {{/each}}
                 {{else}}
-                    <a  href="#">No request</a> 
+                    <div style="position: relative;"><a  href="#">No request</a> </div>
                 {{/if}} 
              </div>
             </div>       
@@ -74,7 +76,7 @@
                </details>
             {{/each}}
         {{else}}
-            You have no friends
+            You don't have any friends
         {{/if}}
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>

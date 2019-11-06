@@ -23,6 +23,7 @@
     </div>
     <input type="hidden" id='wallUser' value='{{userWall}}'>
     <input type="hidden" id='username' value='{{userWall}}'>
+    <input type="hidden" id='findinguser' value='{{findinguser}}'>
      <label class='UserName'>Wall of {{userWall}}</label>
      <div class='btn-container'>
        <div class='btn-item'>
@@ -89,6 +90,10 @@
     let options=$("#userOptions")
     document.getElementById('sendReqAdd').addEventListener('click',(e)=>{
       const user=document.getElementById('wallUser').value
+      if($('#findinguser').val()===$('#username').val()){
+          alert('you cannot add yurself as friend..')
+          return ;
+      }
       if(window.confirm('confirm sending friend request to '+user))
       {
         $('#sendReqAdd').remove()

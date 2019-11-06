@@ -1,14 +1,11 @@
 
 function removeRequest (requester){
-    console.log('in remove request')
     const ele=document.getElementById(requester)
     ele.parentNode.removeChild(ele)
-    function isEmpty( el ){console.log(!$.trim(el.html()))
-        return $.trim(el.html())
-    }
     const drop=$('#drop')
-    if (isEmpty(drop)) {console.log('in if')
-        drop.append(`<a href='#'>no request</a>`);
+    console.log('in remove request',drop.children().length)
+    if (drop.children().length === 0) {console.log('in if')
+        drop.append(`<div style="position: relative;"><a  href="#">No request</a> </div>`);
     }
     axios.post('/user/friends/removeFriendRequest',{viewingUser:requester})
     .then(w=>alert('request removed'))

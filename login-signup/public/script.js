@@ -18,8 +18,8 @@ function checkForm(form)
       return false;
     }
     if(form.password.value != "" && form.password.value == form.Cpassword.value) {
-      if(form.password.value.length < 6) {
-        alert("Error: Password must contain at least six characters!");
+      if(form.password.value.length < 7) {
+        alert("Error: Password must contain at least seven characters!");
         form.password.focus();
         return false;
       }

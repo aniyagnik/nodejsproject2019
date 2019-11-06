@@ -5,7 +5,7 @@ h3{
 
 /* The Close Button (x) */
 .close {
-  position: absolute;
+  position: absolute ;
   right: 25px;
   top: 0;
   color: rgb(0, 0, 0);
@@ -118,10 +118,21 @@ details summary::-webkit-details-marker {
     .addbutton {
         margin: 1px 0;
         font-size: 1em;
-        padding-top:4px;
+        padding: 5px 5px;
     }  
+    #rbutton {
+      padding: 5px 5px;
+    }
     .dropdown:hover .dropdown-content {display: block;max-width:70vw;}   
 }
 @media screen and (max-width:500px){
   .dropdown:hover .dropdown-content {display: block;max-width:100vw;}
+  .addbutton {
+    margin: 1px 0;
+    font-size: 1em;
+    padding: 5px 5px;
+}  
+#rbutton {
+  padding: 5px 5px;
+}
 }
