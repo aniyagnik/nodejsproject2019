@@ -19,15 +19,14 @@ app.use('/settings',require('./settingIndex.js'))
 app.use('/recovery',require('./recoverAccount.js'))
 
 const   {get_alluserImgs,insert_userImgs,delete_userImg}=require('../database/imageCollection')
-const  {get_allLogins,check_loginAcc,get_loginAcc,insert_loginAcc,change_userPass,get_userTotalTime,get_userTime,delete_loginAcc,change_userProfilePic,change_onlineStatus,change_userWallPic,change_onlineTime}=require('../database/IdsCollection')
-const { insert_friendRequest,add_friend,get_friendRequest,get_friends,delete_friendRequest}=require('../database/friendsCollection')
+const  {check_loginAcc,get_loginAcc,get_userTotalTime,get_userTime,delete_loginAcc,change_userProfilePic,change_onlineStatus,change_userWallPic,change_onlineTime}=require('../database/IdsCollection')
 /**
  * PROFILE IMAGE STORING STARTS
  */
-
+accessKeyIdVal,secretAccessKeyVal
 const s3 = new aws.S3({
-    accessKeyId: 'AKIAZQPSWXJ4LMV7QZUV',
-    secretAccessKey: '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',
+    accessKeyId: accessKeyIdVal,
+    secretAccessKey: secretAccessKeyVal,
     Bucket: 'uploadimagesnodejs'
 });
 /**
