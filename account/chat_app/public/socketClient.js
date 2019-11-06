@@ -9,8 +9,8 @@ function scroll () {
 $(document).ready(scroll());
 
 window.addEventListener('load',()=>{
-    const load_screen=document.getElementById('load_screen')
-    load_screen.parentNode.removeChild(load_screen)
+    const modal=document.getElementById('loadModal')
+    modal.style.display='none'
     $('body').css('text-align','left')
 })
 
@@ -159,6 +159,10 @@ function checkUser(user){
         alert('enter user to search')
         return false
     }
+    $('#cload').text('searching the user. please wait..') 
+    const modal=document.getElementById('loadModal')  
+    $('body').css('text-align','center')
+    modal.style.display='block'
     return true
 }
     

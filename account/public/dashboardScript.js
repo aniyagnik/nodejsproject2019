@@ -13,7 +13,7 @@ function show(val){
   return true
 }
  
-function uploadPicture (id){
+function uploadPicture (id,modalId){
     const file=$(`#${id}`)[0].files[0]
     const type=file.type.split('/')[1]
     if(typeof file==='undefined')
@@ -30,8 +30,13 @@ function uploadPicture (id){
         case 'jpeg':    
         case 'png':
         case 'gif':{
-            alert('uplaoding your image...')
-            return } 
+            $('#cload').text('uploading your image please wait..') 
+            const modal=document.getElementById('loadModal')  
+            $('body').css('text-align','center')
+            document.getElementById(modalId).style.display='none'           
+            modal.style.display='block'
+            return true
+         } 
         default :{
             alert("upload image only...")
             return false

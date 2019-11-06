@@ -179,6 +179,7 @@ details summary::-webkit-details-marker {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  cursor: pointer;
 }
 
 .flex-container {

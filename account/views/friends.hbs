@@ -13,7 +13,11 @@
 </head>
 <body>
      {{>navbar}}
-     <span class="loader" id='load_screen'><span class="loader-inner"></span></span>
+      <div class="loadingModal" id='loadModal'>
+      <div class=" animate"  >
+        <span class="loader" id='load_screen'><span class="loader-inner"></span></span><div id='cload' style='color:crimson'> <strong>loading </strong></div>
+      </div>
+    </div> 
      <div style="margin:1%"> 
        <input type="hidden" id="username" value="{{username}}">
          <h3><strong>FRIENDS</strong> </h3>  

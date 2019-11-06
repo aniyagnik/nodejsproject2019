@@ -15,7 +15,11 @@
 </head>
 <body>
     {{>navbar}}
-        <span class="loader" id='load_screen'><span class="loader-inner"></span></span>
+    <div class="loadingModal" id='loadModal'>
+		<div class=" animate"  >
+			<span class="loader" id='load_screen'><span class="loader-inner"></span></span><div id='cload' style='color:crimson'> <strong>loading </strong></div>
+		</div>
+    </div> 
     <div style='margin:2%'> 
         hello,{{username}}
         <div>
@@ -125,6 +129,7 @@
 	{{else}}
 		<div style='text-align:center; margin:20%'>
 			<h1 class='mobile'>SELECT USER TO CHAT</h1>
+			<div id='chat_messages'></div>
 		</div>
 	   {{/if}}	 
 

@@ -12,7 +12,11 @@
 </head>
 <body>
     {{>navbar}}
-    <span class="loader" id='load_screen'><span class="loader-inner"></span></span>
+     <div class="loadingModal" id='loadModal'>
+      <div class=" animate"  >
+        <span class="loader" id='load_screen'><span class="loader-inner"></span></span><div id='cload' style='color:crimson'> <strong>loading </strong></div>
+      </div>
+    </div> 
     <div class="back" style="background-image:url('/user/image/a.jpg');">
         <h3 style="text-align: center;color:brown">User <p style="display:inline;color:blue">Settings</p></h3>
         <h1 style="text-align: center;black">{{user.username}}</p></h1>

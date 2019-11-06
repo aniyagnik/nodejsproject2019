@@ -19,8 +19,11 @@
 </head>
 <body>
    {{>navbar}} 
-   <!-- Loading square for squar.red network -->
-<span class="loader" id='load_screen'><span class="loader-inner"></span></span>
+    <div class="loadingModal" id='loadModal'>
+      <div class=" animate"  >
+        <span class="loader" id='load_screen'><span class="loader-inner"></span></span><div id='cload' style='color:crimson'> <strong>loading </strong></div>
+      </div>
+    </div>  
   <div style='margin:2%'>  
     <div class='row section-top ' style=" margin-left: 0px;">
        <div class='size col-md-3 col-xs-4 col-lg-3 item nopadding'  style="max-width:30%;">
@@ -70,7 +73,7 @@
       </div>
       <div class="containeraddimage">
         <label><b>Change profile Pic</b></label>
-        <form  action="/user/dashboard" method='POST' id="form" enctype="multipart/form-data" onsubmit='return uploadPicture("uploadImage")'>
+        <form  action="/user/dashboard" method='POST' id="form" enctype="multipart/form-data" onsubmit='return uploadPicture("uploadImage","changeProfilePic")'>
           <input type="file" name='uploadImage' id="uploadImage" required>
           <button type="submit" class='addbutton'>Change Image</button>
         </form>
@@ -83,7 +86,7 @@
 
   {{!-- change wall background --}}
   <div id="changeProfile" class="addImgModal">
-   <form class="modal-content-form animate" action='/user/dashboard/edit' method='POST' id="form" enctype="multipart/form-data"  onsubmit='return uploadPicture("wallImage")'>
+   <form class="modal-content-form animate" action='/user/dashboard/edit' method='POST' id="form" enctype="multipart/form-data"  onsubmit='return uploadPicture("wallImage","changeProfile")'>
     <div class="imgcontainer">
       <span onclick="document.getElementById('changeProfile').style.display='none'" class="close" title="Close Modal">&times;</span>
       <div class='avatar' style='background-image:url("{{image}}");display:inline-block;' >
@@ -102,7 +105,7 @@
 
    {{!-- add image  --}}
    <div id="addimgdiv" class="addImgModal">
-      <form class="modal-content-form animate" action='/user/dashboard/addImage' method='POST' id="form" enctype="multipart/form-data"  onsubmit='return uploadPicture("uImages")' >
+      <form class="modal-content-form animate" action='/user/dashboard/addImage' method='POST' id="form" enctype="multipart/form-data"  onsubmit='return uploadPicture("uImages","addimgdiv")' >
         <div class="imgcontainer">
           <span onclick="document.getElementById('addimgdiv').style.display='none'" class="close" title="Close Modal">&times;</span>
            <div class='avatar' style='background-image:url("{{image}}");display:inline-block;' >
@@ -145,6 +148,7 @@
         {{/if}}
        {{/if}}
     </ul>
+   
     <p id="timeSpent"></p>
     
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

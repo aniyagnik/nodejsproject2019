@@ -12,7 +12,11 @@
 </head>
 <body>
     {{>navbar}}
-    <span class="loader" id='load_screen'><span class="loader-inner"></span></span>
+     <div class="loadingModal" id='loadModal'>
+      <div class=" animate"  >
+        <span class="loader" id='load_screen'><span class="loader-inner"></span></span><div id='cload' style='color:crimson'> <strong>loading </strong></div>
+      </div>
+    </div> 
     <div class="bg" style=' background-image: url("{{wallpic}}");'>
         <div id='profilepicbg' onclick='document.getElementById(changeProfile).style.display="block"' style='background-image:url("{{userpic}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
           </div>
@@ -82,12 +86,6 @@
         }
         return true
     }
-    var modal = document.getElementById('addimagediv');
-    window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-  }
     let options=$("#userOptions")
     document.getElementById('sendReqAdd').addEventListener('click',(e)=>{
       const user=document.getElementById('wallUser').value

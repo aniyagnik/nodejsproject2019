@@ -26,10 +26,9 @@ const { insert_friendRequest,add_friend,get_friendRequest,get_friends,delete_fri
  */
 
 const s3 = new aws.S3({
-    accessKeyId: 'AKIAZQPSWXJ4FWIWC3OW',
-    secretAccessKey: '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',
-    Bucket: 'uploadimagesnode',
-    region:'ap-south-1'
+    accessKeyId: 'AKIAZQPSWXJ4LMV7QZUV',
+    secretAccessKey: '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',
+    Bucket: 'uploadimagesnodejs'
 });
 /**
 * Single Upload
@@ -37,7 +36,7 @@ const s3 = new aws.S3({
 const imgUpload = multer({
 storage: multerS3({
     s3: s3,
-    bucket: 'uploadimagesnode',
+    bucket: 'uploadimagesnodejs',
     acl: 'public-read',
     key: function (req, file, cb) {
     cb(null, path.basename( file.originalname, path.extname( file.originalname ) ) + '-' + Date.now() + path.extname( file.originalname ) )
