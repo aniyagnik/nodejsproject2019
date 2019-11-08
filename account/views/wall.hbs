@@ -21,7 +21,6 @@
         <div id='profilepicbg' onclick='document.getElementById(changeProfile).style.display="block"' style='background-image:url("{{userpic}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
           </div>
     </div>
-    <input type="hidden" id='wallUser' value='{{userWall}}'>
     <input type="hidden" id='username' value='{{userWall}}'>
     <input type="hidden" id='findinguser' value='{{findinguser}}'>
      <label class='UserName'>Wall of {{userWall}}</label>
@@ -33,11 +32,11 @@
           </form>
           <div id='userOptions'>
           {{#if isFriend}}
-              <button type="button" class='sendMsg' id='sendReqRemove'>remove friend</button> 
-              <div id='sendReqAdd'></div>
+              <button type="button" class='sendMsg' id='removeFriend'>remove friend</button> 
+              <div id='sendReqAdd'></div><div id='removeReq'></div>
           {{else}}
               <button type="button" class='sendMsg' id='sendReqAdd'>send request</button> 
-              <div id='sendReqRemove'></div>
+              <div id='removeFriend'></div><div id='removeReq'></div>
           {{/if}}
           </div>
      </div>
@@ -88,34 +87,62 @@
         return true
     }
     let options=$("#userOptions")
+
     document.getElementById('sendReqAdd').addEventListener('click',(e)=>{
-      const user=document.getElementById('wallUser').value
       if($('#findinguser').val()===$('#username').val()){
-          alert('you cannot add yurself as friend..')
+          alert('you cannot add yourself as friend..')
           return ;
       }
+      const user=$('#username').val()
+      const reqSender=$('#findinguser').val()
       if(window.confirm('confirm sending friend request to '+user))
       {
         $('#sendReqAdd').remove()
-        $('#sendReqRemove').remove();
+        $('#removeFriend').remove();
         
         axios.post('/user/friends/friendReq',{
-          user:user
+          user:user,
+          reqSender:reqSender
         })
         .then(as=>options.append($(`
-              <button type="button" class="sendMsg" id="sendRseqRemove">request sent</button>
+              <button type="button" class="sendMsg" id="RemoveReq">remove request</button>
                 <div id='sendReqAdd'></div>
+                <div id='removeFriend'></div>
         `)))
         .then(as=>alert('friend request sent to '+user))
       }
     })
 
-    document.getElementById('sendReqRemove').addEventListener('click',(e)=>{
+
+document.getElementById('removeReq').addEventListener('click',(e)=>{
+      const requester=$('#findinguser').val()
+      const username=$('#username').val()
+      if(requester===username){
+          alert('you cannot remove yourself as friend..')
+          return ;
+      }
+      if(window.confirm('confirm sending friend request to '+user)){
+        $('#removeReq').remove()
+        
+        axios.post('/user/friends/removeFriendRequest',{
+          username:username,
+          reqSender:requester
+        })
+        .then(as=>options.append($(`
+              <button type="button" class="sendMsg" id="RemoveReq">remove request</button>
+                <div id='sendReqAdd'></div>
+                <div id='removeFriend'></div>
+        `)))
+        .then(as=>alert('friend request sent to '+user))
+      }
+    })
+
+    document.getElementById('removeFriend').addEventListener('click',(e)=>{
       const user=document.getElementById('searchUser').value
       if(window.confirm('are you sure to remove '+user+ ' as your friend'))
       {
         $('#sendReqAdd').remove()
-      $('#sendReqRemove').remove();
+      $('#removeFriend').remove();
       
 
       axios.post('/user/friends/removeFriend',{
@@ -123,7 +150,7 @@
       })
       .then(as=>options.append($(`
             <button type="button" class="sendMsg" id="sendReqAdd">send request</button>
-              <div id="sendReqRemove"></div>
+              <div id="removeFriend"></div><div id='removeFriend'></div>
       `)))
       .then(as=>alert(user + ' is no longer your friend'))
       }

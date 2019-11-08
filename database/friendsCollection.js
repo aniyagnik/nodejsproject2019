@@ -11,36 +11,33 @@ const get_db=()=>{
   }
 let pic
 
-const insert_friendRequest=(username,reqSender)=>
-    get_loginAcc(reqSender)
-    .then(doc=>{pic=doc.image
-      return get_db()
-    })
-    .then(db=>db.collection('friendReqCollection'))
+const insert_recievedfriendRequest=(username,reqSender)=>
+    get_db()
+    .then(db=>db.collection('loginIds'))
     .then(collection=>collection.findOneAndUpdate(
         {username:username},
         {
-            '$addToSet':{requests:{
-              reqSender:reqSender,
-              profilePic:pic
-            }}
+            '$push':{
+              requestsRecieved:reqSender,
+              }
         },
+        {new:true},
         { upsert : true }
     )) 
     .then(result=>{
-        console.log('insert friendReqCollection sub array pushed  ',result)
+        console.log('insert recieved friends request pushed  ',result)
         return result
     })
     .catch(err=>{console.log('no  username like this exists  for friend request ',err)
-                        return null
+        return null
     })    
 
 
 
   //get one login Id requested by client through username
-  const  get_friendRequest =(username)=>
+const  get_recievedfriendRequest =(username)=>
     get_db()
-    .then(db=>db.collection('friendReqCollection'))
+    .then(db=>db.collection('loginIds'))
     .catch(err=>{
         console.log('error in collection')
     })
@@ -51,93 +48,164 @@ const insert_friendRequest=(username,reqSender)=>
         return null
       }  
       else{      
-      console.log('username matched,request available ',document)
-            return document.requests
+      console.log('username matched,recieved request available ',document.requestsRecieved)
+            return document.requestsRecieved
       }
     })
 
-const add_friend=(username,requester)=>
-  get_loginAcc(requester)
-  .then(doc=>{pic=doc.image
-    return get_db()
-  })
-  .catch(err=>console.log('no  username like this exists in database ',err))
-  .then(db=>db.collection('friendsCollection'))
-  .then(collection=>collection.findOneAndUpdate(
-      {username:username},
-      {
-        '$addToSet':{friends:{
-          friend:requester,
-          profilePic:pic
-        }}
-      },
-      { upsert : true }
-  )) 
-  .catch(err=>console.log('no  username like this exists to dd friend, fail to add friend ',err))
-  .then(result=>{
-      console.log('insert friendsCollection array pushed  ')
-      return result
-  })
-  .then(doc=>edit_friendList(username,requester))
-  .catch(err=>{console.log('no  username like this exists  for friends ',err)
-      return null
-  })    
-      
-  //deleting in collection loginIds
-const delete_friendRequest=(username,reqSender)=>
+
+const delete_recievedfriendRequest=(username,reqSender)=>
     get_db()
-    .then(db=>db.collection('friendReqCollection'))
+    .then(db=>db.collection('loginIds'))
     .then(collection=>collection.updateOne(
         {
           username:username,
         },
         {
-          $pull: { 'requests':{reqSender:reqSender}}
+          $pull: { 'requestsRecieved':reqSender}
         }
       )
     )
-    .then(ha=>{console.log('frd req deleted',ha.message.documents)})
+    .then(ha=>{console.log('recievedfrd req deleted',ha.message.documents)})
     .catch(err=>{console.log('err in deleting friend req : ',err)})
     
 
-const  get_friends =(username)=>
+const insert_sendfriendRequest=(username,reqSender)=>
+     get_db()
+    .then(db=>db.collection('loginIds'))
+    .then(collection=>collection.findOneAndUpdate(
+        {username:username},
+        {
+            '$push':{
+              requestsSend:reqSender,
+              }
+        },
+        {new:true},
+        { upsert : true }
+    )) 
+    .then(result=>{
+        console.log('insert friendsreq send array pushed  ',result)
+        return result
+    })
+    .catch(err=>{console.log('no  username like this exists  for friend request ',err)
+        return null
+    })    
+
+
+
+  //get one login Id requested by client through username
+const  get_sendfriendRequest =(username)=>
     get_db()
-    .then(db=>db.collection('friendsCollection'))
+    .then(db=>db.collection('loginIds'))
     .catch(err=>{
         console.log('error in collection')
     })
     .then(collection=>collection.findOne({username:username}))  
     .then(document=>{
       if( document===null){
-        console.log('no friends for username to show')
+        console.log('no request for username to show')
         return null
       }  
       else{      
-      console.log('username matched,friends are available ',document)
-            return document.friends
+      console.log('username matched,send request available ',document.requestsSend)
+            return document.requestsSend
       }
-    }) 
- //deleting in collection loginIds
- const delete_friend=(username,reqSender)=>
+    })
+
+
+const delete_sendfriendRequest=(username,reqSender)=>
     get_db()
-    .then(db=>db.collection('friendsCollection'))
+    .then(db=>db.collection('loginIds'))
     .then(collection=>collection.updateOne(
         {
-        username:username,
+          username:username,
         },
         {
-        $pull: { 'friends': {friend:reqSender}}
+          $pull: { 'requestsSend':reqSender}
+        }
+      )
+    )
+    .then(ha=>{console.log('send frd req deleted',ha.message.documents)})
+    .catch(err=>{console.log('err in deleting friend req : ',err)})
+        
+
+const  insert_friendInList =(username,requester)=>
+    get_db()
+    .then(db=>db.collection('loginIds'))
+    .then(collection=>collection.findOneAndUpdate(
+        {username:username},
+        {
+            '$push':{
+              friends:requester,
+              }
+        },
+        { upsert : true }
+    )) 
+    .then(result=>{
+        console.log('insert friendsreq recieved array pushed  ',result)
+        return result
+    })
+    .catch(err=>{console.log('no  username like this exists  for friend request ',err)
+        return null
+    })    
+
+
+
+  //get one login Id requested by client through username
+const  get_friendsInList =(username)=>
+    get_db()
+    .then(db=>db.collection('loginIds'))
+    .catch(err=>{
+        console.log('error in collection')
+    })
+    .then(collection=>collection.findOne({username:username}))  
+    .then(document=>{
+      if( document===null){
+        console.log('no request for username to show')
+        return null
+      }  
+      else{      
+      console.log('username matched,getting the friends list ',document.friends)
+            return document.friends
+      }
+    })
+
+ const delete_friendInList=(username,reqSender)=>
+    get_db()
+    .then(db=>db.collection('loginIds'))
+    .then(collection=>collection.updateOne(
+        {username:username},
+        {
+        $pull: { 'friends': reqSender}
         }
     )
     )
-    .then(ha=>console.log('user deleted from frinds',ha.message.documents))
+    .then(ha=>{console.log('user deleted from frinds',ha.message.documents);return true})
     .catch(err=>console.log('err in deleting friend : ',err))
  
+
+const get_profilePic=(username)=>
+    get_db()
+    .then(db=>db.collection('loginIds'))
+    .then(collection=>collection.findOne({username:username}))    
+    .then(ha=>{
+      console.log('user founded in profilepic',ha.username)
+      return {
+        username:username,
+        profilePic:ha.image
+      }
+    })
+    .catch(err=>console.log('err in getting profile : ',err))
+
 module.exports={
-    insert_friendRequest,
-    get_friendRequest,
-    delete_friendRequest,
-    add_friend,
-    get_friends,
-    delete_friend
+  insert_recievedfriendRequest,
+  get_recievedfriendRequest,
+  delete_recievedfriendRequest,
+  insert_sendfriendRequest,
+  get_sendfriendRequest,
+  delete_sendfriendRequest,
+  insert_friendInList,
+  get_friendsInList,
+  delete_friendInList,
+  get_profilePic
 }    

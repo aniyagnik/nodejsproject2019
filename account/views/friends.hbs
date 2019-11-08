@@ -26,22 +26,22 @@
              <div class="dropdown-content" id='drop' style="left:0;padding:1%">
                {{#if requests}}
                 {{#each requests}}
-                <div style="position: relative;" id='{{this.reqSender}}'>
+                <div style="position: relative;" id='{{this.username}}'>
                   <a href="#">
                     <div  style='border-bottom:1px solid black'>
                       <details style="color: chocolate">
                         <summary>
                           <div style='' >
                               <div class="user_img" style=' background-image: url("{{this.profilePic}}");height:50px;width:50px;max-height:50px;max-width:50px;'></div>
-                              <div style='display:inline-block;'>{{this.reqSender}} </div> 
+                              <div style='display:inline-block;'>{{this.username}} </div> 
                           </div>
                         </summary>
                         <p> 
-                          <button class="sbtn" onclick='javascript:document.location.href="/user/friends/addFriend?friend={{this.reqSender}}"'>add friend</button>
-                          <button  class="sbtn" onclick='javascript:document.location.href="/user/dashboard/search?searchUser={{this.reqSender}}"'>view wall</button>  
+                          <button class="sbtn" onclick='javascript:document.location.href="/user/friends/addFriend?friend={{this.username}}"'>add friend</button>
+                          <button  class="sbtn" onclick='javascript:document.location.href="/user/dashboard/search?searchUser={{this.username}}"'>view wall</button>  
                         </p>
                       </details>
-                        <span onclick="removeRequest('{{this.reqSender}}')" class="close" title="remove request">&times;</span>
+                        <span onclick="removeRequest('{{this.username}}')" class="close" title="remove request">&times;</span>
                     </div>
                   </a>  
                 </div>
@@ -64,14 +64,14 @@
           {{#each friendsList}}
             <details style=" border-bottom:1px solid black">
                <summary>
-                <input type="checkbox" form='form1' name="{{this.friend}}" name="{{this.friend}}" value='{{this.friend}}' onclick="edit_hiddenInput('{{this.friend}}')">
+                <input type="checkbox" form='form1' name="{{this.username}}" name="{{this.username}}" value='{{this.username}}' onclick="edit_hiddenInput('{{this.username}}')">
                 <div class='friend_info' >
-                    <div style='display:inline-block'><div class="user_img" style=' background-image: url("{{this.profilePic}}");'></div><div class='friendname'><strong>{{this.friend}}</strong> </div>
-                </div></div>
+                    <div style='display:inline-block'><div class="user_img" style=' background-image: url("{{this.profilePic}}");'></div><div class='friendname'><strong>{{this.username}}</strong> </div></div>
+                </div>
                </summary>
                <p>
-                   <button class="sbtn" onclick='document.location.href="/user/chat?searchUser={{this.friend}}"'>message</button>
-                   <button class="sbtn" onclick='document.location.href="/user/dashboard/search?searchUser={{this.friend}}"'>view {{this.friend}}</button>
+                   <button class="sbtn" onclick='document.location.href="/user/chat?searchUser={{this.username}}"'>message</button>
+                   <button class="sbtn" onclick='document.location.href="/user/dashboard/search?searchUser={{this.username}}"'>view {{this.username}}</button>
                </p>
                </details>
             {{/each}}

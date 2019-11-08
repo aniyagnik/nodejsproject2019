@@ -3,7 +3,8 @@ const app = express()
 const hbs=require('hbs')
 const path=require('path')
 const {delete_loginFriend}=require('../database/IdsCollection')
-const {insert_friendRequest,get_friendRequest,delete_friendRequest,add_friend,get_friends,delete_friend}=require('../database/friendsCollection')
+const {insert_recievedfriendRequest,get_recievedfriendRequest,delete_recievedfriendRequest,insert_sendfriendRequest,get_sendfriendRequest,
+    delete_sendfriendRequest,insert_friendInList,get_friendsInList,delete_friendInList,get_profilePic}=require('../database/friendsCollection')
 const {create_newGroup}=require("../database/groupCollection")
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
@@ -16,13 +17,40 @@ app.get('/',(req,res)=>{
     console.log('in friends view get')
     if(req.user){
         const {username}=req.user
-        let requests
-        get_friendRequest(username)
-       .then(doc=>{requests=doc
-            return get_friends(username)
+        let requests,friendsList,promises1=[],promises2=[]
+        get_recievedfriendRequest(username)
+       .then(doc=>{
+           if(doc.length>0){
+                console.log('requesters name are : ',doc)
+                doc.forEach(ele=>{
+                    promises1.push(get_profilePic(ele))
+                })
+                return Promise.all(promises1)
+           }
+           else{
+               return null
+           }
         })
-        .then(friends=>{
-            friendsList=friends
+        .then(list=>{
+            console.log("list for requesters ",list)
+            requests=list
+            return get_friendsInList(username)
+        })
+        .then(doc=>{
+            if(doc.length>0){    
+                console.log('friends name are : ',doc)
+                doc.forEach(ele=>{
+                    promises2.push(get_profilePic(ele))
+                })
+                return Promise.all(promises2)
+           }
+           else{
+               return null
+           }
+        })
+        .then(list=>{
+            console.log("list for friends ",list)
+            friendsList=list
             res.render('friends',{requests,friendsList,username})
         })
     }
@@ -38,7 +66,10 @@ app.post('/friendReq',(req,res)=>{
         const reqSender=req.user.username
         const username=req.body.user
         console.log('values are : ',username,reqSender)
-        insert_friendRequest(username,reqSender)
+        insert_recievedfriendRequest(username,reqSender)
+        .catch(err=>console.log('error while saving sendrequest ',err))
+        .then(as=>insert_sendfriendRequest(reqSender,username))
+        .catch(err=>console.log('error while saving recieved request ',err))
         .then(ha=>res.sendStatus(202))
     }else{
         res.redirect('/')
@@ -51,9 +82,11 @@ app.get('/addFriend',(req,res)=>{
         const {username}=req.user
         const requester=req.query.friend
         console.log('friend req of : ',requester)
-        add_friend(username,requester)
-        .then(doc=>add_friend(requester,username))
-        .then(doc=>delete_friendRequest(username,requester))
+        insert_friendInList(username,requester)
+        .then(doc=>delete_recievedfriendRequest(username,requester))
+        .then(doc=>insert_friendInList(requester,username))
+        .then(doc=>delete_sendfriendRequest(requester,username))
+        .catch(err=>console.log("error in making friend ",err))
         .then(ha=>res.redirect('/user/friends'))
     }else{
         res.redirect('/')
@@ -67,10 +100,8 @@ app.post('/removeFriend',(req,res)=>{
         const {username}=req.user
         const requester=req.body.user
         console.log('friend req of : ',requester)
-        delete_friend(username,requester)
-        .then(doc=>delete_friend(requester,username))
-        .then(doc=>delete_loginFriend(username,requester))
-        .then(doc=>delete_loginFriend(requester,username))
+        delete_friendInList(username,requester)
+        .then(doc=>delete_friendInList(requester,username))
         .then(ha=>res.sendStatus(202))
         .catch(err=>console.log('error in deleting friend',err))
     }else{
@@ -81,9 +112,10 @@ app.post('/removeFriend',(req,res)=>{
 app.post('/removeFriendRequest',(req,res)=>{
     console.log('in friend request remove')
     if(req.user){
-        reqSender=req.body.viewingUser
-        const {username}=req.user
-        delete_friendRequest(username,reqSender)
+        const reqSender=req.body.requester
+        const {username}=req.body
+        delete_recievedfriendRequest(username,reqSender)
+        .then(dd=>delete_sendfriendRequest(reqSender,username))
         .then(ha=>res.sendStatus(202))
         .catch(err=>console.log('error in deleting friend request' ,err))
 
@@ -96,24 +128,17 @@ app.post('/unFriendSelected',(req,res)=>{
     console.log('in friend request post selected remove')
     if(req.user){
         const {username}=req.user
-        console.log('friend req of : ',req.body)
+        let promises3=[]
         console.log('friend : ',typeof req.body,req.body.selectedFriend)
         const selectedFriend=req.body.selectedFriend.split(" ")
-        const {now}=req.body
         console.log('unfriend list',selectedFriend)
-        async function removeFriends(){
-            const k=await selectedFriend.forEach((requester)=>{
-                    console.log('requester in forEach',requester)
-                    delete_friend(username,requester)
-                    .then(doc=>delete_friend(requester,username))
-                    .then(doc=>delete_loginFriend(username,requester))
-                    .then(doc=>delete_loginFriend(requester,username))
-                    .catch(err=>console.log('error in deleting friend',err))
-                })
+        selectedFriend.forEach(requester=>{
+            promises3.push(delete_friendInList(username,requester),delete_friendInList(requester,username))
+        })
+        Promise.all(promises3)
+        .then(ha=>res.redirect('/user/friends'))
+        .catch(err=>console.log('error in deleting friend',err))
 
-            res.redirect('/user/friends')    
-        }   
-         removeFriends()  
     }else{
         res.redirect('/')
     }

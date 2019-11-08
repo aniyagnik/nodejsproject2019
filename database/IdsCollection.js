@@ -104,6 +104,8 @@ async function insert_loginAcc (Id_info){
                         image:'/user/image/image.jpg',
                         wallPic:'/user/image/wallpic.png',
                         friends:[],
+                        requestsRecieved:[],
+                        requestsSend:[],
                         online:false,
                         createdOn:Id_info.createdOn,
                         totalTime:0,
@@ -484,33 +486,6 @@ const change_userWallPic=(username,filename)=>
     })
    
 
-const edit_friendList=(username,friend)=>
-    get_db()
-    .then(db=>db.collection('loginIds'))
-    .then(collection=>collection.updateOne(
-       { username:username},
-        {
-            "$addToSet":{
-                friends:friend
-            }
-        }
-    ))
-    .catch(err=>console.log("error while editing friends list : ",err))
-
-const delete_loginFriend=(username,requester)=>
-    get_db()
-    .then(db=>db.collection('loginIds'))
-    .then(collection=>collection.updateOne(
-    { username:username},
-        {
-            "$pull":{
-                friends:requester
-            }
-        }
-    ))
-    .then(ha=>console.log('user deleted from friends list',ha.message.documents))
-    .catch(err=>console.log("error while editing deletes friend from list list : ",err))
-
     //deleting in collection loginIds
 const delete_loginAcc=(username)=>
     get_db()
@@ -574,8 +549,6 @@ module.exports={
     change_userWallPic,
     change_onlineStatus,
     change_activeStatus,
-    edit_friendList,
-    delete_loginFriend,
     change_onlineTime,
     set_appLock,
     get_todayTime,

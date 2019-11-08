@@ -7,12 +7,14 @@ function removeRequest (requester){
     if (drop.children().length === 0) {console.log('in if')
         drop.append(`<div style="position: relative;"><a  href="#">No request</a> </div>`);
     }
-    axios.post('/user/friends/removeFriendRequest',{viewingUser:requester})
+    const username=$('#username')
+    axios.post('/user/friends/removeFriendRequest',{requester:requester,username:username})
     .then(w=>alert('request removed'))
 }
 
 function edit_hiddenInput(checkOf){
     let value=$("#unFriend").val()
+    console.log("value in function ",checkOf)
     console.log('in edit',value.includes(checkOf))
     if(!value.includes(checkOf)){
         console.log('in if')
