@@ -1,17 +1,30 @@
 
-function removeRequest (requester){
+function removeRequestRec (requester){
     const ele=document.getElementById(requester)
     ele.parentNode.removeChild(ele)
-    const drop=$('#drop')
-    console.log('in remove request',drop.children().length)
-    if (drop.children().length === 0) {console.log('in if')
-        drop.append(`<div style="position: relative;"><a  href="#">No request</a> </div>`);
+    const dropRec=$('#dropRec')
+    console.log('in remove request',dropRec.children().length)
+    if (dropRec.children().length === 0) {console.log('in if')
+        dropRec.append(`<div style="position: relative;"><a  href="#">No request</a> </div>`);
     }
-    const username=$('#username')
-    axios.post('/user/friends/removeFriendRequest',{requester:requester,username:username})
+    const username=$('#username').val()
+    axios.post('/user/friends/removeFriendRequest',{sender:requester,reciever:username})
     .then(w=>alert('request removed'))
 }
 
+
+function removeRequestSend (requester){
+    const ele=document.getElementById(requester)
+    ele.parentNode.removeChild(ele)
+    const dropSend=$('#dropSend')
+    console.log('in remove request',dropSend.children().length)
+    if (dropSend.children().length === 0) {console.log('in if')
+        dropSend.append(`<div style="position: relative;"><a  href="#">No request</a> </div>`);
+    }
+    const username=$('#username').val()
+    axios.post('/user/friends/removeFriendRequest',{sender:username,reciever:requester})
+    .then(w=>alert('request removed'))
+}
 function edit_hiddenInput(checkOf){
     let value=$("#unFriend").val()
     console.log("value in function ",checkOf)

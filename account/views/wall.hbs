@@ -35,8 +35,13 @@
               <button type="button" class='sendMsg' id='removeFriend'>remove friend</button> 
               <div id='sendReqAdd'></div><div id='removeReq'></div>
           {{else}}
+            {{#if isreqSend}}
+              <button type="button" class='sendMsg' id='removeReq'>remove request</button> 
+             {{else}}
               <button type="button" class='sendMsg' id='sendReqAdd'>send request</button> 
               <div id='removeFriend'></div><div id='removeReq'></div>
+             {{/if}}
+
           {{/if}}
           </div>
      </div>

@@ -68,7 +68,7 @@ app.get('/',(req,res)=>{
         .then(list=>{
             console.log("list for friends ",list)
             friendsList=list
-            res.render('friends',{requests,friendsList,username})
+            res.render('friends',{requestsSend,requestsRec,requests,friendsList,username})
         })
     }
     else{
@@ -129,10 +129,12 @@ app.post('/removeFriend',(req,res)=>{
 app.post('/removeFriendRequest',(req,res)=>{
     console.log('in friend request remove')
     if(req.user){
-        const reqSender=req.body.requester
-        const {username}=req.body
-        delete_recievedfriendRequest(username,reqSender)
-        .then(dd=>delete_sendfriendRequest(reqSender,username))
+        const {reciever}=req.body
+        const {sender}=req.body
+        console.log('req body is ',req.body)
+        console.log('values in removing sender reciever ',sender,reciever)
+        delete_recievedfriendRequest(reciever,sender)
+        .then(dd=>delete_sendfriendRequest(sender,reciever))
         .then(ha=>res.sendStatus(202))
         .catch(err=>console.log('error in deleting friend request' ,err))
 
@@ -140,6 +142,7 @@ app.post('/removeFriendRequest',(req,res)=>{
         res.redirect('/')
     }
 })
+
 
 app.post('/unFriendSelected',(req,res)=>{
     console.log('in friend request post selected remove')

@@ -23,7 +23,7 @@
          <h3><strong>FRIENDS</strong> </h3>  
            <div class='dropdown' style='margin:2%'>
              <button  class='addbutton' style="width:auto;">Requests Recieved</button>
-             <div class="dropdown-content" id='drop' style="left:0;padding:1%">
+             <div class="dropdown-content" id='dropRec' style="left:0;padding:1%">
                {{#if requestsRec}}
                 {{#each requestsRec}}
                 <div style="position: relative;" id='{{this.username}}'>
@@ -41,7 +41,7 @@
                           <button  class="sbtn" onclick='javascript:document.location.href="/user/dashboard/search?searchUser={{this.username}}"'>view wall</button>  
                         </p>
                       </details>
-                        <span onclick="removeRequest('{{this.username}}')" class="close" title="remove request">&times;</span>
+                        <span onclick="removeRequestRec('{{this.username}}')" class="close" title="remove request">&times;</span>
                     </div>
                   </a>  
                 </div>
@@ -53,10 +53,10 @@
             </div>
             <div class='dropdown' style='margin:2%'>
              <button  class='addbutton' style="width:auto;">Requests Send</button>
-             <div class="dropdown-content" id='drop' style="left:0;padding:1%">
+             <div class="dropdown-content" id='dropSend' style="left:0;padding:1%">
                {{#if requestsSend}}
                 {{#each requestsSend}}
-                <div style="position: relative;" id='S{{this.username}}'>
+                <div style="position: relative;" id='{{this.username}}'>
                   <a href="#">
                     <div  style='border-bottom:1px solid black'>
                       <details style="color: chocolate">
@@ -70,7 +70,7 @@
                           <button  class="sbtn" onclick='javascript:document.location.href="/user/dashboard/search?searchUser={{this.username}}"'>view wall</button>  
                         </p>
                       </details>
-                        <span onclick="removeRequest('{{this.username}}')" class="close" title="remove request">&times;</span>
+                        <span onclick="removeRequestSend('{{this.username}}')" class="close" title="remove request">&times;</span>
                     </div>
                   </a>  
                 </div>
