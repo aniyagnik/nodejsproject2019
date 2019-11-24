@@ -128,7 +128,7 @@ function removeOfflined () {
     
 }
 app.use(session({
-    secret: "somethings are hidden for good",
+    secret: Secret,
     resave:false,
     saveUninitialized:true
   })

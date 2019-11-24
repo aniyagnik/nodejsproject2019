@@ -24,8 +24,8 @@ const  {check_loginAcc,get_loginAcc,get_userTotalTime,get_userTime,delete_loginA
  * PROFILE IMAGE STORING STARTS
  */
 const s3 = new aws.S3({
-    accessKeyId: 'AKIAZQPSWXJ4LMV7QZUV',
-    secretAccessKey: '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' ,
+    accessKeyId: awsKey,
+    secretAccessKey: secret,
     Bucket: 'uploadimagesnodejs'
 });
 /**
