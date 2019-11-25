@@ -24,9 +24,9 @@ const  {check_loginAcc,get_loginAcc,get_userTotalTime,get_userTime,delete_loginA
  * PROFILE IMAGE STORING STARTS
  */
 const s3 = new aws.S3({
-    accessKeyId: awsKey,
-    secretAccessKey: secret,
-    Bucket: 'uploadimagesnodejs'
+    accessKeyId: process.env.accessKey,
+    secretAccessKey: process.env.secretAccess,
+    Bucket: 'anirudhprojectupload'
 });
 /**
 * Single Upload

@@ -128,7 +128,7 @@ function removeOfflined () {
     
 }
 app.use(session({
-    secret: Secret,
+    secret: process.env.secretsession,
     resave:false,
     saveUninitialized:true
   })
