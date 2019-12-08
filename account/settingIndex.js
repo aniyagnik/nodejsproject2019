@@ -3,7 +3,7 @@ const app = express()
 const hbs=require('hbs')
 const path=require('path')
 var nodemailer = require("nodemailer");
-const {change_userEmail,check_loginAcc,check_userEmail,change_activeStatus}=require('../database/IdsCollection')
+const {change_userEmail,check_loginAcc,check_userEmail,change_activeStatus,change_userPass}=require('../database/IdsCollection')
 const {set_appLock}=require('../database/IdsCollection')
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
@@ -126,22 +126,48 @@ app.post('/changeEmail',(req,res)=>{
         res.redirect('/')
     }
 })
-
+ 
+function checkPass(password){
+    if(password != "" && password == Cpassword) {
+        if(password.length < 7) {
+          return false;
+        }
+        if(password == username) {
+          return false;
+        }
+        re = /[0-9]/;
+        if(!re.test(password)) {
+          return false;
+        }
+        re = /[a-z]/;
+        if(!re.test(password)) {
+          return false;
+        }
+        re = /[A-Z]/;
+        if(!re.test(password)) {
+          return false;
+        }
+      } else 
+          return false;
+}
 app.post('/changePassword',(req,res)=>{
     console.log('in post change PASS')
-    if(req.user)
-    {
-       if(req.body.newPass===req.body.cNewPass)
-       {
-            change_userPass(req.user.username,req.body.newPass,req.body.oldPass)
-            .then(done=>{
-                if(done===false)
-                  res.redirect('/not-found')
-                res.redirect('/user/dashboard')})
+    if(req.user){
+        console.log("value got : ",req.body)
+        if(req.body.newPass===req.body.cNewPass){ 
+            if(checkPass(req.body.newPass)){
+                change_userPass(req.user.username,req.body.newPass,req.body.oldPass)
+                .then(done=>{
+                    if(done===false)
+                        res.send('unable to change password')
+                    res.send('password changed succesfully')})
+            }
+            else{
+                res.send("password is not strong")
+            }
        }
        else{
-           console.log("PASSWORDS DON'T MATHCH")
-           res.redirect('/')
+           res.send("PASSWORDS DON'T MATHCH")
        }
     }
     else{

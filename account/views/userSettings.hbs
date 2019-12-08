@@ -70,7 +70,7 @@
                 <h3>CHANGE PASSWORD</h3>
                 <hr>
                 <div style="border-bottom:1px solid black">
-                    <form action="/user/settings/changePassword" method="post">
+                    <form onsubmit="return changePassword()">
                         <label><b>New Password</b></label> <br>
                         <input type="password" name='newPass' id="newPass" required> <br>
                         <label><b>Confirm New Password</b></label> <br>
@@ -250,6 +250,24 @@
             }
         }       
 
+      function changePassword(){
+            if(confirm("are you sure you want to change passowrd of this account...")){
+                $.ajax({
+                    type:"POST",
+                    url:'/user/settings/changePassword',
+                    data:{
+                        newPass:$("#newPass").val(),
+                        cNewPass:$("#cNewPass").val(),
+                        oldPass:$('#oldPass').val()
+                    }
+                })
+                .then(msg=>{
+                    alert(msg)
+                })
+            }
+            return false
+        }       
+                   
          function sendQuery(){
              alert('facing some technical issues please try again after some time..')
              return;

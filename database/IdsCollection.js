@@ -357,8 +357,7 @@ const change_userPass=(username,newPassword,oldPassword)=>
             }
     }
     })
-    .then(ha=>
-        {
+    .then(ha=>{
             if(ha){
               return get_db()
             }
