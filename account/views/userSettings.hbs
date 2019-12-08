@@ -235,6 +235,14 @@
         }       
 
        function changeEmail(){
+           if($("#newEmail").val()==="" || !$("#newEmail").val().includes("@")){
+               alert('enter new email address...')
+               return;
+           }
+            if($("#password").val()==""){
+                alert('enter your password....')
+                return ;
+            }   
             if(confirm("are you sure you want to change email address of this account...")){
                 $.ajax({
                     type:"POST",
@@ -248,6 +256,7 @@
                     alert(msg.message)
                 })
             }
+            
         }       
 
       function changePassword(){

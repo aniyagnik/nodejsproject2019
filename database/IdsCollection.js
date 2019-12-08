@@ -332,55 +332,22 @@ const  get_loginAcc =(username)=>
       }
     })
 
-const change_userPass=(username,newPassword,oldPassword)=>
+const change_userPass=(username,newPassword)=>
     get_db()
     .then(db=>db.collection('loginIds'))
     .catch(err=>{
         console.log('error in collection')
         res.send('error1')    
     })
-    .then(collection=>collection.findOne({username:username}))  
-    .then(document=>{
-    if(document==null){
-        console.log('error in finding username ')
-        return false
-    }  
-    else{      
-    console.log('username matched')
-            if(document.password===oldPassword)
-            {
-                document.password=newPassword
-                return true
-            }
-            else{
-                return false
-            }
-    }
-    })
-    .then(ha=>{
-            if(ha){
-              return get_db()
-            }
-            else{return false}
-        }
-    )
-    .then(db=>db.collection('loginIds'))
-    .catch(err=>{
-        console.log('error in collection')
-        return false   
-    })
-    .then(collection=>{
-    //  console.log(collection)
-        return collection.updateOne(
+    .then(collection=>collection.updateOne(
             { username:username },
             {
-            $set: { password :newPassword },
-            
+                $set: { password :newPassword },
             }
         )
-    })  
+    )  
     .catch(err=>{
-        console.log('error in finding the account')
+        console.log('error in finding the account',err)
         return false
     })
 

@@ -127,8 +127,8 @@ app.post('/changeEmail',(req,res)=>{
     }
 })
  
-function checkPass(password){
-    if(password != "" && password == Cpassword) {
+function checkPass(password,username){
+    if(password != "" ) {
         if(password.length < 7) {
           return false;
         }
@@ -154,21 +154,26 @@ app.post('/changePassword',(req,res)=>{
     console.log('in post change PASS')
     if(req.user){
         console.log("value got : ",req.body)
-        if(req.body.newPass===req.body.cNewPass){ 
-            if(checkPass(req.body.newPass)){
-                change_userPass(req.user.username,req.body.newPass,req.body.oldPass)
-                .then(done=>{
-                    if(done===false)
-                        res.send('unable to change password')
-                    res.send('password changed succesfully')})
-            }
-            else{
-                res.send("password is not strong")
-            }
-       }
-       else{
-           res.send("PASSWORDS DON'T MATHCH")
-       }
+        if(req.user===req.body.oldPass){
+            if(req.body.newPass===req.body.cNewPass){ 
+                if(checkPass(req.body.newPass,req.user.username)){
+                    change_userPass(req.user.username,req.body.newPass)
+                    .then(done=>{
+                        if(done===false)
+                            res.send('unable to change password')
+                        res.send('password changed succesfully')})
+                }
+                else{
+                    res.send("password is not strong")
+                }
+           }
+           else{
+               res.send("PASSWORDS DON'T MATHCH")
+           }
+        }
+        else{
+            res.send('INCORRECT PASSWORD!!')
+        }
     }
     else{
         res.redirect('/')
