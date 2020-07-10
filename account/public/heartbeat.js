@@ -4,9 +4,9 @@ function hearbeat(){
     console.log('in heartbeat function')
     setTimeout(()=>{
         console.log('in timeout')
-    $.get('/heartbeat?name='+name+"?time="+timeSpentOnSite,()=>{
+    $.get('/heartbeat?name='+name,()=>{
             hearbeat()
         })
     },10000)
 }
-//hearbeat()
+hearbeat()

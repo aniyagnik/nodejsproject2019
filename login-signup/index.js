@@ -71,6 +71,7 @@ app.post('/signup',(req,res)=>{
         //const addedUser=await create_newUnactiveLoginAcc(newAcc)
         const addedUser=await insert_loginAcc(newAcc)
         console.log("added user is : ",addedUser)
+        console.log(req.body.date)
         if(!addedUser)
         {
           console.log('adduser is null')

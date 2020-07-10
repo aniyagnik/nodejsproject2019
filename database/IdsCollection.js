@@ -305,7 +305,7 @@ const change_onlineTime=(username,time)=>
      }  
      else{      
      console.log('user time updated')
-             return document
+             return null
      }
      })
      .catch(err=>console.log('error in finding the account for time update',err))
@@ -482,7 +482,7 @@ const get_userTime=(name)=>
     .then(db=>db.collection('loginIds'))
     .then(collection=>collection.findOne({username:name}))
     .then(user=>{
-        console.log("max time  limit for user is available")
+        console.log("getting user total and today time")
         const doc={
             todayTime:user.todayTime,
             maxLimit:user.maxLimit

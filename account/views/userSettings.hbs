@@ -175,9 +175,6 @@
         })
         let val=document.getElementById("createdOn")
         let total
-        var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
-        d.setUTCSeconds(val.innerText);
-        val.innerText=d
         $.ajax({
             type: "GET",
             url: "/user/totalTime",

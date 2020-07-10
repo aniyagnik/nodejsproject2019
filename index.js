@@ -76,10 +76,13 @@ var rNum=Math.random()/4294967295
 app.get('/heartbeat',(req,res)=>{
     console.log('in heart beat server')
     const {name}=req.query
+
     const index=ids.findIndex(ele=>ele.name===name)
     if(index>-1)
     {
        ids[index].value=rNum
+       change_onlineTime(name,10000)
+       //.then(ok=>{console.log("new time updated")})
     }
     else{
       get_todayTime(name)
@@ -128,7 +131,7 @@ function removeOfflined () {
     
 }
 app.use(session({
-    secret: process.env.secretsession,
+    secret: 'process.env.secretsession',
     resave:false,
     saveUninitialized:true
   })

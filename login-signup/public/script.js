@@ -53,7 +53,7 @@ function checkForm(form)
     }
 
     alert("You entered a valid password");
-    const t=parseInt(Date.now())
+    const t=new Date()
     document.getElementById('date').value=t
     return true;
 }

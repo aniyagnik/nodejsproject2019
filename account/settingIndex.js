@@ -30,6 +30,7 @@ app.get('/',(req,res)=>{
     if(req.user)
     {
         let {user}=req
+        console.log('createdOn ',user)
         user={...user,password:"*********" }
         res.render('userSettings',{user})    
     }

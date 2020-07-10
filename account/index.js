@@ -73,7 +73,7 @@ app.get('/dashboard',(req,res)=>{
     if(req.user)
     {
         let requests,{username}=req.user
-        console.log('check typeof ',typeof req.user.totalTime,typeof req.user.todayTime)
+        console.log('check typeof time in dashborard ',typeof req.user.totalTime,typeof req.user.todayTime)
         get_alluserImgs(username)
         .then(result=>{
             return result.images

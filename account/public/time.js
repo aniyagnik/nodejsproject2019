@@ -34,12 +34,11 @@ function getsessionTime(){
 }
 
 function startCounting(){
-    timerStart = Date.now();
     timer = setInterval(function(){
         if(sessionTime>maxLimit){
+            console.log("max limit reached in if")
             window.localStorage.clear()
-            window.localStorage.clear()
-            window.localStorage.clear()            
+            window.localStorage.clear()   
             location.href="/user/logout?time="+sessionTime
             return 
         }
@@ -51,6 +50,7 @@ function startCounting(){
         
     },1000);
 }
+timerStart = Date.now();
 startCounting();
 
 var stopCountingWhenWindowIsInactive = true; 
