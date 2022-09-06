@@ -26,25 +26,26 @@ const  {check_loginAcc,get_loginAcc,get_userTotalTime,get_userTime,delete_loginA
 const s3 = new aws.S3({
     accessKeyId: process.env.accessKey,
     secretAccessKey: process.env.secretAccess,
-    Bucket: 'anirudhprojectupload'
+    Bucket: 'node-multer-bucket',
+    region: 'ap-south-1',
 });
 /**
 * Single Upload
 */
 const imgUpload = multer({
-storage: multerS3({
-    s3: s3,
-    bucket: 'uploadimagesnodejs',
-    acl: 'public-read',
-    key: function (req, file, cb) {
-    cb(null, path.basename( file.originalname, path.extname( file.originalname ) ) + '-' + Date.now() + path.extname( file.originalname ) )
+    storage: multerS3({
+        s3: s3,
+        bucket: 'node-multer-bucket',
+        acl: 'public-read',
+        key: function (req, file, cb) {
+        cb(null, /*path.basename( file.originalname, path.extname( file.originalname ) ) + '-'*/ + Date.now().toString() + path.extname( file.originalname ) )
+        }
+    }),
+    limits:{ fileSize: 3000000 }, // In bytes: 3000000 bytes = 3 MB
+    fileFilter: function( req, file, cb ){
+        checkFileType( file, cb );
+        console.log('exit checkFileType')
     }
-}),
-limits:{ fileSize: 3000000 }, // In bytes: 3000000 bytes = 3 MB
-fileFilter: function( req, file, cb ){
-    checkFileType( file, cb );
-    console.log('exit checkFileType')
-}
 })
 
 /**

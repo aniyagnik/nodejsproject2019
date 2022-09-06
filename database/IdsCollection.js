@@ -81,18 +81,17 @@ async function insert_loginAcc (Id_info){
                     collection.insertOne(add)
                     return true
                 })
-                .then(ha=>{console.log('images :',ha);return true})
-                .catch(err=>console.log('error in saving in collection images '))
+                .catch(err=>console.log('error in saving in collection images ',err))
                 get_db()
                 .then(db=>db.collection('unseenChatCollection'))
-                .catch(err=>console.log('error in accessing in collection unseenChat '))
+                .catch(err=>console.log('error in accessing in collection unseenChat ',err))
                 .then(collection=>{
                     add={username:Id_info.username,
                         unseenChats:[]
                     }
                     return collection.insertOne(add)
                 })
-                .catch(err=>console.log('error in adding in collection messages '))                                   
+                .catch(err=>console.log('error in adding in collection messages ',err))                                   
                 .then(ha=>{
                     return get_db()})
                 .then(db=>db.collection('loginIds'))
@@ -209,15 +208,15 @@ const  check_loginAcc =(username,password)=>
       }  
       else{      
       console.log('username matched')
-      //console.log('document : ',document)  
+      console.log('document : ',document.password, password)  
       if(document.password===password)
         {
             console.log('pASSWORD MATHCED')
-            if(document.maxLimit<document.todayTime || document.active===false){
-                return false
-            }else{
+            // if(document.maxLimit<document.todayTime || document.active===false)
+            //     console.log('jijoji ',document.maxLimit, document.todayTime , document.active===false)
+            //     return false
+            // else
                 return document
-            }
         }
         else{
             console.log('error in password')
