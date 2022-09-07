@@ -160,9 +160,13 @@ span.psw {
   .modal{
     padding-top: 2%;
   }
-  
-/* Modal Content/Box */
-.modal-content {
-   width: 90%; /* Could be more or less, depending on screen size */
-}
+   
+  #mainBox {
+    min-width: 80vw;
+    max-width: 80vw;
+  }
+  /* Modal Content/Box */
+  .modal-content {
+    width: 90%; /* Could be more or less, depending on screen size */
+  }
 }
