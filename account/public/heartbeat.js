@@ -1,10 +1,10 @@
-var name=document.getElementById("username").value
+const username=document.getElementById("username").value
 
 function hearbeat(){
-    console.log('in heartbeat function')
+    // every 10 seconds
     setTimeout(()=>{
         console.log('in timeout')
-    $.get('/heartbeat?name='+name,()=>{
+    $.get('/heartbeat?name='+username,()=>{
             hearbeat()
         })
     },10000)

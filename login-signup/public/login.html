@@ -11,38 +11,43 @@
 </head>
 
 <body > 
-    
-        <h1 style="color:crimson">WeShare.com</h1>
+    <div id="mainBox">
+        <div class="box-item" style="background-color: crimson;border-top:20px double gold;border-bottom:20px double gold">
+            <h1 style="color:white;font-family: monospace, 'Courier New', Courier; padding-left: 5vw;padding-right: 5vw;">WeShare</h1>
+        </div>
+        <div class="box-item">
             <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+        </div>
+        <div class="box-item">
+            <button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Signup</button>
+        </div>
+    </div>
 
-            <div id="id01" class="modal">
-            <form class="modal-content animate" action="/login" method='POST' id="form2">
-                <div class="container">
-                <label ><b>Username</b></label>
-                <input type="text" name="username" id="username" placeholder="Enter Username" required>
-                <label ><b>Password</b></label>
-                <input type="password" name="password" id="password" placeholder="Enter Password" required>
-                <button type="submit" id='submit'>Login</button>
-                </div>
-                <div class="container" style="background-color:#f1f1f1">
-                <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-                <span class="psw">Forgot <a href="/user/recovery/">password?</a></span>
-                </div>
-            </form>
+    <div id="id01" class="modal">
+        <form class="modal-content animate" action="/login" method='POST' id="form2">
+            <div class="container">
+            <label ><b>Username</b></label>
+            <input type="text" name="username" id="username" placeholder="Enter Username" required>
+            <label ><b>Password</b></label>
+            <input type="password" name="password" id="password" placeholder="Enter Password" required>
+            <button type="submit" id='submit'>Login</button>
             </div>
+            <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+            <span class="psw">Forgot <a href="/user/recovery/">password?</a></span>
+            </div>
+        </form>
+    </div>
 
-        <button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Signup</button>
-
-        <div id="id02" class="modal">
-        
+    <div id="id02" class="modal">
         <div class="modal-content animate" >
-
             <div class="container">
             <label ><b>Email</b></label>
             <input type="email" name="email" id="emailSign" placeholder="Enter Email ex. example@xyz.com" required>   
             <label><b>Username</b></label>
             <input type="text" name="username" id="usernameSign" placeholder="Enter Username" required>
-            <label ><b>Password</b><br>
+            <label >
+                    <b>Password</b><br>
                     1. atleast one lower and uppercase character <br>
                     2. password should not be username <br>
                     3. atleast 7 characters
@@ -53,12 +58,12 @@
             <input type="password" name="Cpassword" id="CpasswordSign" placeholder="Enter Password" required>
             <button type="submit" onclick="signupUser()">Signup</button>
             </div>
-
             <div class="container" style="background-color:#f1f1f1">
             <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
             </div>
         </div>
-    </div>
+    </div>    
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
     <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>

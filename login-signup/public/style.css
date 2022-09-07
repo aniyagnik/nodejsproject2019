@@ -1,9 +1,39 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
-     /* Center and scale the image nicely */
-  
+  background-color: #ccc;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+#mainBox {
+  border-radius: 10px;
+  min-height: 60vh;
+  max-height: 60vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: rgb(47, 63, 81) 0px 20px 30px -10px;
+} 
+
+#mainBox>div {
+  flex: 1 0 50%;
+}
+
+#mainBox>div:first-child {
+  flex: 0 0 100%;
+}
+
+.box-item{
+  display: flex;
+  justify-content: center;
 }
 h1{
     font-family:'algerian';
