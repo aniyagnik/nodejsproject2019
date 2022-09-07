@@ -14,11 +14,6 @@ var io = require('socket.io')(server);
 
 const  {change_onlineStatus,get_todayTime,change_onlineTime}=require('./database/IdsCollection')
 
-/*S3_BUCKET = process.env.S3_BUCKET || 'anirudhbucketnodejs19';
-aws.config.region = 'ap-south-1';
-AWSAccessKeyId=AKIAJ7IGPAB26GURJG4A;
-AWSSecretKey=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
-*/
 app.engine('html', require('ejs').renderFile);
 
 app.use(express.urlencoded({extended: true}))

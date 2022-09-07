@@ -26,13 +26,13 @@
     </div>  
   <div style='margin:2%'>  
     <div class='row section-top ' style=" margin-left: 0px;">
-       <div class='size col-md-3 col-xs-4 col-lg-3 item nopadding'  style="max-width:30%;">
+       <div class='size col-md-3 col-xs-4 col-lg-3 item nopadding'  style="max-width:30%;display:flex;justify-content:center">
          <div id='profilepic' style='background-image:url("{{image}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
                 <img src="null.png" alt="" id='profilepic' style="height:100%; width:100%;">
           </div>
        </div>
        <div class='col-md-3 col-xs-8 col-lg-3 nopadding item' style="font-family:'Segoe UI';max-width:70%;font-size:1.5em;font-size: xx-large;font-weight: 700;color:white;">
-          hello,{{username}}
+          {{username}}
           <input type="hidden" id="username" value="{{username}}">
        </div>
        <div class='col-md-6 col-xs-12 col-lg-6 nopadding item' style='margin-top:1%;margin-buttom:1%text-align:center;'>
