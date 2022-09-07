@@ -11,41 +11,64 @@
    
 </head>
 <body>
-    {{>navbar}}
-     <div class="loadingModal" id='loadModal'>
-      <div class=" animate"  >
-        <span class="loader" id='load_screen'><span class="loader-inner"></span></span><div id='cload' style='color:crimson'> <strong>loading </strong></div>
+  {{!-- navbar --}}
+  {{>navbar}}
+
+  {{!-- Loding Screen --}}
+  <div class="loadingModal" id='loadModal'>
+    <div class=" animate"  >
+      <span class="loader" id='load_screen'>
+        <span class="loader-inner"></span>
+      </span>
+      <div id='cload' style='color:crimson'>
+        <strong>loading </strong>
       </div>
-    </div> 
-    <div class="bg" style=' background-image: url("{{wallpic}}");'>
-        <div id='profilepicbg' onclick='document.getElementById(changeProfile).style.display="block"' style='background-image:url("{{userpic}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
-          </div>
     </div>
+  </div>
+
+  <div class="wallBox">
+    {{!-- User's Wall Pic box --}}
+    <div class="bg" style=' background-image: url("{{wallpic}}");'></div>
+      {{!-- profile pic --}}
+      <div class="wallBox-item" style="left: 15%;">
+        <div 
+          id='profilepicbg' onclick='document.getElementById(changeProfile).style.display="block"' 
+          style='background-image:url("{{userpic}}")' 
+          onclick="document.getElementById('changeProfilePic').style.display='block'">
+        </div>  
+      </div>
+      {{!-- user name --}}
+      <div class="wallBox-item placementBox">
+        <div style="font:bold 30px Georgia, serif;color:rgb(68, 51, 51)">
+          {{userWall}}
+        </div>
+      </div>
+  </div>
+  <br><br><br>
     <input type="hidden" id='username' value='{{userWall}}'>
     <input type="hidden" id='findinguser' value='{{findinguser}}'>
-     <label class='UserName'>Wall of {{userWall}}</label>
      <div class='btn-container'>
-       <div class='btn-item'>
+        <div class='btn-item'>
           <form action="/user/chat" method="get" onsubmit="return checkUser('yagnik')" >
             <input type="hidden" name='searchUser' id='searchUser' value='{{userWall}}'>
             <button type="submit" class='sendMsg'>message</button> <br> <br>
           </form>
           <div id='userOptions'>
-          {{#if isFriend}}
+            {{#if isFriend}}
               <button type="button" class='sendMsg' id='removeFriend'>remove friend</button> 
               <div id='sendReqAdd'></div><div id='removeReq'></div>
-          {{else}}
-            {{#if isreqSend}}
-              <button type="button" class='sendMsg' id='removeReq'>remove request</button> 
-             {{else}}
-              <button type="button" class='sendMsg' id='sendReqAdd'>send request</button> 
-              <div id='removeFriend'></div><div id='removeReq'></div>
-             {{/if}}
-
-          {{/if}}
+            {{else}}
+              {{#if isreqSend}}
+                <button type="button" class='sendMsg' id='removeReq'>remove request</button> 
+              {{else}}
+                <button type="button" class='sendMsg' id='sendReqAdd'>send request</button> 
+                <div id='removeFriend'></div><div id='removeReq'></div>
+              {{/if}}
+            {{/if}}
           </div>
+        </div>
      </div>
-     </div>
+
      <input type="hidden" value='{{viewingUser}}' id='viewUser'>
       <ul class="flex-container">
       {{#if imagesArr}}
