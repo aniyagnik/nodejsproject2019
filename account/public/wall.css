@@ -2,7 +2,7 @@ body, html {
   height: 100%;
   width:100%;
   margin: 0;
-  background-color: darkgrey;
+  background-color: lightgray;
 }
 
 /* Center the image and position the close button */
@@ -84,7 +84,7 @@ body, html {
 .wallBox{
   height: 70%; 
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
   background-color: white;
@@ -122,14 +122,14 @@ body, html {
   border: 5px solid white;
   border-radius:100%;
   align-self: center;
-  width:15vw;
-  height:15vw;
+  width:14vw;
+  height:14vw;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.userProfilePic{
+.userProfile{
   top:-20%;
   position: relative; 
 }
@@ -138,10 +138,22 @@ body, html {
   font-size:2em;
   font-family: Georgia, serif;
   color:brown;
+  left: 20%;
+  top:20%;
   position: relative;
-  left:15%;
-  padding-top: 15%;
 }
+
+.wallBox-item-btn{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: flex-end;
+  align-self: center;
+  width:14vw;
+  height:8vw;
+}
+
 .flex-container {
   padding: 0;
   margin: 1%;
@@ -174,58 +186,36 @@ body, html {
   
 }
 
-.btn-container {
-  padding: 0;
-  list-style: none;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  flex-direction: row;
-  align-content: center;
-}
-
-.btn-item {
-  background: ghostwhite;
-  padding: 2px;
-  margin:1px;
-  text-align: center;
-  object-fit: cover;
-  align-items: center;
-  display:inline-block;
-}
-
 .sendMsg {
   background-color: black;
   font-family: 'Courier New', Courier, monospace;
   font-size: 1em;
-  color: aqua;
-  box-shadow: 1px 1px 1px 1px,2px 2px 2px 2px rgb(158, 54, 50);
-  padding-left:40px;
-  padding-right:40px;
-  padding-top:10px;
-  padding-bottom:10px;
+  color: rgb(0, 221, 255);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  padding-left:30px;
+  padding-right:30px;
+  padding-top:7px;
+  padding-bottom:7px;
   border:none;
-  border-radius: 0px
+  border-radius: 10px;
 }
 
 .sendMsg:hover {
-  background-color: aliceblue;
-  color:rgb(69, 0, 230);
+  background-color: rgb(0, 140, 255);
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  color:rgb(255, 255, 255);
   opacity:0.5;
-  transition:all 0.8s;
+  transition:all 0.5s;
 }
 
 button:active:after{
   opacity:1;
-  
 }
+
 a{
   text-decoration: none;
 }
+
 .size{
   height:100% ;
   width:100%;

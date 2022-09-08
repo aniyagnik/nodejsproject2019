@@ -34,54 +34,51 @@
     </div> 
 
     {{!-- profile Box --}}
-    <div class="wallBox-item userProfilePic">
-
+    <div class="wallBox-item userProfile">
       {{!-- profile pic --}}
       <div 
         id='profilepicbg' onclick='document.getElementById(changeProfile).style.display="block"' 
         style='background-image:url("{{userpic}}")' 
         onclick="document.getElementById('changeProfilePic').style.display='block'">
       </div>  
-      
       {{!-- user name --}}
       <div class="userWallName">
-          {{userWall}}
+         <br><br> {{userWall}}
       </div>
     </div>
     
     {{!-- user options --}}
-    <div class="wallBox-item">
-      <div>
-        HAHA HIHI
+    <div class="wallBox-item userProfile">
+      
+      <input type="hidden" id='username' value='{{userWall}}'>
+      <input type="hidden" id='findinguser' value='{{findinguser}}'>
+      
+      <div class="wallBox-item-btn">
+        <form action="/user/chat" method="get" onsubmit="return checkUser('yagnik')" >
+          <input type="hidden" name='searchUser' id='searchUser' value='{{userWall}}'>
+          <button type="submit" class='sendMsg'>message</button>
+        </form>
       </div>
+        
+      <div id='userOptions' class="wallBox-item-btn">
+        {{#if isFriend}}
+          <button type="button" class='sendMsg' id='removeFriend'>remove friend</button> 
+          <div id='sendReqAdd'></div><div id='removeReq'></div>
+        {{else}}
+          {{#if isreqSend}}
+            <button type="button" class='sendMsg' id='removeReq'>remove request</button> 
+          {{else}}
+            <button type="button" class='sendMsg' id='sendReqAdd'>send request</button> 
+            <div id='removeFriend'></div><div id='removeReq'></div>
+          {{/if}}
+        {{/if}}
+      </div>
+
     </div>
   </div>
   <br><br><br>
     
-  <input type="hidden" id='username' value='{{userWall}}'>
-  <input type="hidden" id='findinguser' value='{{findinguser}}'>
-    <div class='btn-container'>
-      <div class='btn-item'>
-        <form action="/user/chat" method="get" onsubmit="return checkUser('yagnik')" >
-          <input type="hidden" name='searchUser' id='searchUser' value='{{userWall}}'>
-          <button type="submit" class='sendMsg'>message</button> <br> <br>
-        </form>
-        <div id='userOptions'>
-          {{#if isFriend}}
-            <button type="button" class='sendMsg' id='removeFriend'>remove friend</button> 
-            <div id='sendReqAdd'></div><div id='removeReq'></div>
-          {{else}}
-            {{#if isreqSend}}
-              <button type="button" class='sendMsg' id='removeReq'>remove request</button> 
-            {{else}}
-              <button type="button" class='sendMsg' id='sendReqAdd'>send request</button> 
-              <div id='removeFriend'></div><div id='removeReq'></div>
-            {{/if}}
-          {{/if}}
-        </div>
-      </div>
-    </div>
-
+  
      <input type="hidden" value='{{viewingUser}}' id='viewUser'>
       <ul class="flex-container">
       {{#if imagesArr}}
