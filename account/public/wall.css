@@ -2,6 +2,7 @@ body, html {
   height: 100%;
   width:100%;
   margin: 0;
+  background-color: darkgrey;
 }
 
 /* Center the image and position the close button */
@@ -80,9 +81,29 @@ body, html {
   text-align:center;
 }
 
+.wallBox{
+  height: 70%; 
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: white;
+  flex-wrap: wrap;
+  box-shadow: rgb(47, 63, 81) 0px 20px 30px -10px;
+  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; */
+}
+
+.wallBox-item{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  position: relative;
+}
+
 .bg {
-  height: 80%;
-  width:100%; 
+  height: 100%;
+  width: 70%; 
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -97,30 +118,6 @@ body, html {
   overflow:auto;
 }
 
-.wallBox>div {
-  flex: 0 0 100%;
-}
-
-.wallBox{
-  height: 60%; 
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-  background-color: white;
-  box-shadow: rgb(47, 63, 81) 0px 20px 30px -10px;
-}
-
-.wallBox-item{
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  position: relative;
-  top:-15%;
-}
-.placementBox{
-  top:-30%;left:35%;
-}
 #profilepicbg{
   border: 5px solid white;
   border-radius:100%;
@@ -130,6 +127,20 @@ body, html {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.userProfilePic{
+  top:-20%;
+  position: relative; 
+}
+
+.userWallName{
+  font-size:2em;
+  font-family: Georgia, serif;
+  color:brown;
+  position: relative;
+  left:15%;
+  padding-top: 15%;
 }
 .flex-container {
   padding: 0;
@@ -231,9 +242,6 @@ a{
     max-height: 25%;  
   }
 
-  .placementBox{
-    top:-40%;left:50%;
-  }
   #profilepicbg{
     border: 5px solid white;
     border-radius:100%;
@@ -242,6 +250,21 @@ a{
     height:15vh;
     position: relative;
   }
+
+  .userProfilePic{
+    top:-5%;
+  }
+  
+  .userWallName{
+    font-size:1.5em;
+    top:-15%;
+  }
+
+  .bg {
+    height: 100%;
+    width: 100%; 
+  }
+
 }
 @media screen and (min-device-width:300px)and (max-device-width:500px){
     
@@ -252,25 +275,35 @@ a{
     max-height: 30%;  
     
   }
-      
-.avatar {
-  width: 25vw;
-  height:25vw;
-  border-radius: 50%;
-}
+        
+  .avatar {
+    width: 25vw;
+    height:25vw;
+    border-radius: 50%;
+  }
 
-.placementBox{
-  top:-25%;
-  left:50%;
-}
-#profilepicbg{
-  border: 5px solid white;
-  border-radius:100%;
-  align-self: center;
-  width:15vh;
-  height:15vh;
-  position: relative;
-}
+  #profilepicbg{
+    border: 5px solid white;
+    border-radius:100%;
+    align-self: center;
+    width:15vh;
+    height:15vh;
+    position: relative;
+  }
+
+  .userProfilePic{
+    top:-10%
+  }
+  
+  .userWallName{
+    font-size: 1.5em;
+    top:-5%;
+  }
+
+  .bg {
+    height: 100%;
+    width: 100%;
+  }
 
   .sendMsg{
     font-size:1em;
