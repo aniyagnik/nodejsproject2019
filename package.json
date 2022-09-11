@@ -19,7 +19,7 @@
   "dependencies": {
     "aws-sdk": "^2.521.0",
     "crypto": "^1.0.1",
-    "date-and-time": "^0.9.0",
+    "date-and-time": "^0.14.2",
     "dotenv": "^16.0.2",
     "ejs": "^2.7.1",
     "express": "^4.17.1",
