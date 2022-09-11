@@ -20,12 +20,15 @@ app.use('/recovery',require('./recoverAccount.js'))
 
 const   {get_alluserImgs,insert_userImgs,delete_userImg}=require('../database/imageCollection')
 const  {check_loginAcc,get_loginAcc,get_userTotalTime,get_userTime,delete_loginAcc,change_userProfilePic,change_onlineStatus,change_userWallPic,change_onlineTime}=require('../database/IdsCollection')
+
+require('dotenv').config()
+
 /**
  * PROFILE IMAGE STORING STARTS
  */
 const s3 = new aws.S3({
-    accessKeyId: process.env.accessKey,
-    secretAccessKey: process.env.secretAccess,
+    accessKeyId: process.env.accessKeyId,
+    secretAccessKey: process.env.secretAccessKey,
     Bucket: 'node-multer-bucket',
     region: 'ap-south-1',
 });
