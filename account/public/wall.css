@@ -2,7 +2,6 @@ body, html {
   height: 100%;
   width:100%;
   margin: 0;
-  background-color: lightgray;
 }
 
 /* Center the image and position the close button */
@@ -167,6 +166,7 @@ body, html {
   justify-content: flex-start;
   flex-direction: row;
   align-content: center;
+  padding: 1em;
 }
 
 .flex-item {
@@ -197,7 +197,7 @@ body, html {
   padding-top:7px;
   padding-bottom:7px;
   border:none;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .sendMsg:hover {

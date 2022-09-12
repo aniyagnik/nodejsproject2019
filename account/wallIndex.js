@@ -24,15 +24,19 @@ app.get('/',(req,res)=>{
         const {wallpic}=req.query
         const {friends}=req.user
         const {requestsSend}=req.user
-        let isFriend=false,isreqSend=false
+        let isFriend=false,isreqSend=false,isDifferent=false
+
         console.log('friends and req are ',friends,requestsSend)
-        if(friends.find(ele=>ele===userWall)){
+        
+        if(friends.find(ele=>ele===userWall))
             isFriend=true    
-        }
-        if(requestsSend.find(ele=>ele===userWall)){
+
+        if(requestsSend.find(ele=>ele===userWall))
             isreqSend=true    
-        }
-        //console.log('values taken :',findinguser,userpic,userWall,wallpic)    
+        
+        if(findinguser===viewingUser)
+            isDifferent=false        
+
         get_alluserImgs(userWall)
         .then(result=>{
             return result.images
@@ -40,7 +44,7 @@ app.get('/',(req,res)=>{
         .then(arr=>{    
             const imagesArr=arr.reverse()
             console.log('images acquired : ',imagesArr,isFriend,isreqSend)
-            res.render('wall',{findinguser,userpic,imagesArr,wallpic,userWall,viewingUser,isFriend,isreqSend})
+            res.render('wall',{findinguser,userpic,imagesArr,wallpic,userWall,viewingUser,isFriend,isreqSend,isDifferent})
         })
     }
     else{res.redirect('/')}

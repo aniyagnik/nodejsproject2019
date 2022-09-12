@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="loading.css">
    
 </head>
-<body>
+<script>
+</script>
+<body style="  background-color: lightgray;">
   {{!-- navbar --}}
   {{>navbar}}
 
@@ -52,32 +54,44 @@
       
       <input type="hidden" id='username' value='{{userWall}}'>
       <input type="hidden" id='findinguser' value='{{findinguser}}'>
-      
+
+
       <div class="wallBox-item-btn">
-        <form action="/user/chat" method="get" onsubmit="return checkUser('yagnik')" >
+        <form action="/user/friends" method="GET">
           <input type="hidden" name='searchUser' id='searchUser' value='{{userWall}}'>
-          <button type="submit" class='sendMsg'>message</button>
+          <button type="submit" class='sendMsg'>friends</button>
         </form>
       </div>
         
-      <div id='userOptions' class="wallBox-item-btn">
-        {{#if isFriend}}
-          <button type="button" class='sendMsg' id='removeFriend'>remove friend</button> 
-          <div id='sendReqAdd'></div><div id='removeReq'></div>
-        {{else}}
-          {{#if isreqSend}}
-            <button type="button" class='sendMsg' id='removeReq'>remove request</button> 
-          {{else}}
-            <button type="button" class='sendMsg' id='sendReqAdd'>send request</button> 
-            <div id='removeFriend'></div><div id='removeReq'></div>
-          {{/if}}
-        {{/if}}
-      </div>
+      {{!-- only show when finding user and viewed user are different  --}}
+      {{#if isDifferent }}
 
+        <div class="wallBox-item-btn">
+          <form action="/user/chat" method="get">
+            <input type="hidden" name='searchUser' id='searchUser' value='{{userWall}}'>
+            <button type="submit" class='sendMsg'>message</button>
+          </form>
+        </div>
+
+        <div id='userOptions' class="wallBox-item-btn">
+          {{#if isFriend}}
+            <button type="button" class='sendMsg' id='removeFriend'>remove friend</button> 
+            <div id='sendReqAdd'></div><div id='removeReq'></div>
+          {{else}}
+            {{#if isreqSend}}
+              <button type="button" class='sendMsg' id='removeReq'>remove request</button> 
+            {{else}}
+              <button type="button" class='sendMsg' id='sendReqAdd'>send request</button> 
+              <div id='removeFriend'></div><div id='removeReq'></div>
+            {{/if}}
+          {{/if}}
+        </div>
+
+      {{/if}}
+  
     </div>
   </div>
-  <br><br><br>
-    
+  <br>
   
      <input type="hidden" value='{{viewingUser}}' id='viewUser'>
       <ul class="flex-container">
@@ -116,14 +130,6 @@
   <script src="heartbeat.js"></script>
   <script src="time.js"></script>
   <script>
-    function checkUser(user)
-       { if(user===this.searchUser.value)
-        {
-            alert('you want to chat with yourself.😒😒')
-            return false
-        }
-        return true
-    }
     let options=$("#userOptions")
 
     document.getElementById('sendReqAdd').addEventListener('click',(e)=>{
