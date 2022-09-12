@@ -32,16 +32,23 @@
 
      {{!-- User's Wall Pic box --}}
     <div style="width: 100%;height:80%;" class="wallBox-item">
-      <div class="bg" style=' background-image: url("{{wallpic}}");'></div>
+      <div class="bg" style=' background-image: url("{{wallpic}}");'>
+        {{#if isDifferent}}
+        {{else}}
+          <div class="wallBox-item-btn" style="position: relative; top:70%;left:80%; z-index: 1;justify-content: center;align-items: flex-end;">
+            <button onclick='return show(changeProfile.id)' type="button" class="sendMsg" style="background-color:white ;color:black;font-weight:bold">+ wall image</button>
+          </div>
+        {{/if}}
+      </div>
     </div> 
 
     {{!-- profile Box --}}
     <div class="wallBox-item userProfile">
       {{!-- profile pic --}}
       <div 
-        id='profilepicbg' onclick='document.getElementById(changeProfile).style.display="block"' 
+        id='profilepicbg' 
         style='background-image:url("{{userpic}}")' 
-        onclick="document.getElementById('changeProfilePic').style.display='block'">
+        onclick="return show(changeProfilePic.id)">
       </div>  
       {{!-- user name --}}
       <div class="userWallName">
@@ -86,51 +93,79 @@
             {{/if}}
           {{/if}}
         </div>
-
       {{/if}}
   
     </div>
   </div>
   <br>
   
-     <input type="hidden" value='{{viewingUser}}' id='viewUser'>
-      <ul class="flex-container">
-      {{#if imagesArr}}
-        {{#each imagesArr}}
-          <li class='flex-item' style='order:{{@index}}'>
-            <a href="/user/wall/viewImage?userWall={{../userWall}}&image={{this.image}}&description={{this.description}}">
-              <div class='size' style='background-image:url("{{this.image}}")'>
-                <img src="../null.png" alt="" class='size' style="height:100%; width:100%;">
-              </div>
-          </a> 
-          </li>
-        {{/each}}
-      {{/if}}    
-      </ul> 
+  <input type="hidden" value='{{viewingUser}}' id='viewUser'>
+  {{!-- user images --}}
+  <ul class="flex-container">
+    {{#if imagesArr}}
+      {{#each imagesArr}}
+        <li class='flex-item' style='order:{{@index}}'>
+          <a href="/user/wall/viewImage?userWall={{../userWall}}&image={{this.image}}&description={{this.description}}">
+            <div class='size' style='background-image:url("{{this.image}}")'>
+              <img src="../null.png" alt="" class='size' style="height:100%; width:100%;">
+            </div>
+        </a> 
+        </li>
+      {{/each}}
+    {{/if}}    
+  </ul> 
 
-       <div id="changeProfile" class="addImgModal">
-      <form class="modal-content-form animate" action='/user/dashboard/edit' method='POST' id="form" enctype="multipart/form-data"  onsubmit='return uploadPicture("wallImage")'>
-        <div class="imgcontainer">
-          <span onclick="document.getElementById('changeProfile').style.display='none'" class="close" title="Close Modal">&times;</span>
-          <div class='avatar' style='background-image:url("{{image}}");display:inline-block;' >
-          </div>
+  {{!-- change profile wall --}}
+  <div id="changeProfile" class="addImgModal">
+    <form class="modal-content-form animate" action='/user/dashboard/edit' method='POST' id="form" enctype="multipart/form-data"  onsubmit='return uploadPicture("wallImage")'>
+      <div class="imgcontainer">
+        <span onclick="document.getElementById('changeProfile').style.display='none'" class="close" title="Close Modal">&times;</span>
+        <div class='avatar' style='background-image:url("{{userpic}}");display:inline-block;' >
         </div>
-        <div class="containeraddimage">
-          <label><b>Select Wall(visible to viewer)</b></label>
-          <input type="file" name='wallPic' id="wallImage" required>
-          <button type="submit" class='addbutton'>Save Changes</button>
-        </div>
-        <div class="container" style="background-color:#f1f1f1">
-          <button type="button" onclick="document.getElementById('changeProfile').style.display='none'" class="addbutton cancelbtn">Cancel</button>
-        </div>
-      </form>
+      </div>
+      <div class="containeraddimage">
+        <label><b>Select Wall Image</b></label>
+        <input type="file" name='wallPic' id="wallImage" required>
+        <button type="submit" class='addbutton'>Save Changes</button>
+      </div>
+      <div class="container" style="background-color:#f1f1f1">
+        <button type="button" onclick="document.getElementById('changeProfile').style.display='none'" class="addbutton cancelbtn">Cancel</button>
+      </div>
+    </form>
   </div>
+
+   {{!-- change profile pic --}}
+   <div id="changeProfilePic" class="addImgModal">
+    <div class="modal-content-form animate"  >
+      <div class="imgcontainer">
+        <span onclick="document.getElementById('changeProfilePic').style.display='none'" class="close" title="Close Modal">&times;</span>
+        <div class='avatar' style='background-image:url("{{userpic}}");display:inline-block;' >
+        </div>
+      </div>
+      <div class="containeraddimage">
+        <label><b>Change profile Pic</b></label>
+        <form  action="/user/dashboard" method='POST' id="form" enctype="multipart/form-data" onsubmit='return uploadPicture("uploadImage","changeProfilePic")'>
+          <input type="file" name='uploadImage' id="uploadImage" required>
+          <button type="submit" class='addbutton'>Change Image</button>
+        </form>
+      </div>
+     <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('changeProfilePic').style.display='none'" class="addbutton cancelbtn">Cancel</button>
+     </div>
+    </div>
+  </div>
+
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
   <script src="heartbeat.js"></script>
   <script src="time.js"></script>
   <script>
     let options=$("#userOptions")
+       
+    function show(val){
+      document.getElementById(val).style.display='block'
+      return true
+    }    
 
     document.getElementById('sendReqAdd').addEventListener('click',(e)=>{
       if($('#findinguser').val()===$('#username').val()){
