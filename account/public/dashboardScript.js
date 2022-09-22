@@ -17,7 +17,7 @@ function handleSideBar() {
     console.log('in side bar handle')
     let sideBarStyle = document.getElementById("mySidebar").style;
 
-    if(sideBarStyle.width === "" || sideBarStyle.width === "0px"){
+    if(sideBarStyle.width === "0px"){
         //display side bar
         sideBarStyle.width = "30vh";
         sideBarStyle["box-shadow"] =  "rgba(0,0,0,0.55) 45px 0px 50px -55px";

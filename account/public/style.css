@@ -4,7 +4,10 @@ body {font-family: Arial, Helvetica, sans-serif;background-color: rgb(251, 253, 
   padding-right: 0px !important;
   padding-left: 0px !important;
 }
-
+#main{
+  height: 100vh;
+  margin-left: 30vh;
+}
 .section-top{
   display:flex;
   align-items: center;
@@ -56,6 +59,7 @@ input[type=text], input[type=file],input[type=password] {
   border: none;
   position: absolute;
   top: 50vh;
+  z-index: 1;
 }
 
 #openMenuBtn:hover {
@@ -85,11 +89,12 @@ input[type=text], input[type=file],input[type=password] {
 /* Modal Content/Box */
 #mySidebar {
   height: 100%;
-  width: 0;
+  width: 30vh;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
+  box-shadow: rgba(0,0,0,0.55) 45px 0px 50px -55px;
   overflow-x: hidden;
   transition: all 0.5s;
   background-color: #ffffff;
@@ -293,6 +298,102 @@ transition: all 0.8s ease-in-out;
   cursor: pointer;
 }
 .dropdown-content div:hover {background-color: #f1f1f1}
+
+.wallBox{
+  height: 70%; 
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: white;
+  flex-wrap: wrap;
+  box-shadow: rgb(47, 63, 81) 0px 20px 30px -10px;
+  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; */
+}
+
+.wallBox-item{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  position: relative;
+}
+
+.bg {
+  height: 100%;
+  width: 70%; 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.wallBox-item-btn{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: flex-end;
+  align-self: center;
+  width:14vw;
+  height:8vw;
+}
+
+.sendMsg {
+  background-color: black;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1em;
+  color: rgb(0, 221, 255);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  padding-left:30px;
+  padding-right:30px;
+  padding-top:7px;
+  padding-bottom:7px;
+  border:none;
+  border-radius: 5px;
+}
+
+.sendMsg:hover {
+  background-color: rgb(0, 140, 255);
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  color:rgb(255, 255, 255);
+  opacity:0.5;
+  transition:all 0.5s;
+}
+
+#profilepic{
+  border-radius:100%;
+  align-self: center;
+  width:10vw;
+  height: 10vw;
+  margin: 1%;
+  overflow:auto;
+}
+
+#profilepicbg{
+  border: 5px solid white;
+  border-radius:100%;
+  align-self: center;
+  width:14vw;
+  height:14vw;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.userProfile{
+  top:-20%;
+  position: relative; 
+  left:-10%;
+}
+
+.userWallName{
+  font-size:2em;
+  font-family: Georgia, serif;
+  color:brown;
+  left: 20%;
+  top:20%;
+  position: relative;
+}
 
 @media screen and (min-device-width:300px)and (max-device-width:800px){
     

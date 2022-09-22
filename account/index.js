@@ -76,19 +76,17 @@ app.get('/dashboard',(req,res)=>{
     console.log('in dashboard')  
     if(req.user)
     {
-        let requests,{username}=req.user
-        console.log('check typeof time in dashborard ',typeof req.user.totalTime,typeof req.user.todayTime)
+        const {username}=req.user
+        const {wallPic}=req.user
+        const {image}=req.user
         get_alluserImgs(username)
         .then(result=>{
             return result.images
         })
         .catch(err=>console.log('error in getting collection images ',err))
         .then(arr=>{   
-            const {username}=req.user
-            const {image}=req.user
             const imagesArr=arr.reverse()
-            //console.log('imagesArr : ',imagesArr)
-            res.render('dashboard',{username,image,imagesArr,requests})
+            res.render('dashboard',{username,wallPic,image,imagesArr})
         })
     }
     else{

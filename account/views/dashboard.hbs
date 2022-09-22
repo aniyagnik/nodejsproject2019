@@ -18,48 +18,8 @@
     <link rel="stylesheet" href="loading.css">
 </head>
 <body>
-  
-  {{!-- <div style='margin:2%'>  
-    <div class='row section-top ' style=" margin-left: 0px;">
-       <div class='size col-md-3 col-xs-4 col-lg-3 item nopadding'  style="max-width:30%;display:flex;justify-content:center">
-         <div id='profilepic' style='background-image:url("{{image}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
-                <img src="null.png" alt="" id='profilepic' style="height:100%; width:100%;">
-          </div>
-       </div>
-       <div class='col-md-3 col-xs-8 col-lg-3 nopadding item' style="font-family:'Segoe UI';max-width:70%;font-size:1.5em;font-size: xx-large;font-weight: 700;color:white;">
-          {{username}}
-          <input type="hidden" id="username" value="{{username}}">
-       </div>
-       <div class='col-md-6 col-xs-12 col-lg-6 nopadding item' style='margin-top:1%;margin-buttom:1%text-align:center;'>
-         <div class='section-inside'>
-           <div class='dropdown'style="float:right;">
-              <form action="/user/friends" method="GET" >
-                 <button type='submit' class='addbutton menuBtn' style="width:auto;">friends</button>
-              </form>
-            </div> 
-           <div class='dropdown'>
-             <button  class='addbutton menuBtn' style="width:auto;">edit Profile</button>
-             <div class="dropdown-content" style="left:0;">
-              <a onclick='return show(changeProfilePic.id)' href="#changeProfilePic">change profile Pic</a> 
-              <a onclick='return show(changeProfile.id)' href="#changeProfile">add wall image</a>
-             </div>
-            </div>
-           <div>
-             <button onclick="document.getElementById('addimgdiv').style.display='block'" class='addbutton menuBtn' style="width:auto;">Add Image</button>
-           </div>
-           <div>
-             <form action="/user/chat" method="GET" >
-               <button type='submit' class='addbutton menuBtn' style="width:auto;">chat</button>
-             </form>
-           </div> 
-         </div>
-       </div>
-    </div>
-    <br>
-  </div> --}}
-
   <input type="hidden" id="username" value="{{username}}">
-  
+
   {{!-- side Bar menu  --}}
   <div id="mySidebar" class="animateMenu">
     {{!-- user image --}}
@@ -99,6 +59,77 @@
       </div>
     </div>
   </div>
+
+  {{!-- Main body of the page --}}
+  <div  id="main">
+    {{>navbar}} 
+    {{!-- loading modal --}}
+    <div class="loadingModal" id='loadModal'>
+      <div class=" animate"  >
+        <span class="loader" id='load_screen'>
+          <span class="loader-inner"></span>
+        </span>
+        <div id='cload' style='color:crimson'>
+          <strong>loading</strong>
+        </div>
+      </div>
+    </div>
+
+  {{!-- sidebar button --}}
+  <button  onclick="handleSideBar()" id='openMenuBtn'>
+    <
+  </button>
+  
+  {{!-- user's wall box --}}
+  <div class="wallBox">  
+    {{!-- User's Wall Pic box --}}
+    <div style="width: 100%;height:80%;" class="wallBox-item">
+      <div class="bg" style=' background-image: url("{{wallPic}}");'>
+        <div class="wallBox-item-btn" style="position: relative; top:70%;left:80%; z-index: 1;justify-content: center;align-items: flex-end;">
+          <button onclick='return show(changeProfile.id)' type="button" class="sendMsg" style="background-color:white ;color:black;font-weight:bold">+ wall image</button>
+        </div>
+      </div>
+    </div> 
+    {{!-- profile Box --}}
+    <div class="wallBox-item userProfile">
+      {{!-- profile pic --}}
+      <div 
+        id='profilepicbg' 
+        style='background-image:url("{{image}}")' 
+        onclick="return show(changeProfilePic.id)">
+      </div>  
+      {{!-- user name --}}
+      <div class="userWallName">
+        <br><br> {{username}}
+      </div>
+    </div>
+  </div>
+
+  {{!-- images posted by user --}}
+  <ul class="flex-container">
+    {{#if imagesArr}}
+      {{#each imagesArr}}
+        <li class='flex-item' style='order:{{@index}}'>
+          <a href="./wall/viewImage?userWall={{../username}}&image={{this.image}}&description={{this.description}}">
+            <div class='sizeImg' style='background-image:url("{{this.image}}")'>
+              <img src="null.png" alt="" class='sizeImg' style="height:100%; width:100%;">
+            </div>
+          </a> 
+          <details style="color: chocolate">
+            <summary>caption</summary>
+            <p> {{this.description}}</p>
+          </details>
+          <form action="/user/dashboard/deleteImage" method="POST" onsubmit='return ask_confirm()'>
+            <input type="hidden" value='{{this.image}}' name='image' >
+            <button type="submit" style='width: 100%;  padding: 1px 2px;  margin: 3px 0;  display: inline-block;  border: 1px solid #ccc;  box-sizing: border-box;'>Delete</button>
+          </form>
+        </li>          
+      {{/each}}
+      {{else}}
+        <li class='flex-item'>You Don't have any Post Yet</li>
+      {{/if}}
+    </ul>
+  </div> 
 
    {{!-- change profile pic --}}
    <div id="changeProfilePic" class="addImgModal">
@@ -161,49 +192,12 @@
         </div>
       </form>
     </div>
-
-  {{!-- Main body of the page --}}
-  <div  id="main">
-    {{>navbar}} 
-    <div class="loadingModal" id='loadModal'>
-      <div class=" animate"  >
-        <span class="loader" id='load_screen'><span class="loader-inner"></span></span><div id='cload' style='color:crimson'> <strong>loading </strong></div>
-      </div>
-    </div> 
-
-    <button  onclick="handleSideBar()" id='openMenuBtn' style="width:auto;">></button>
-    <ul class="flex-container">
-      {{#if username}}
-        {{#if imagesArr}}
-          {{#each imagesArr}}
-          <li class='flex-item' style='order:{{@index}}'>
-            <a href="./wall/viewImage?userWall={{../username}}&image={{this.image}}&description={{this.description}}">
-              <div class='sizeImg' style='background-image:url("{{this.image}}")'>
-                <img src="null.png" alt="" class='sizeImg' style="height:100%; width:100%;">
-              </div>
-            </a> 
-            <details style="color: chocolate">
-                <summary>caption</summary>
-                <p> {{this.description}}</p>
-              </details>
-              <form action="/user/dashboard/deleteImage" method="POST" onsubmit='return ask_confirm()'>
-                <input type="hidden" value='{{this.image}}' name='image' >
-                <button type="submit" style='width: 100%;  padding: 1px 2px;  margin: 3px 0;  display: inline-block;  border: 1px solid #ccc;  box-sizing: border-box;'>Delete</button>
-              </form>
-          </li>          
-          {{/each}}
-        {{else}}
-            You Don't have any Post Yet
-        {{/if}}
-       {{/if}}
-    </ul>
-  </div> 
     <p id="timeSpent"></p>
     
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src='dashboardScript.js'></script>
-{{!-- <script src="heartbeat.js"></script> --}}
-{{!-- <script src="time.js"></script> --}}
+<script src="heartbeat.js"></script>
+<script src="time.js"></script>
 </body>
 </html>
 
