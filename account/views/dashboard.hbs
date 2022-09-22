@@ -67,37 +67,35 @@
       <div class='avatar' style='background-image:url("{{image}}");display:inline-block;' ></div>
     </div>
     {{!-- username --}}
-    <div style="font-family:'Segoe UI';font-size:1.5em;font-size: xx-large;font-weight: 700;color:crimson">
+    <div style="font-family:'Segoe UI';font-size:1.5em;font-size: xx-large;font-weight: 700;color:rgb(0, 0, 0)">
       {{username}}
     </div>
     {{!-- user options --}}
     <div class='nopadding' style='width:100%;text-align:center;'>
       <div>
-        <form action="/user/friends" method="GET" ></form>
-          <div style="float:right;" class="menuOption" lick="document.getElementById('addimgdiv').style.display='block'">
-            Post Images
-          </div> 
-        </form>
-
-        <form action="/user/friends" method="GET" ></form>
-          <div style="float:right;" class="menuOption">
-            Friends
-          </div> 
-        </form>
-        
-        <form action="/user/chat" method="GET" ></form>
-          <div style="float:right;" class="menuOption">
-            Messages
-          </div> 
-        </form>
-
         <div>
-          <button  class='addbutton menuBtn' style="width:auto;">edit Profile</button>
-          <div class="dropdown-content" style="left:0;">
-            <a onclick='return show(changeProfilePic.id)' href="#changeProfilePic">change profile Pic</a> 
-            <a onclick='return show(changeProfile.id)' href="#changeProfile">add wall image</a>
+          <button class='menuOption dropdown'>edit Profile</button>
+          <div class="dropdown-content">
+            <div onclick='return show(changeProfilePic.id)' href="#changeProfilePic">change profile Pic</div> 
+            <div onclick='return show(changeProfile.id)'  href="#changeProfile">add wall image</div>
           </div>
         </div>
+
+        <div style="float:right;" class="menuOption" onclick="document.getElementById('addimgdiv').style.display='block'">
+          Post Images
+        </div> 
+
+        <form action="/user/friends" method="GET" >
+          <button style="float:right;" class="menuOption">
+            Friends
+          </button> 
+        </form>
+        
+        <form action="/user/chat" method="GET" >
+          <button style="float:right;" class="menuOption">
+            Messages
+          </button> 
+        </form>
       </div>
     </div>
   </div>

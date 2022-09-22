@@ -29,11 +29,12 @@ input[type=text], input[type=file],input[type=password] {
 
 /* Set a style for all buttons */
 .addbutton {
-  background-color: rgb(72, 45, 230);
-  color: rgb(255, 255, 255);
+  background-color: crimson;
+  font-weight: bold;
+  color: gold;
   padding: 10px 10px;
   margin: 3vh 0;
-  border: 1px dashed rgb(233, 240, 240);
+  border: 1px solid rgb(233, 240, 240);
   cursor: pointer;
   width: 100%;
 }
@@ -66,9 +67,9 @@ input[type=text], input[type=file],input[type=password] {
   color:crimson;
   font-weight: bold;
   padding: 15px 10px;
-  cursor: pointer;
   min-width: 100%;
-  z-index: 1;
+  border: none;
+  cursor: pointer;
 }
 .menuOption:hover{
   background-color:lightgoldenrodyellow;
@@ -77,7 +78,8 @@ input[type=text], input[type=file],input[type=password] {
 }
 
 .addbutton:hover {
-  background-color: rgb(33, 150, 247)
+  background-color: gold;
+  color: crimson;
 }
 
 /* Modal Content/Box */
@@ -108,10 +110,12 @@ input[type=text], input[type=file],input[type=password] {
   width: auto;
   margin: 18px 4px;
   padding: 10px 18px;
-  background-color: #f44336;
+  background-color:lightgray;
+  color: crimson;
 }
 .cancelbtn:hover{
-  background-color: crimson;
+  color: gold;
+  background-color: gray;
 }
 /* Center the image and position the close button */
 .imgcontainer {
@@ -270,28 +274,25 @@ a.hover{text-decoration: none;}
   width:22vw;
   height: 22vw;
 }
-
-
+.active {
+  background-color: crimson;
+  color: white;
+}
 .dropdown-content {
   display: none;
-  position: absolute;
-  right: 0;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+  background-color:lightgoldenrodyellow;
+  width: 100%;
+  -webkit-transition: all 0.8s ease-in-out;
+-moz-transition: all 0.8s ease-in-out;
+transition: all 0.8s ease-in-out;
 }
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
+.dropdown-content div{
+  color:orangered;
+  padding: 15px 10px;
+  min-width: 100%;
+  cursor: pointer;
 }
-
-.dropdown-content a:hover {background-color: #f1f1f1;text-decoration: none;}
-.dropdown:hover .dropdown-content {display: block;}
-.dropdown:hover .dropbtn {background-color: #3e8e41;}
+.dropdown-content div:hover {background-color: #f1f1f1}
 
 @media screen and (min-device-width:300px)and (max-device-width:800px){
     
