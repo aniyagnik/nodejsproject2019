@@ -12,7 +12,27 @@ function show(val){
   document.getElementById(val).style.display='block'
   return true
 }
- 
+
+function handleSideBar() {
+    console.log('in side bar handle')
+    let sideBarStyle = document.getElementById("mySidebar").style;
+
+    if(sideBarStyle.width === "" || sideBarStyle.width === "0px"){
+        //display side bar
+        sideBarStyle.width = "30vh";
+        sideBarStyle["box-shadow"] =  "rgba(0,0,0,0.55) 45px 0px 50px -55px";
+        document.getElementById("main").style.marginLeft = "30vh";
+        document.getElementById("openMenuBtn").innerHTML = "<";
+    }
+    else{
+        //hide side bar
+        sideBarStyle.width = "0";
+        sideBarStyle["box-shadow"] =  null;
+        document.getElementById("main").style.marginLeft = "0";
+        document.getElementById("openMenuBtn").innerHTML = ">";
+    }
+}
+
 function uploadPicture (id,modalId){
     const file=$(`#${id}`)[0].files[0]
     const type=file.type.split('/')[1]

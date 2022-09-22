@@ -18,13 +18,8 @@
     <link rel="stylesheet" href="loading.css">
 </head>
 <body>
-   {{>navbar}} 
-    <div class="loadingModal" id='loadModal'>
-      <div class=" animate"  >
-        <span class="loader" id='load_screen'><span class="loader-inner"></span></span><div id='cload' style='color:crimson'> <strong>loading </strong></div>
-      </div>
-    </div>  
-  <div style='margin:2%'>  
+  
+  {{!-- <div style='margin:2%'>  
     <div class='row section-top ' style=" margin-left: 0px;">
        <div class='size col-md-3 col-xs-4 col-lg-3 item nopadding'  style="max-width:30%;display:flex;justify-content:center">
          <div id='profilepic' style='background-image:url("{{image}}")' onclick="document.getElementById('changeProfilePic').style.display='block'">
@@ -61,6 +56,50 @@
        </div>
     </div>
     <br>
+  </div> --}}
+
+  <input type="hidden" id="username" value="{{username}}">
+  
+  {{!-- side Bar menu  --}}
+  <div id="mySidebar" class="animateMenu">
+    {{!-- user image --}}
+    <div class="imgcontainer">
+      <div class='avatar' style='background-image:url("{{image}}");display:inline-block;' ></div>
+    </div>
+    {{!-- username --}}
+    <div style="font-family:'Segoe UI';font-size:1.5em;font-size: xx-large;font-weight: 700;color:crimson">
+      {{username}}
+    </div>
+    {{!-- user options --}}
+    <div class='nopadding' style='width:100%;text-align:center;'>
+      <div>
+        <form action="/user/friends" method="GET" ></form>
+          <div style="float:right;" class="menuOption" lick="document.getElementById('addimgdiv').style.display='block'">
+            Post Images
+          </div> 
+        </form>
+
+        <form action="/user/friends" method="GET" ></form>
+          <div style="float:right;" class="menuOption">
+            Friends
+          </div> 
+        </form>
+        
+        <form action="/user/chat" method="GET" ></form>
+          <div style="float:right;" class="menuOption">
+            Messages
+          </div> 
+        </form>
+
+        <div>
+          <button  class='addbutton menuBtn' style="width:auto;">edit Profile</button>
+          <div class="dropdown-content" style="left:0;">
+            <a onclick='return show(changeProfilePic.id)' href="#changeProfilePic">change profile Pic</a> 
+            <a onclick='return show(changeProfile.id)' href="#changeProfile">add wall image</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
    {{!-- change profile pic --}}
@@ -125,6 +164,16 @@
       </form>
     </div>
 
+  {{!-- Main body of the page --}}
+  <div  id="main">
+    {{>navbar}} 
+    <div class="loadingModal" id='loadModal'>
+      <div class=" animate"  >
+        <span class="loader" id='load_screen'><span class="loader-inner"></span></span><div id='cload' style='color:crimson'> <strong>loading </strong></div>
+      </div>
+    </div> 
+
+    <button  onclick="handleSideBar()" id='openMenuBtn' style="width:auto;">></button>
     <ul class="flex-container">
       {{#if username}}
         {{#if imagesArr}}
@@ -145,16 +194,18 @@
               </form>
           </li>          
           {{/each}}
+        {{else}}
+            You Don't have any Post Yet
         {{/if}}
        {{/if}}
     </ul>
-   
+  </div> 
     <p id="timeSpent"></p>
     
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src='dashboardScript.js'></script>
-<script src="heartbeat.js"></script>
-<script src="time.js"></script>
+{{!-- <script src="heartbeat.js"></script> --}}
+{{!-- <script src="time.js"></script> --}}
 </body>
 </html>
 

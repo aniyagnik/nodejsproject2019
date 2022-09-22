@@ -17,18 +17,6 @@ body {font-family: Arial, Helvetica, sans-serif;background-color: rgb(251, 253, 
   align-content:space-between;
 }
 
-
-.section-inside{
-  display:flex;
-  flex-wrap: wrap;
-  align-items: center;
-  text-align:center;
-  justify-content: space-evenly;
-  width: 100%; /* Full width */
-  padding:5px;
-  background-color: rgb(13, 17, 228); /* Fallback color */
-  background-color: rgba(31, 56, 197, 0.76); /* Black w/ opacity */ 
-}
 /* Full-width input fields */
 input[type=text], input[type=file],input[type=password] {
   width: 100%;
@@ -44,7 +32,7 @@ input[type=text], input[type=file],input[type=password] {
   background-color: rgb(72, 45, 230);
   color: rgb(255, 255, 255);
   padding: 10px 10px;
-  margin: 8px 0;
+  margin: 3vh 0;
   border: 1px dashed rgb(233, 240, 240);
   cursor: pointer;
   width: 100%;
@@ -57,12 +45,62 @@ input[type=text], input[type=file],input[type=password] {
   border-radius: 10px;
 
 }
-
-.menuBtn :hover{
-  background-color:rgb(44, 43, 48);
+#openMenuBtn {
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  position: absolute;
+  top: 50vh;
 }
+
+#openMenuBtn:hover {
+  background-color: #444;
+}
+
+.menuOption{
+  background-color:white;
+  color:crimson;
+  font-weight: bold;
+  padding: 15px 10px;
+  cursor: pointer;
+  min-width: 100%;
+  z-index: 1;
+}
+.menuOption:hover{
+  background-color:lightgoldenrodyellow;
+  color: #f44336;
+  transition: all 0.5s;
+}
+
 .addbutton:hover {
   background-color: rgb(33, 150, 247)
+}
+
+/* Modal Content/Box */
+#mySidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  transition: all 0.5s;
+  background-color: #ffffff;
+  position: absolute;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+}
+
+.animateMenu {
+  -webkit-animation: slide 0.5s;
+  animation: slide 0.5s;
 }
 
 /* Extra styles for the cancel button */
@@ -83,8 +121,8 @@ input[type=text], input[type=file],input[type=password] {
 }
 
 .avatar {
-  width: 40vh;
-  height:40vh;
+  width: 26vh;
+  height:26vh;
   border-radius: 50%;
   overflow:hidden;
   background-position: center;
@@ -174,7 +212,6 @@ details summary::-webkit-details-marker {
 #profilepic{
   border-radius:100%;
   align-self: center;
-  width:85%;
   height:85%;  
   border:1px solid black;
   background-position: center;
