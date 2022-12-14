@@ -27,8 +27,8 @@ require('dotenv').config()
  * PROFILE IMAGE STORING STARTS
  */
 const s3 = new aws.S3({
-    accessKeyId: process.env.accessKeyId,
-    secretAccessKey: process.env.secretAccessKey,
+    accessKeyId: "AKIA6IEPOJCLZJQCE4HC",
+    secretAccessKey: "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",
     Bucket: 'node-multer-bucket',
     region: 'ap-south-1',
 });
